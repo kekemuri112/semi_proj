@@ -64,7 +64,7 @@ CREATE TABLE COMMENTS
 	comment_ref number(5),
 	comment_step number(5)
 )
-CREATE SEQUENCE COMMENT_SEQ;
+       CREATE SEQUENCE COMMENT_SEQ;
 
 CREATE TABLE CAFEREG
 (
