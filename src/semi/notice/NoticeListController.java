@@ -1,4 +1,4 @@
-package semi.cafe;
+package semi.notice;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -8,14 +8,14 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-@WebServlet("/cafe/cafelist.do")
-public class CafeListController extends HttpServlet {
+@WebServlet("/notice/noticeList.do")
+public class NoticeListController extends HttpServlet{
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		CafeDao dao=CafeDao.getInstance();
-		ArrayList<String> cafelist=dao.listAll();
-		req.setAttribute("cafelist",cafelist );
-		req.getRequestDispatcher("/cafe/cafelist.jsp").forward(req, resp);
+		NoticeDao dao=NoticeDao.getInstance();
+		int cafe_num=Integer.parseInt(req.getParameter("cafe_num"));
+		ArrayList<NoticeVo> noticelist=dao.listAll(cafe_num);
+		req.setAttribute("noticelist", noticelist);
+		req.getRequestDispatcher("/notice/noticeList.jsp").forward(req, resp);
 	}
 }

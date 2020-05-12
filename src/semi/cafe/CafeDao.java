@@ -16,22 +16,25 @@ public class CafeDao {
 		return instance;
 	}
 	//리스트(카페이름)불러오는 메소드
-	public ArrayList<String> listall(){
+	public ArrayList<String> listAll(){
 		Connection con=null;
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
 		try {
 			con=ConnectionPool.getCon();
-			String sql="select cafe_name from cafe 	ORDER BY cafe_name DESC";
+			String sql="select cafe_name from cafe order by cafe_name desc";
 			pstmt=con.prepareStatement(sql);
 			rs=pstmt.executeQuery();
 			ArrayList<String> list=new ArrayList<String>();
 			while(rs.next()) {
+				System.out.println("rs.next()발동중..");
 				list.add(rs.getString("cafe_name"));
 			}
+			System.out.println("리턴주기전이다.");
 			return list;
 		}catch(SQLException se) {
 			se.printStackTrace();
+			System.out.println("리턴안된거임.. NULL");
 			return null;
 		}finally {
 			try {
