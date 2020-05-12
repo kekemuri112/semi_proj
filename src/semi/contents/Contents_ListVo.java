@@ -3,7 +3,7 @@ package semi.contents;
 import java.sql.Date;
 
 public class Contents_ListVo {
-	private int index;
+	private int contents_num;
 	private String contents_title;
 	private String users_id;
 	private Date contents_regDate;
@@ -12,10 +12,10 @@ public class Contents_ListVo {
 	public Contents_ListVo() {}
 	
 	
-	public Contents_ListVo(int index, String contents_title, String users_id, Date contents_regDate,
+	public Contents_ListVo(int contents_num, String contents_title, String users_id, Date contents_regDate,
 			Date contents_modifyDate) {
 		super();
-		this.index = index;
+		this.contents_num = contents_num;
 		this.contents_title = contents_title;
 		this.users_id = users_id;
 		this.contents_regDate = contents_regDate;
@@ -23,8 +23,8 @@ public class Contents_ListVo {
 	}
 
 
-	public int getIndex() {
-		return index;
+	public int getContents_num() {
+		return contents_num;
 	}
 
 	public String getContents_title() {
@@ -43,8 +43,8 @@ public class Contents_ListVo {
 		return contents_modifyDate;
 	}
 
-	public void setIndex(int index) {
-		this.index = index;
+	public void setContents_num(int contents_num) {
+		this.contents_num = contents_num;
 	}
 
 	public void setContents_title(String contents_title) {

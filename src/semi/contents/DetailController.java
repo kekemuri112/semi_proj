@@ -16,7 +16,7 @@ public class DetailController extends HttpServlet{
 		ContentsDao dao=ContentsDao.getDao();
 		Contents_detailVo vo=dao.detail(contents_num);
 		req.setAttribute("vo", vo);
-		
-		req.getRequestDispatcher("/detail.jsp").forward(req, resp);
+		req.setAttribute("cp",req.getContextPath());
+		req.getRequestDispatcher("/contents/detail.jsp").forward(req, resp);
 	}
 }

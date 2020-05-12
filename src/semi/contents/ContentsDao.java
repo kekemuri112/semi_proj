@@ -98,13 +98,13 @@ public class ContentsDao {
 			rs=pstmt.executeQuery();
 			ArrayList<Contents_ListVo> list=new ArrayList<Contents_ListVo>();
 			while(rs.next()) {
-				int index=rs.getInt("contents_num");
+				int contents_num=rs.getInt("contents_num");
 				String title=rs.getString("contents_title");
 				int users_num=rs.getInt("users_num");
 				String users_id=getUsers_id(users_num);
 				Date contents_regDate=rs.getDate("contents_regdate");
 				Date contents_modifyDate=rs.getDate("contents_modifydate");
-				Contents_ListVo vo=new Contents_ListVo(index,title,users_id,contents_regDate,contents_modifyDate);
+				Contents_ListVo vo=new Contents_ListVo(contents_num,title,users_id,contents_regDate,contents_modifyDate);
 				list.add(vo);
 			}
 			return list;
@@ -174,7 +174,7 @@ public class ContentsDao {
 				String post=rs.getString("contents_post");
 				Date contents_regDate=rs.getDate("contents_regdate");
 				Date contents_modifyDate=rs.getDate("contents_modifyDate");
-				vo=new Contents_detailVo(contents_title, users_id, post, contents_regDate, contents_modifyDate);
+				vo=new Contents_detailVo(contents_title, users_id, post, contents_regDate, contents_modifyDate,contents_num);
 
 			}
 			return vo;
