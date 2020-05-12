@@ -42,27 +42,27 @@ CREATE TABLE notice
 );
 CREATE SEQUENCE BOARD_LIST_SEQ;
 
-CREATE TABLE CONTENT
+CREATE TABLE CONTENTS
 (
-	content_num number(4) primary key,
+	contents_num number(4) primary key,
 	notice_num number(4) references NOTICE(NOTICE_num),
 	users_num number(4) references users(users_num),
-	content_title varchar2(30),
-	content_post varchar2(1024),
-	content_regdate date,
+	contents_title varchar2(30),
+	contents_post varchar2(1024),
+	contents_regdate date,
 	contents_modifydate date
 )
 CREATE SEQUENCE CONTENT_SEQ;
 
 CREATE TABLE COMMENTS
 (
-	comment_num number(4) primary key,
-	content_num number(4) references content(content_num),
+	comments_num number(4) primary key,
+	contents_num number(4) references content(content_num),
 	users_num number(4) references users(users_num),
-	comment_content varchar2(100),
-	comment_lev number(5),
-	comment_ref number(5),
-	comment_step number(5)
+	comments_content varchar2(100),
+	comments_lev number(5),
+	comments_ref number(5),
+	comments_step number(5)
 )
        CREATE SEQUENCE COMMENT_SEQ;
 
@@ -80,10 +80,4 @@ CREATE TABLE ANSWER
 	USERS_CAFE_NUM NUMBER(4) REFERENCES USERS_CAFE(USERS_CAFE_NUM),
 	ANSWER_CONTENTS VARCHAR2(50),
 	CONSTRAINT PK_CAFEREG_NUM PRIMARY KEY(CAFEREG_NUM, USERS_CAFE_NUM)
-<<<<<<< HEAD
 );
-
-¤±¤¤¤·¤©
-=======
-);
->>>>>>> refs/remotes/heedo/Dev_Heedo
