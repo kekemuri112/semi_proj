@@ -30,7 +30,7 @@
 		<h1>대가리3</h1>
 		<div id="header3-1">
 			<input type="button" value="로그인">
-			<a href="${cp}/register/login.jsp"><input type="button" value="회원가입"></a>
+			<a href="${cp}/register/register.jsp"><input type="button" value="회원가입"></a>
 			<input type="button" value="ID/PW찾기">
 		</div>
 	</div>
