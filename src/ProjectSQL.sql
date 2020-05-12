@@ -5,7 +5,7 @@ CREATE TABLE USERS
 	users_pwd varchar2(30),
 	users_name varchar2(12),
 	users_email varchar2(40) unique,
-	users_birth date,
+	users_birth varchar2(6),
 	users_phone varchar2(22)
 );
 CREATE SEQUENCE USERS_SEQ;
@@ -14,6 +14,7 @@ CREATE TABLE CAFE
 (
 	cafe_num number(4) primary key,
 	cafe_name varchar2(30) unique,
+	cafe_desc varchar2(30),
 	cafe_intent varchar2(50),
 	cafe_admin varchar2(20),
 	cafe_approved varchar2(10),
@@ -38,7 +39,8 @@ CREATE TABLE notice
 	notice_name varchar2(30),
 	notice_lev number(10),
 	notice_ref number(5),
-	notice_step number(5)
+	notice_step number(5),
+	notice_grade number(10)
 );
 CREATE SEQUENCE BOARD_LIST_SEQ;
 
@@ -51,7 +53,7 @@ CREATE TABLE CONTENTS
 	contents_post varchar2(1024),
 	contents_regdate date,
 	contents_modifydate date
-)
+);
 CREATE SEQUENCE CONTENT_SEQ;
 
 CREATE TABLE COMMENTS
@@ -63,7 +65,7 @@ CREATE TABLE COMMENTS
 	comments_lev number(5),
 	comments_ref number(5),
 	comments_step number(5)
-)
+);
        CREATE SEQUENCE COMMENT_SEQ;
 
 CREATE TABLE CAFEREG
