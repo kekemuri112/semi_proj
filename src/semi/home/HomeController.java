@@ -13,7 +13,7 @@ public class HomeController extends HttpServlet{
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String cp=req.getContextPath();
-		req.setAttribute("cp", cp);
-		req.getRequestDispatcher("/home/main.html").forward(req, resp);
+		req.getServletContext().setAttribute("cp", cp);
+		req.getRequestDispatcher("/home/main.jsp").forward(req, resp);
 	}
 }
