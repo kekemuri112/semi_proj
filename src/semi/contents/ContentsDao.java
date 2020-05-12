@@ -104,7 +104,7 @@ public class ContentsDao {
 				String users_id=getUsers_id(users_num);
 				Date contents_regDate=rs.getDate("contents_regdate");
 				Date contents_modifyDate=rs.getDate("contents_modifydate");
-				Contents_ListVo vo=new Contents_ListVo(contents_num,title,users_id,contents_regDate,contents_modifyDate);
+				Contents_ListVo vo=new Contents_ListVo(contents_num,title,users_id,contents_regDate,contents_modifyDate,users_num);
 				list.add(vo);
 			}
 			return list;
@@ -168,13 +168,14 @@ public class ContentsDao {
 			pstmt.setInt(1, contents_num);
 			rs=pstmt.executeQuery();
 			Contents_detailVo vo=null;
-			if(rs.next()) {
+			if(rs.next()) { 
 				String contents_title=rs.getString("contents_title");
-				String users_id=getUsers_id(rs.getInt("users_num"));
+				int users_num=rs.getInt("users_num");
+				String users_id=getUsers_id(users_num);
 				String post=rs.getString("contents_post");
 				Date contents_regDate=rs.getDate("contents_regdate");
 				Date contents_modifyDate=rs.getDate("contents_modifyDate");
-				vo=new Contents_detailVo(contents_title, users_id, post, contents_regDate, contents_modifyDate,contents_num);
+				vo=new Contents_detailVo(contents_title, users_id, post, contents_regDate, contents_modifyDate,contents_num,users_num);
 
 			}
 			return vo;
@@ -184,6 +185,30 @@ public class ContentsDao {
 		}finally {
 			try {
 				if(rs!=null)rs.close();
+				if(pstmt!=null)pstmt.close();
+				if(con!=null)con.close();
+			}catch(SQLException se) {
+				se.printStackTrace();
+			}
+		}
+	}
+	public int insert(ContentsVo vo) { //게시글작성 메소드
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		try {
+			con=ConnectionPool.getCon();
+			String sql="insert into contents values(content_seq.nextval,?,?,?,?,sysdate,sysdate)";
+			pstmt=con.prepareStatement(sql);
+			pstmt.setInt(1, vo.getNotice_num());
+			pstmt.setInt(2, vo.getUsers_num());
+			pstmt.setString(3,vo.getContents_title());
+			pstmt.setString(4,vo.getContents_post());
+			return pstmt.executeUpdate();
+		}catch(SQLException se) {
+			se.printStackTrace();
+			return -1;
+		}finally {
+			try {
 				if(pstmt!=null)pstmt.close();
 				if(con!=null)con.close();
 			}catch(SQLException se) {

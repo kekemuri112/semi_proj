@@ -9,12 +9,13 @@ public class Contents_detailVo {
 	private Date contents_regDate;
 	private Date contents_modifyDate;
 	private int contents_num;
+	private int users_num;
 	
 	public Contents_detailVo() {}
 	
 
 	public Contents_detailVo(String contents_title, String users_id, String post, Date contents_regDate,
-			Date contents_modifyDate,int contents_num) {
+			Date contents_modifyDate,int contents_num,int users_num) {
 		super();
 		this.contents_title = contents_title;
 		this.users_id = users_id;
@@ -22,8 +23,19 @@ public class Contents_detailVo {
 		this.contents_regDate = contents_regDate;
 		this.contents_modifyDate = contents_modifyDate;
 		this.contents_num=contents_num;
+		this.users_num=users_num;
 	}
 	
+
+	public int getUsers_num() {
+		return users_num;
+	}
+
+
+	public void setUsers_num(int users_num) {
+		this.users_num = users_num;
+	}
+
 
 	public String getContents_title() {
 		return contents_title;

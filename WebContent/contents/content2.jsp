@@ -1,17 +1,22 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>/contents/content.jsp</title>
+</head>
+<body>
 <h1> 전체글보기 </h1>
 <table border="1">
 	<tr>
-		<th>게시글번호</th><th>제목</th><th>작성자</th><th>작성일</th>
+		<th>게시글번호</th><th>제목</th><th>작성일</th>
 	</tr>
 	<c:forEach var="vo" items="${list }">
 	<tr>
 		<td>${vo.contents_num}</td>
-		<td><a href="${cp }/semi/detail.do?contents_num=${vo.contents_num}">${vo.contents_title }</a></td>
-		<td>${vo.users_id }</td>
-		<td>${vo.contents_modifyDate }</td>
+		<td><a href="${cp }/semi/detail.do?contents_num=${vo.contents_num}">${vo.contents_title }</a></td><td>${vo.contents_modifyDate }</td>
 	</tr>
 	</c:forEach>
 </table>
@@ -49,9 +54,12 @@
 		[다음]
 	</c:otherwise>
 </c:choose>
-<c:if test="${not empty notice_num }">
 <input type="button" onclick="writeForm()" value="글작성">
-</c:if>
+</body>
 <script type="text/javascript">
+	function writeForm(){
+		var xhr=new XMLhttp
+	}
 
 </script>
+</html>

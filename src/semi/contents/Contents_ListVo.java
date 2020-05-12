@@ -6,6 +6,7 @@ public class Contents_ListVo {
 	private int contents_num;
 	private String contents_title;
 	private String users_id;
+	private int users_num;
 	private Date contents_regDate;
 	private Date contents_modifyDate;
 	
@@ -13,13 +14,24 @@ public class Contents_ListVo {
 	
 	
 	public Contents_ListVo(int contents_num, String contents_title, String users_id, Date contents_regDate,
-			Date contents_modifyDate) {
+			Date contents_modifyDate,int users_num) {
 		super();
 		this.contents_num = contents_num;
 		this.contents_title = contents_title;
 		this.users_id = users_id;
 		this.contents_regDate = contents_regDate;
 		this.contents_modifyDate = contents_modifyDate;
+		this.users_num=users_num;
+	}
+
+
+	public int getUsers_num() {
+		return users_num;
+	}
+
+
+	public void setUsers_num(int users_num) {
+		this.users_num = users_num;
 	}
 
 

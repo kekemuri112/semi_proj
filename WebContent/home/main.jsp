@@ -30,7 +30,7 @@
 		<h1>대가리3</h1>
 		<div id="header3-1">
 			<input type="button" value="로그인">
-			<a href="${cp}/register/login.jsp"><input type="button" value="회원가입"></a>
+			<a href="#"><input type="button" value="회원가입"></a>
 			<input type="button" value="ID/PW찾기">
 		</div>
 	</div>
@@ -44,7 +44,7 @@
 		</div>
 	</div>
 	<div id="main">
-		<h1>메인바보1</h1><h1>메인바보2</h1><h1>메인바보3</h1><h1>메인바보4</h1>	
+		<jsp:include page="${file }"/>
 	</div>
 </div>
 </body>

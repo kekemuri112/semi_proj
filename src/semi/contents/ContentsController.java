@@ -43,6 +43,7 @@ public class ContentsController extends HttpServlet {
 		req.setAttribute("startPage", startPage);
 		req.setAttribute("endPage", endPage);
 		req.setAttribute("pageNum",pageNum);
-		req.getRequestDispatcher("/contents/content.jsp").forward(req, resp);
+		req.setAttribute("file","/contents/content.jsp");
+		req.getRequestDispatcher("/home/main.jsp").forward(req, resp);
 	}
 }

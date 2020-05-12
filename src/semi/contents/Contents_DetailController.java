@@ -9,14 +9,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @WebServlet("/semi/detail.do")
-public class DetailController extends HttpServlet{
+public class Contents_DetailController extends HttpServlet{
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		int contents_num=Integer.parseInt(req.getParameter("contents_num"));
 		ContentsDao dao=ContentsDao.getDao();
 		Contents_detailVo vo=dao.detail(contents_num);
 		req.setAttribute("vo", vo);
+		req.setAttribute("file","/contents/detail.jsp");
 		req.setAttribute("cp",req.getContextPath());
-		req.getRequestDispatcher("/contents/detail.jsp").forward(req, resp);
+		req.getRequestDispatcher("/home/main.jsp").forward(req, resp);
 	}
 }
