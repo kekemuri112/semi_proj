@@ -29,13 +29,13 @@ public class ContentsController extends HttpServlet {
 		if(endPage>pageCount){
 			endPage=pageCount;
 		}
-		
 		System.out.println("pageCount:"+pageCount);
 		System.out.println("pageNum : "+pageNum);
 		System.out.println("startPage: "+startPage);
 		System.out.println("endPage: "+endPage);
 		System.out.println("startRow : "+startRow);
 		System.out.println("endRow : "+endRow);
+		System.out.println("=======================\n");
 		req.setAttribute("cp", req.getContextPath());
 		req.setAttribute("cafe_num", cafe_num);
 		req.setAttribute("list", list);
