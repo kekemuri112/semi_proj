@@ -1,8 +1,10 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Main.html</title>
+<title>/home/main.jsp</title>
 <style>
  #wrap{width:1800px;height:980px;background-color: red;margin: auto;}
  #header1{width:25%;height:20%;background-color: blue;margin: auto;float: left;display: inline-block;}
@@ -28,7 +30,7 @@
 		<h1>대가리3</h1>
 		<div id="header3-1">
 			<input type="button" value="로그인">
-			<input type="button" value="회원가입">
+			<a href="${cp}/register/login.jsp"><input type="button" value="회원가입"></a>
 			<input type="button" value="ID/PW찾기">
 		</div>
 	</div>
