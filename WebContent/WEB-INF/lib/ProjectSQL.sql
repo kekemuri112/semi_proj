@@ -51,7 +51,7 @@ CREATE TABLE CONTENTS
 	contents_post varchar2(1024),
 	contents_regdate date,
 	contents_modifydate date
-)
+);
 CREATE SEQUENCE CONTENT_SEQ;
 
 CREATE TABLE COMMENTS
@@ -63,8 +63,8 @@ CREATE TABLE COMMENTS
 	comments_lev number(5),
 	comments_ref number(5),
 	comments_step number(5)
-)
-       CREATE SEQUENCE COMMENT_SEQ;
+);
+CREATE SEQUENCE COMMENT_SEQ;
 
 CREATE TABLE CAFEREG
 (

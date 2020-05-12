@@ -23,6 +23,26 @@ public class ContentsController extends HttpServlet {
 		int endRow=startRow+9;
 		ContentsDao dao=ContentsDao.getDao();
 		ArrayList<Contents_ListVo>list=dao.listAll(cafe_num, startRow, endRow);
+		int pageCount=(int)Math.ceil(dao.getCount(cafe_num)/10.0);
+		int startPage=((pageNum-1)/5)*5+1;
+		int endPage=startPage+4;
+		if(endPage>pageCount){
+			endPage=pageCount;
+		}
 		
+		System.out.println("pageCount:"+pageCount);
+		System.out.println("pageNum : "+pageNum);
+		System.out.println("startPage: "+startPage);
+		System.out.println("endPage: "+endPage);
+		System.out.println("startRow : "+startRow);
+		System.out.println("endRow : "+endRow);
+		req.setAttribute("cp", req.getContextPath());
+		req.setAttribute("cafe_num", cafe_num);
+		req.setAttribute("list", list);
+		req.setAttribute("pageCount", pageCount);
+		req.setAttribute("startPage", startPage);
+		req.setAttribute("endPage", endPage);
+		req.setAttribute("pageNum",pageNum);
+		req.getRequestDispatcher("/contents/content.jsp").forward(req, resp);
 	}
 }

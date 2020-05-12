@@ -7,7 +7,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
 import semi.db.ConnectionPool;
 
 public class ContentsDao {
@@ -74,8 +73,6 @@ public class ContentsDao {
 			}
 		}
 	}
-	
-	
 	public ArrayList<Contents_ListVo> listAll (int cafe_num,int startRow,int endRow){
 		Connection con=null;  //전체리스트뽑기
 		PreparedStatement pstmt=null;
@@ -94,14 +91,14 @@ public class ContentsDao {
 					sql+="notice_num="+num;
 				}
 			}
-			sql+=")aa  order by rnum desc) where rnum>=? and rnum<=? ";
+			sql+=" order by contents_num desc)aa  ) where rnum>=? and rnum<=? ";
 			pstmt=con.prepareStatement(sql);
 			pstmt.setInt(1, startRow);
 			pstmt.setInt(2, endRow);
 			rs=pstmt.executeQuery();
 			ArrayList<Contents_ListVo> list=new ArrayList<Contents_ListVo>();
 			while(rs.next()) {
-				int index=rs.getInt("rnum");
+				int index=rs.getInt("contents_num");
 				String title=rs.getString("contents_title");
 				int users_num=rs.getInt("users_num");
 				String users_id=getUsers_id(users_num);
@@ -122,7 +119,42 @@ public class ContentsDao {
 			}catch(SQLException se) {
 				se.printStackTrace();
 			}
+		}	
+	}
+	public int getCount(int cafe_num) {
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		ArrayList<Integer> list2=getNotice_num(cafe_num);
+		try {
+			con=ConnectionPool.getCon();
+			String sql="select nvl(count(*),0) cnt from contents where ";
+			for(int i=0;i<list2.size();i++) {
+				int num=list2.get(i);
+				if(i!=list2.size()-1) {
+					sql+="notice_num="+num+" or ";
+				}else{
+					sql+="notice_num="+num;
+				}
+			}
+			pstmt=con.prepareStatement(sql);
+			rs=pstmt.executeQuery();
+			if(rs.next()) {
+				int cnt=rs.getInt("cnt");
+				return cnt;
+			}
+			return -1;
+		}catch(SQLException se) {
+			se.printStackTrace();
+			return -1;
+		}finally {
+			try {
+				if(rs!=null)rs.close();
+				if(pstmt!=null)pstmt.close();
+				if(con!=null)con.close();
+			}catch(SQLException se) {
+				se.printStackTrace();
+			}
 		}
-		
 	}
 }
