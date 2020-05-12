@@ -4,7 +4,7 @@ public class CommentsVo {
 	private int comments_num;
 	private int contents_num;
 	private int users_num;
-	private String commnets_content;
+	private String comments_content;
 	private int comments_ref;
 	private int comments_lev;
 	private int comments_step;
@@ -14,7 +14,7 @@ public class CommentsVo {
 		this.comments_num = comments_num;
 		this.contents_num = contents_num;
 		this.users_num = users_num;
-		this.commnets_content = commnets_content;
+		this.comments_content = commnets_content;
 		this.comments_ref = comments_ref;
 		this.comments_lev = comments_lev;
 		this.comments_step = comments_step;
@@ -37,11 +37,11 @@ public class CommentsVo {
 	public void setUsers_num(int users_num) {
 		this.users_num = users_num;
 	}
-	public String getCommnets_content() {
-		return commnets_content;
+	public String getComments_content() {
+		return comments_content;
 	}
 	public void setCommnets_content(String commnets_content) {
-		this.commnets_content = commnets_content;
+		this.comments_content = commnets_content;
 	}
 	public int getComments_ref() {
 		return comments_ref;

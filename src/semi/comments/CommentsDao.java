@@ -47,7 +47,9 @@ public class CommentsDao {
 		ResultSet rs=null;
 		try {
 			con=ConnectionPool.getCon();
-			pstmt=con.prepareStatement("select * from comments where contents_num=?");
+			pstmt=con.prepareStatement("select * from comments c inner join users u "
+					+ "on c.users_num=u.users_num; "
+					+ "where contents_num=?");
 			rs=pstmt.executeQuery();
 			ArrayList<CommentsVo> comList=new ArrayList<CommentsVo>();
 			while(rs.next()) {
@@ -102,7 +104,7 @@ public class CommentsDao {
 			pstmt2.setInt(1, comments_listnum);
 			pstmt2.setInt(2, contents_num);
 			pstmt2.setInt(3, vo.getUsers_num());
-			pstmt2.setString(4, vo.getCommnets_content());
+			pstmt2.setString(4, vo.getComments_content());
 			pstmt2.setInt(5, vo.getComments_lev());
 			pstmt2.setInt(6, vo.getComments_ref());
 			pstmt2.setInt(7, vo.getComments_step());
@@ -126,11 +128,10 @@ public class CommentsDao {
 		PreparedStatement pstmt=null;
 		try {
 			con=ConnectionPool.getCon();
-			String sql="insert into comments set comments_content=? where comments_num=?";
+			String sql="update comments set comments_content=? where comments_num=?";
 			pstmt=con.prepareStatement(sql);
 			pstmt.setInt(1, comments_content);
 			pstmt.setInt(2, comments_num);
-			
 			int n=pstmt.executeUpdate();
 			return n;
 		}catch(SQLException se) {
@@ -168,5 +169,34 @@ public class CommentsDao {
 			}
 		}
 		
+	}
+	public UserVo getUserId(int users_num) {
+		String sql="select user_id from users where users_num=?";
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		try {
+			con=ConnectionPool.getCon();
+			pstmt=con.prepareStatement(sql);
+			pstmt.setInt(1, users_num);
+			rs=pstmt.executeQuery();
+			if(rs.next()) {
+				UserVo vo=new UserVo(
+						rs.getInt("users_num"),
+						rs.getString("users_id"));
+				return vo;
+			}
+			return null;
+		}catch(SQLException se) {
+			System.out.println(se.getMessage());
+			return null;
+		}finally {
+			try {
+				if(pstmt!=null) pstmt.close();
+				if(con!=null) con.close();
+			}catch(SQLException s) {
+				s.printStackTrace();
+			}
+		}
 	}
 }
