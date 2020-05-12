@@ -37,9 +37,7 @@
 	
 	<div id="menu">
 		<div id="list">
-		<input type="button" value="카페1" id="cafe">
-		<input type="button" value="카페2" id="cafe">
-		<input type="button" value="카페3" id="cafe">
+			
 		</div>
 		<div id="chat">
 			<h1>채팅방임</h1>
