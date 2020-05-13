@@ -8,7 +8,7 @@
 </head>
 <body>
 	<div>
-		<form method="post" action="$/cafe/cafeinsert.do">
+		<form method="post" action="$/cafe/cafeinsert.do" enctype="multipart/form-data">
 			카페이름<br>
 			<input type="text" name="name"><br>
 			카페소개글<br>

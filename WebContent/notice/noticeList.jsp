@@ -13,7 +13,8 @@
 		<c:forEach var="vo" items="${noticelist }">
 			<c:choose>
 				<c:when test="${vo.notice_lev==0 }">
-					<a href="">${vo.notice_name }</a><br>
+					<a href="">${vo.notice_name }</a><a href="noticeList.do?notice_ref=${vo.notice_num }">[+]</a><br>
+	
 				</c:when>
 				<c:otherwise>
 					<c:forEach var="i" begin="1" end="${vo.notice_lev }">
@@ -25,7 +26,7 @@
 		
 			
 		</c:forEach>
-		<br> <a style="font-size: 200px" href="">+</a>
+		
 	</div>
 </body>
 </html>

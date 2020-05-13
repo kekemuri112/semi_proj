@@ -30,7 +30,6 @@ public class CafeDao {
 				System.out.println("rs.next()발동중..");
 				list.add(rs.getString("cafe_name"));
 			}
-			System.out.println("리턴주기전이다.");
 			return list;
 		}catch(SQLException se) {
 			se.printStackTrace();

@@ -10,17 +10,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.json.JSONObject;
+//
 @WebServlet("/notice/noticeinsert.do")
 public class NoticeInsertController extends HttpServlet{
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		req.setCharacterEncoding("utf-8");
+		int cafe_num=Integer.parseInt(req.getParameter("cafe_num"));
 		String notice_name=req.getParameter("notice_name");
-		String notice_lev=req.getParameter("notice_lev");
-		String notice_ref=req.getParameter("notice_ref");
-		String notice_step=req.getParameter("notice_step");
-		String notice_grade=req.getParameter("notice_grade");
-		NoticeVo vo=new NoticeVo(0,0,notice_name,notice_lev,notice_ref,notice_step,notice_grade);
+		int notice_lev=Integer.parseInt(req.getParameter("notice_lev"));
+		int notice_ref=Integer.parseInt(req.getParameter("notice_ref"));
+		int notice_step=Integer.parseInt(req.getParameter("notice_step"));
+		int notice_grade=Integer.parseInt(req.getParameter("notice_grade"));
+		NoticeVo vo=new NoticeVo(0,cafe_num,notice_name,notice_lev,notice_ref,notice_step,notice_grade);
 		NoticeDao dao=NoticeDao.getInstance();
 		int n=dao.insert(vo);
 		JSONObject json=new JSONObject();

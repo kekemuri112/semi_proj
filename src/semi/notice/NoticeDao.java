@@ -149,4 +149,42 @@ public class NoticeDao {
 		}
 	}
 	
+	//PK값 하나 받아서 모든값을 가져오는 메소드 (rs 를 사용)
+	public NoticeVo getVo(int notice_num) {
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		try {
+			con=ConnectionPool.getCon();
+			String sql="select * from notice where notice_num=?";
+			pstmt=con.prepareStatement(sql);
+			pstmt.setInt(1, notice_num);
+			rs=pstmt.executeQuery();
+			NoticeVo vo=null;
+			if(rs.next()) {
+				vo=new NoticeVo(
+						notice_num,
+						rs.getInt("cafe_num"),
+						rs.getString("notice_name"),
+						rs.getInt("notice_lev"),
+						rs.getInt("notice_ref"),
+						rs.getInt("notice_step"),
+						rs.getInt("notice_grade")
+					);
+			}
+			return vo;
+		}catch (SQLException se) {
+			se.printStackTrace();
+			return null;
+		}finally {
+			try {
+				if(rs!=null)rs.close();
+				if(pstmt!=null)pstmt.close();
+				if(con!=null)con.close();
+			}catch (SQLException s) {
+				s.printStackTrace();
+			}
+		}
+	}
+	
 }
