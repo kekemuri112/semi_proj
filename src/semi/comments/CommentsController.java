@@ -18,25 +18,27 @@ import semi.contents.Contents_detailVo;
 public class CommentsController extends HttpServlet{
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
 		int contents_num=Integer.parseInt(req.getParameter("contents_num"));
 		int users_num=Integer.parseInt(req.getParameter("users_num"));
-		/*
-		req.setAttribute("vo", vo);
-		req.setAttribute("list", comList);
-		req.getRequestDispatcher("/comments/comments.jsp").forward(req, resp);*/
 		int pageNum=1;
-	
-		int startRow=(pageNum-1)*5+1;
-		int endRow=startRow+4;
 		String spageNum=req.getParameter("pageNum");
 		if(spageNum!=null) {
 			pageNum=Integer.parseInt(spageNum);
 		}
-		System.out.println("comments pageNum : "+pageNum);
+		int startRow=(pageNum-1)*5+1;
+		int endRow=startRow+4;
 		CommentsDao dao=CommentsDao.getInstance();
+		int pageCount=(int)Math.ceil((dao.getCount(contents_num)/5.0));
+		int startPage=((pageNum-1)/5)*5+1;
+		int endPage=startPage+4;
+		if(endPage>pageCount) {
+			endPage=pageCount;
+		}
+		System.out.println("comments pageNum : "+pageNum);
+		System.out.println("comments startPage:"+startPage);
 		UserVo vos=dao.getUserId(users_num);
 		System.out.println("comments users_num : "+users_num);
+		System.out.println("comments pageCount: "+pageCount);
 		ArrayList<CommentsVo> comList=dao.comList(contents_num,startRow,endRow);
 		JSONArray jarr=new JSONArray();
 		for(CommentsVo vo1:comList) {
@@ -52,6 +54,12 @@ public class CommentsController extends HttpServlet{
 			json.put("comments_step", vo1.getComments_step());
 			jarr.put(json);
 		}
+		JSONObject json=new JSONObject();
+		json.put("startPage", startPage);
+		json.put("endPage", endPage);
+		json.put("pageNum",pageNum );
+		json.put("pageCount", pageCount);
+		jarr.put(json);
 		resp.setContentType("text/plain;charset=utf-8");
 		PrintWriter pw=resp.getWriter();
 		pw.print(jarr);

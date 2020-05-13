@@ -39,7 +39,6 @@ public class Contents_insertController extends HttpServlet{
 		System.out.println("insert 실행결과 : "+n);
 		if(n>0) {
 			System.out.println("실행성공!!");
-
 		}else {
 			System.out.println("실행실패!!");
 		}

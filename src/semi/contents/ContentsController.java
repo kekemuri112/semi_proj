@@ -26,7 +26,6 @@ public class ContentsController extends HttpServlet {
 		if(snotice_num!=null) {
 			notice_num=Integer.parseInt(snotice_num);
 		}
-		
 		int pageNum=1;
 		if(spageNum!=null) {
 			pageNum=Integer.parseInt(spageNum);

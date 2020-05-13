@@ -7,57 +7,50 @@
 %>
 <div id="commList">
 </div>
+<div id="page">
+</div>
 	<div>
 		<textarea rows="3" cols="30" id="comments"></textarea><br>
 		<input type="button" value="등록하기" onclick="comments_write()">
 	</div>
-<div><!-- 페이징 처리
-	<c:if test="${startPageNum>5 }">
-		<a href="${cp }/semi/comments.do?pageNum=${startPageNum-1}">◀</a>
-	</c:if>
-	<c:forEach var="i" begin="${startPageNum }" end="${endPageNum }">
-		<c:choose>
-			<c:when test="${i==pageNum }">
-				<a href="${cp }/semi/comments.do?pageNum=${i}">
-				<span style='color:blue'>[${i}]</span></a>
-			</c:when>
-			<c:otherwise>
-				<a href="${cp }/semi/comments.do?pageNum=${i}">
-				<span style='color:gray'>[${i}]</span></a>
-			</c:otherwise>
-		</c:choose>
-	</c:forEach>
-	<c:if test="${pageCount>endPageNum }">
-		<a href="${cp }/semi/comments.do?pageNum=${endPageNum+1}">▶</a>	
-	</c:if> -->
-</div>
+
 <script type="text/javascript">
-	window.onload=getList;
-	function getList(){
+	window.onload=function(){
+		getList();
+		page();
+	}
+
+	function getList(pageNum){ //리스트출력
 		console.log("list 함수 실행!!");
+		console.log("pageNum : "+pageNum)
 		var xhr=new XMLHttpRequest();
 		xhr.onreadystatechange=function(){
 			if(xhr.readyState==4 && xhr.status==200){
+				deleteDiv();
 				var data=xhr.responseText;
 				var json=JSON.parse(data);
 				var commList=document.getElementById("commList");
-				for(var i=0;i<json.length;i++){
+				for(var i=0;i<json.length-1;i++){
 					var users_id=json[i].users_id;
 					var comments_content=json[i].comments_content;
 					var comments_num=json[i].comments_num;
 					var div=document.createElement("div");
-					div.innerHTML="<strong>작성자 : </strong>"+users_id+"<br>"
-						         +"내용 : "+comments_content+"<br>"
-						        +"<input type='button' value='수정하기' ><input type='button' value='삭제하기'>";
+					div.innerHTML="<strong>"+users_id +" : "+comments_content+"</strong>"
+						        +"<input type='button' value='수정' ><input type='button' value='삭제'>";
 					div.className="comments"
 					commList.appendChild(div);
 				}
 			}
 		}
-		xhr.open('get', '${cp}/comments/comments.do?contents_num=<%=contents_num%>&users_num=<%=users_num%>', true);
+		var pageNum1=1;
+		if(pageNum!=null){
+			pageNum1=pageNum;
+		}
+		console.log("pageNum1 :"+pageNum1);
+		xhr.open('get', '${cp}/comments/comments.do?contents_num=<%=contents_num%>&users_num=<%=users_num%>&pageNum='+pageNum1, true);
 		xhr.send();
 	}
-	function comments_write(){
+	function comments_write(){ //댓글쓰기
 		var textarea_comments_content=document.getElementById("comments")
 		var comments_content=textarea_comments_content.value;
 		var xhr=new XMLHttpRequest();
@@ -67,5 +60,45 @@
 		xhr.open();
 		xhr.send();
 	}
-	
+	function page(){ //페이지처리
+		console.log("page함수 호출!!!");
+		var xhr=new XMLHttpRequest();
+		xhr.onreadystatechange=function(){
+			if(xhr.status==200&&xhr.readyState==4){
+				var data=xhr.responseText;
+				var json=JSON.parse(data);
+				var i=json.length-1;
+				var startPage=json[i].startPage;
+				var endPage=json[i].endPage;
+				var pageCount=json[i].pageCount;
+				var pageNum=json[i].pageNum;
+				console.log(startPage);
+				var div=document.getElementById("page");
+				if(startPage>5){
+					div.innerHTML+=
+						"<a href='javascript:getList("+(startPage-1)+")'>[이전]</a>";
+				}
+				for(var j=1;j<=endPage;j++){
+					console.log("j:"+j);
+					div.innerHTML+=
+						<%--"<a href='${cp}/comments/comments.do?contents_num=<%=contents_num%>&users_num=<%=users_num%>&pageNum='"+j+">["+j+"]</a>"--%>
+						"<a href='javascript:getList("+j+")'>["+j+"]</a>"
+				}
+				if(pageCount>endPage){
+					div.innerHTML+=
+						"<a href='javascript:getList("+(endPage+1)+")'>[다음]</a>";
+				}
+			}
+		}
+		xhr.open('get','${cp}/comments/comments.do?contents_num=<%=contents_num%>&users_num=<%=users_num%>',true);
+		xhr.send();
+	}
+	function deleteDiv(){
+		var commList=document.getElementById("commList");
+		var chiled=commList.childNodes;
+		for(var i=chiled.length-1;i>=0;i--){
+			var comments=chiled.item(i);
+			commList.removeChild(comments);
+		}
+	}
 </script>

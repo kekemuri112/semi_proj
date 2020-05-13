@@ -14,30 +14,30 @@ public class CommentsDao {
 	public static CommentsDao getInstance() {
 		return instance;
 	}
-	public int getCommentsMaxNum() {
+	public int getCount(int contents_num) { // 해당게시글의 댓글 전체행
 		Connection con=null;
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
 		try {
 			con=ConnectionPool.getCon();
-			String sql="select NVL(max(comments_num),0) comments_maxnum from comments";
+			String sql="select NVL(count(*),0) cnt from comments where contents_num=?";
 			pstmt=con.prepareStatement(sql);
+			pstmt.setInt(1, contents_num);
 			rs=pstmt.executeQuery();
 			if(rs.next()) {
-				return rs.getInt("comments_maxnum");
-			}else {
-				return -1;
+				return rs.getInt("cnt");
 			}
+			return -1;
 		}catch(SQLException se) {
-			System.out.println(se.getMessage());
+			se.printStackTrace();
 			return -1;
 		}finally {
 			try {
-				if(rs!=null) rs.close();
-				if(pstmt!=null) pstmt.close();
-				if(con!=null) con.close();
-			}catch(SQLException s) {
-				s.printStackTrace();
+				if(rs!=null)rs.close();
+				if(pstmt!=null)pstmt.close();
+				if(con!=null)con.close();
+			}catch(SQLException se) {
+				se.printStackTrace();
 			}
 		}
 	}
@@ -83,13 +83,13 @@ public class CommentsDao {
 			}
 		}
 	}
-	public int insertCom(CommentsVo vo) {
+	/*public int insertCom(CommentsVo vo) {
 		Connection con=null;
 		PreparedStatement pstmt1=null;
 		PreparedStatement pstmt2=null;
 		try {
 			con=ConnectionPool.getCon();
-			int comments_listnum=getCommentsMaxNum()+1; //등록하는 댓글 번호
+			//int comments_listnum=getCommentsMaxNum()+1; //등록하는 댓글 번호
 			int contents_num=vo.getContents_num();
 			int comments_ref=vo.getComments_ref();
 			int comments_lev=vo.getComments_lev();
@@ -128,7 +128,7 @@ public class CommentsDao {
 				s.printStackTrace();
 			}
 		}
-	}
+	}*/
 	public int modifyCom(String comments_content, int comments_num) {
 		Connection con=null;
 		PreparedStatement pstmt=null;
