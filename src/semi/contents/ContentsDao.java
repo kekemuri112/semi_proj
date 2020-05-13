@@ -73,24 +73,28 @@ public class ContentsDao {
 			}
 		}
 	}
-	public ArrayList<Contents_ListVo> listAll (int cafe_num,int startRow,int endRow){
+	public ArrayList<Contents_ListVo> listAll (int cafe_num,int startRow,int endRow,int notice_num){
 		Connection con=null;  //전체리스트뽑기
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
-		ArrayList<Integer> list2=getNotice_num(cafe_num);
 		try {
 			con=ConnectionPool.getCon();
 			
-			String sql="select* from (select "+
+			String sql="select * from (select "+
 			"aa.*, rownum rnum from (select * from contents where ";
-			for(int i=0;i<list2.size();i++) {
-				int num=list2.get(i);
-				if(i!=list2.size()-1) {
-					sql+="notice_num="+num+" or ";
-				}else{
-					sql+="notice_num="+num;
+			if(notice_num==0) { 
+				ArrayList<Integer> list2=getNotice_num(cafe_num);
+				for(int i=0;i<list2.size();i++) {		
+					int num=list2.get(i);
+					if(i!=list2.size()-1) {
+						sql+="notice_num="+num+" or ";
+					}else{
+						sql+="notice_num="+num;
+					}
 				}
-			}
+			}else {
+				sql+="notice_num="+notice_num;
+			}	
 			sql+=" order by contents_num desc)aa  ) where rnum>=? and rnum<=? ";
 			pstmt=con.prepareStatement(sql);
 			pstmt.setInt(1, startRow);
@@ -121,20 +125,25 @@ public class ContentsDao {
 			}
 		}	
 	}
-	public int getCount(int cafe_num) { //해당카페의 게시글 전체 행갯수 구함
+	public int getCount(int cafe_num,int notice_num) { //해당카페의 게시글 전체 행갯수 구함
 		Connection con=null;
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
-		ArrayList<Integer> list2=getNotice_num(cafe_num);
+		
 		try {
 			con=ConnectionPool.getCon();
 			String sql="select nvl(count(*),0) cnt from contents where ";
-			for(int i=0;i<list2.size();i++) {
-				int num=list2.get(i);
-				if(i!=list2.size()-1) {
-					sql+="notice_num="+num+" or ";
-				}else{
-					sql+="notice_num="+num;
+			if(notice_num>0) {
+				sql+="notice_num="+notice_num;
+			}else{
+				ArrayList<Integer> list2=getNotice_num(cafe_num);
+				for(int i=0;i<list2.size();i++) {
+					int num=list2.get(i);
+					if(i!=list2.size()-1) {
+						sql+="notice_num="+num+" or ";
+					}else{
+						sql+="notice_num="+num;
+					}
 				}
 			}
 			pstmt=con.prepareStatement(sql);
@@ -176,7 +185,6 @@ public class ContentsDao {
 				Date contents_regDate=rs.getDate("contents_regdate");
 				Date contents_modifyDate=rs.getDate("contents_modifyDate");
 				vo=new Contents_detailVo(contents_title, users_id, post, contents_regDate, contents_modifyDate,contents_num,users_num);
-
 			}
 			return vo;
 		}catch(SQLException se) {
@@ -203,6 +211,56 @@ public class ContentsDao {
 			pstmt.setInt(2, vo.getUsers_num());
 			pstmt.setString(3,vo.getContents_title());
 			pstmt.setString(4,vo.getContents_post());
+			return pstmt.executeUpdate();
+		}catch(SQLException se) {
+			se.printStackTrace();
+			return -1;
+		}finally {
+			try {
+				if(pstmt!=null)pstmt.close();
+				if(con!=null)con.close();
+			}catch(SQLException se) {
+				se.printStackTrace();
+			}
+		}
+	}
+	public int getCafe_Num(int notice_num) { // 게시판 번호받아서 어느카페에 속하는지 카페번호 구하기.
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		try {
+			con=ConnectionPool.getCon();
+			String sql="select cafe_num from notice where notice_num=?";
+			pstmt=con.prepareStatement(sql);
+			pstmt.setInt(1, notice_num);
+			rs=pstmt.executeQuery();
+			if(rs.next()) {
+				return rs.getInt("cafe_num");
+			}
+			return -1;
+		}catch(SQLException se) {
+			se.printStackTrace();
+			return -1;
+		}finally {
+			try {
+				if(rs!=null)rs.close();
+				if(pstmt!=null)pstmt.close();
+				if(con!=null)con.close();
+			}catch(SQLException se) {
+				se.printStackTrace();
+			}
+		}
+	}
+	public int update(String contents_title,String contents_post,int contents_num) {
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		try {
+			con=ConnectionPool.getCon();
+			String sql="update contents set contents_title=?, contents_post=?,contents_modifydate=sysdate where contents_num=?";
+			pstmt=con.prepareStatement(sql);
+			pstmt.setString(1, contents_title);
+			pstmt.setString(2, contents_post);
+			pstmt.setInt(3, contents_num);
 			return pstmt.executeUpdate();
 		}catch(SQLException se) {
 			se.printStackTrace();

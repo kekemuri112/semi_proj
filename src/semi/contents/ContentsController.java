@@ -15,6 +15,12 @@ public class ContentsController extends HttpServlet {
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		int cafe_num=Integer.parseInt(req.getParameter("cafe_num"));
 		String spageNum=req.getParameter("pageNum");
+		String snotice_num=req.getParameter("notice_num");
+		int notice_num=0;
+		if(snotice_num!=null) {
+			notice_num=Integer.parseInt(snotice_num);
+		}
+		
 		int pageNum=1;
 		if(spageNum!=null) {
 			pageNum=Integer.parseInt(spageNum);
@@ -22,20 +28,23 @@ public class ContentsController extends HttpServlet {
 		int startRow=(pageNum-1)*10+1;
 		int endRow=startRow+9;
 		ContentsDao dao=ContentsDao.getDao();
-		ArrayList<Contents_ListVo>list=dao.listAll(cafe_num, startRow, endRow);
-		int pageCount=(int)Math.ceil(dao.getCount(cafe_num)/10.0);
+		ArrayList<Contents_ListVo>list=dao.listAll(cafe_num, startRow, endRow,notice_num);
+		int pageCount=(int)Math.ceil(dao.getCount(cafe_num,notice_num)/10.0);
 		int startPage=((pageNum-1)/5)*5+1;
 		int endPage=startPage+4;
 		if(endPage>pageCount){
 			endPage=pageCount;
 		}
 		System.out.println("pageCount:"+pageCount);
+		System.out.println("notice_num:"+notice_num);
 		System.out.println("pageNum : "+pageNum);
 		System.out.println("startPage: "+startPage);
 		System.out.println("endPage: "+endPage);
 		System.out.println("startRow : "+startRow);
 		System.out.println("endRow : "+endRow);
 		System.out.println("=======================\n");
+		req.getSession().setAttribute("users_num", "2");
+		req.setAttribute("notice_num", notice_num);
 		req.setAttribute("cp", req.getContextPath());
 		req.setAttribute("cafe_num", cafe_num);
 		req.setAttribute("list", list);

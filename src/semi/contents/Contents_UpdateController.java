@@ -7,21 +7,23 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-@WebServlet("/semi/detail.do")
-public class Contents_DetailController extends HttpServlet{
+@WebServlet("/contents/update.do")
+public class Contents_UpdateController extends HttpServlet{
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		String contents_title=req.getParameter("contents_title");
+		String contents_post=req.getParameter("contents_post");
 		String scontents_num=req.getParameter("contents_num");
-		if(scontents_num==null) {
-			scontents_num=(String)req.getAttribute("contents_num");
-		}
 		int contents_num=Integer.parseInt(scontents_num);
 		ContentsDao dao=ContentsDao.getDao();
-		Contents_detailVo vo=dao.detail(contents_num);
-		req.setAttribute("vo", vo);
-		req.setAttribute("file","/contents/detail.jsp");
-		req.setAttribute("cp",req.getContextPath());
-		req.getRequestDispatcher("/home/main.jsp").forward(req, resp);
+		int n=dao.update(contents_title,contents_post,contents_num);
+		if(n>0) {
+			req.setAttribute("contents_num",contents_num );
+			req.getRequestDispatcher("/semi/detail.do").forward(req, resp);
+		}else {
+			req.setAttribute("msg", "수정실패!!!");
+		}
+		
 	}
+	
 }
