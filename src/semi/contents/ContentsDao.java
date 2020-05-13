@@ -274,4 +274,25 @@ public class ContentsDao {
 			}
 		}
 	}
+	public int updatePoint(int users_num) {
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		try {
+			con=ConnectionPool.getCon();
+			String sql="update user_cafe set users_cafe_point=users_cafe_point+100 where users_num=?";
+			pstmt=con.prepareStatement(sql);
+			pstmt.setInt(1, users_num);
+			return pstmt.executeUpdate();
+		}catch(SQLException se) {
+			se.printStackTrace();
+			return -1;
+		}finally {
+			try {
+				if(pstmt!=null)pstmt.close();
+				if(con!=null)con.close();
+			}catch(SQLException se) {
+				se.printStackTrace();
+			}
+		}
+	}
 }

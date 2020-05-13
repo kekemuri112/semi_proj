@@ -37,7 +37,7 @@
 	
 	<div id="menu">
 		<div id="list">
-			
+			<jsp:include page="${mlist }"></jsp:include>
 		</div>
 		<div id="chat">
 			<h1>채팅방임</h1>

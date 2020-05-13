@@ -16,9 +16,17 @@ public class HomeController extends HttpServlet{
 		req.getServletContext().setAttribute("cp", cp);
 		String file=req.getParameter("file");
 		if(file==null) {
-			file=(String)req.getAttribute("file");
+			file="";
+			//file=(String)req.getAttribute("file");
 		}
+		String mlist=req.getParameter("mlist");
+		if(mlist==null) {
+			mlist="/cafe/cafelist.do";
+			//mlist=(String)req.getAttribute("mlist");
+		}
+		
 		req.setAttribute("file", file);
+		req.setAttribute("mlist", mlist);
 		req.getRequestDispatcher("/home/main.jsp").forward(req, resp);
 	
 	}

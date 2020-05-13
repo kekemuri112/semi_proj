@@ -50,12 +50,5 @@
 	</c:otherwise>
 </c:choose>
 <c:if test="${notice_num>0 }">
-<form action="${ cp}/contents/insert.do" method="get">
-<input type="hidden" value="${notice_num }" name="notice_num">
-<input type="hidden" value="${cafe_num }" name="cafe_num">
-<input type="submit" value="글작성"></a>
-</form>
+<a href="${cp }/contents/insert.do?cafe_num=${cafe_num}&notice_num=${notice_num}"><input type="button" value="글작성" ></a>
 </c:if>
-<script type="text/javascript">
-	
-</script>

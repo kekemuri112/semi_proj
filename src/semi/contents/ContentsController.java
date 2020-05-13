@@ -13,7 +13,13 @@ import javax.servlet.http.HttpServletResponse;
 public class ContentsController extends HttpServlet {
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		int cafe_num=Integer.parseInt(req.getParameter("cafe_num"));
+		String scafe_num=req.getParameter("cafe_num");
+		int cafe_num=0;
+		if(scafe_num!=null) {
+			cafe_num=Integer.parseInt(scafe_num);
+		}else {
+			cafe_num=(int)req.getAttribute("cafe_num");
+		}
 		String spageNum=req.getParameter("pageNum");
 		String snotice_num=req.getParameter("notice_num");
 		int notice_num=0;
@@ -43,9 +49,9 @@ public class ContentsController extends HttpServlet {
 		System.out.println("startRow : "+startRow);
 		System.out.println("endRow : "+endRow);
 		System.out.println("=======================\n");
-		req.getSession().setAttribute("users_num", "2");
+		req.getSession().setAttribute("users_num", 2);
 		req.setAttribute("notice_num", notice_num);
-		req.setAttribute("cp", req.getContextPath());
+		req.getServletContext().setAttribute("cp", req.getContextPath());
 		req.setAttribute("cafe_num", cafe_num);
 		req.setAttribute("list", list);
 		req.setAttribute("pageCount", pageCount);
