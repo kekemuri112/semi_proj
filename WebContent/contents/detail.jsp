@@ -3,6 +3,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <style>
 h2{display:inline-block;}
+.comments{border:2px solid black ;width:450px;}
 </style>
 <h1>상세글보기</h1>
 <h2>${vo.contents_title }</h2>&nbsp; &nbsp; <span>${vo.users_id }</span>&nbsp; &nbsp;
@@ -20,4 +21,8 @@ ${vo.post }
 	</form>
 	<input type="button" value="삭제하기" onclick="">
 </c:if>
-<a href="#"><input type="button" value="뒤로가기"></a>
+<a href="#"><input type="button" value="뒤로가기"></a><br>
+
+<div>
+	<jsp:include page="../comments/comments.jsp?contents_num=${vo.contents_num }&users_num=${vo.users_num }"/>
+</div>

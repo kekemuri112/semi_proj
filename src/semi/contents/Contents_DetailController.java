@@ -21,7 +21,6 @@ public class Contents_DetailController extends HttpServlet{
 		Contents_detailVo vo=dao.detail(contents_num);
 		req.setAttribute("vo", vo);
 		req.setAttribute("file","/contents/detail.jsp");
-		req.setAttribute("cp",req.getContextPath());
 		req.getRequestDispatcher("/home/main.jsp").forward(req, resp);
 	}
 }
