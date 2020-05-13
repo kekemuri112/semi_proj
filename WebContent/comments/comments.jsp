@@ -9,9 +9,11 @@
 <script type="text/javascript">
 	var xhrList=null;
 	function getList(){
+		var contents_num=document.getElementById("contents_num").value;
+		var comments_content=document.getElementById("comments_content").value;
 		xhrList=new XMLHttpRequest();
 		xhrList.onreadystatechange=listOk;
-		xhrList.open('get', 'comments.do?${vo.contents_num}', true);
+		xhrList.open('get', 'semi/comments.do?contents_num=${vo.contents_num}', true);
 		xhrList.send();
 	}
 	function listOk(){
@@ -34,8 +36,8 @@
 	var xhr=null;
 	function insertComm(){
 		xhr=new XMLHttpRequest();
-		var user_id=request.getParameter("user_id");
-		var comments_content=documnet.getElementById("comments_content");
+		var user_id=request.getParameter("user_id").value;
+		var comments_content=documnet.getElementById("comments_content").value;
 		xhr.onreadystatechange=insertOk;
 		xhr.open('get', 'comments/insert.do?user_id='+user_id+'&comments_content='+comments_content+'&contents_num=${vo.contents_num}',true);
 	}
@@ -79,6 +81,7 @@
 	}
 	var modifyComments=null;
 	function modifyCom(comments_num){
+		var comments_content=document.getElementById("comments_content").value;
 		modifyComments=new XMLHttpRequest();
 		modifyComments.onreadystatechange=modifyOk;
 		modifyComments.open('get','/comments/modify.do?',true)
@@ -100,11 +103,12 @@
 </head>
 <body>
 <div>
-	<div id="commentsList"></div>
+	<div id="getList()">
+</div>
 	<div>
-		${vo.user_id } &nsb; : 
+		${vo.user_id } : 
 		<textarea rows="3" cols="30" id="comments"></textarea><br>
-		<input type="button" value="등록하기" onclick="insertComments()">
+		<input type="button" value="등록하기" onclick="insertComm()">
 	</div>
 </div>
 <div><!-- 페이징 처리 -->
@@ -124,7 +128,7 @@
 		</c:choose>
 	</c:forEach>
 	<c:if test="${pageCount>endPageNum }">
-		<a href="${cp }/semi/comments.do?pageNum=${endPageNum+1">▶</a>	
+		<a href="${cp }/semi/comments.do?pageNum=${endPageNum+1}">▶</a>	
 	</c:if>
 </div>
 </body>

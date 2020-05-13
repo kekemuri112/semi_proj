@@ -57,7 +57,7 @@ CREATE SEQUENCE CONTENT_SEQ;
 CREATE TABLE COMMENTS
 (
 	comments_num number(4) primary key,
-	contents_num number(4) references content(content_num),
+	contents_num number(4) references contents(contents_num),
 	users_num number(4) references users(users_num),
 	comments_content varchar2(100),
 	comments_lev number(5),

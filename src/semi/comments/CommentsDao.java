@@ -47,9 +47,9 @@ public class CommentsDao {
 		ResultSet rs=null;
 		try {
 			con=ConnectionPool.getCon();
-			pstmt=con.prepareStatement("select * from comments c inner join users u "
-					+ "on c.users_num=u.users_num; "
-					+ "where contents_num=?");
+			pstmt=con.prepareStatement("select *"+
+					" from comments c, users u" + 
+					" where c.users_num=u.users_num and contents_num=?");
 			rs=pstmt.executeQuery();
 			ArrayList<CommentsVo> comList=new ArrayList<CommentsVo>();
 			while(rs.next()) {
@@ -123,14 +123,14 @@ public class CommentsDao {
 			}
 		}
 	}
-	public int modifyCom(int comments_content, int comments_num) {
+	public int modifyCom(String comments_content, int comments_num) {
 		Connection con=null;
 		PreparedStatement pstmt=null;
 		try {
 			con=ConnectionPool.getCon();
 			String sql="update comments set comments_content=? where comments_num=?";
 			pstmt=con.prepareStatement(sql);
-			pstmt.setInt(1, comments_content);
+			pstmt.setString(1, comments_content);
 			pstmt.setInt(2, comments_num);
 			int n=pstmt.executeUpdate();
 			return n;

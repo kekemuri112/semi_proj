@@ -17,17 +17,21 @@ public class CommentsController extends HttpServlet{
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		int contents_num=Integer.parseInt(req.getParameter("contents_num"));
+		int users_num=Integer.parseInt(req.getParameter("users_num"));
 		CommentsDao dao=CommentsDao.getInstance();
 		ArrayList<CommentsVo> comList=dao.comList(contents_num);
+		UserVo vo=dao.getUserId(users_num);
 		JSONArray jarr=new JSONArray();
-		for(CommentsVo vo:comList) {
+		req.setAttribute("vo", vo);
+		req.getRequestDispatcher("/comments/comments.jsp").forward(req, resp);
+		for(CommentsVo vo1:comList) {
 			JSONObject json=new JSONObject();
-			json.put("contents_num", vo.getContents_num());
-			json.put("users_num", vo.getUsers_num());
-			json.put("comments_content", vo.getComments_content());
-			json.put("comments_ref", vo.getComments_ref());
-			json.put("comments_lev", vo.getComments_lev());
-			json.put("comments_step", vo.getComments_step());
+			json.put("contents_num", vo1.getContents_num());
+			json.put("users_num", vo1.getUsers_num());
+			json.put("comments_content", vo1.getComments_content());
+			json.put("comments_ref", vo1.getComments_ref());
+			json.put("comments_lev", vo1.getComments_lev());
+			json.put("comments_step", vo1.getComments_step());
 			jarr.put(json);
 		}
 		resp.setContentType("text/plain;charset=utf-8");
