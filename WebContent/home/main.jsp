@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <html>
 <head>
 <meta charset="UTF-8">
@@ -21,32 +22,30 @@
 <body>
 <div id="wrap">
 	<div id="header1">
-		<h1>대가리1</h1>
+		<jsp:include page="${header1 }"/>
 	</div>
 	<div id="header2">
-		<h1>대가리2</h1>
+		<jsp:include page="${header2 }"/>
 	</div>
 	<div id="header3">
 		<h1>대가리3</h1>
-		<div id="header3-1">
-			<input type="button" value="로그인">
-			<a href="${cp}/register/register.jsp"><input type="button" value="회원가입"></a>
-			<input type="button" value="ID/PW찾기">
+		<div id="headerLog">
+			<jsp:include page="${headerLog }"/>
 		</div>
 	</div>
 	
 	<div id="menu">
 		<div id="list">
-		<input type="button" value="카페1" id="cafe">
-		<input type="button" value="카페2" id="cafe">
-		<input type="button" value="카페3" id="cafe">
+			<jsp:include page="${mlist }"/>
 		</div>
 		<div id="chat">
 			<h1>채팅방임</h1>
 		</div>
 	</div>
 	<div id="main">
-		<h1>메인바보1</h1><h1>메인바보2</h1><h1>메인바보3</h1><h1>메인바보4</h1>	
+		<div>
+			<jsp:include page="${mfile }"/>
+		</div>
 	</div>
 </div>
 </body>
