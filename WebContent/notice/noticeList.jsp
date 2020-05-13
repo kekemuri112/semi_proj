@@ -11,14 +11,21 @@
 	<h1>게시판목록</h1>
 	<div>
 		<c:forEach var="vo" items="${noticelist }">
-			<c:if test="${vo.notice_lev>0 }">
-				<c:forEach var="i" begin="1" end="${vo.notice_lev }">
-					&nbsp;&nbsp;
-				</c:forEach>
-			</c:if>
-			<a href="">${vo.notice_name }</a>
+			<c:choose>
+				<c:when test="${vo.notice_lev==0 }">
+					<a href="">${vo.notice_name }</a><br>
+				</c:when>
+				<c:otherwise>
+					<c:forEach var="i" begin="1" end="${vo.notice_lev }">
+					 &ensp;&ensp;&ensp; 
+					</c:forEach>
+					└ <a href="">${vo.notice_name }</a><br>
+				</c:otherwise>
+			</c:choose>
+		
 			
 		</c:forEach>
+		<br> <a style="font-size: 200px" href="">+</a>
 	</div>
 </body>
 </html>
