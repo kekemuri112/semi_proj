@@ -31,11 +31,13 @@
 					var comments_content=json[i].comments_content;
 					var comments_num=json[i].comments_num;
 					var div=document.createElement("div");
+					var pageNum=json[json.length-1].pageNum;
 					const j=i;
 					div.innerHTML="<strong>"+users_id +" :"+comments_content+"</strong>"
 								+"<input type='hidden' value='"+users_id+"'>"
 								+"<input type='hidden' value='"+comments_content+"'>"
 								+"<input type='hidden' value='"+comments_num+"'>"
+								+"<input type='hidden' value='"+pageNum+"'>"
 						        +"<input type='button' value='수정' onclick='modify("+j+")'>"
 								+"<input type='button' value='삭제' onclick='comments_delete("+j+")'>";
 					div.id="comment"+j;
@@ -131,10 +133,12 @@
 		var users_id=com[1].value;
 		var comments_content=com[2].value;
 		var comments_num=com[3].value;
+		var pageNum=com[4].value;
 		div.innerHTML=users_id+"<input type='text' value='"+comments_content+"'>"
 					 +"<input type='hidden' value='"+users_id+"'>"
 					 +"<input type='hidden' value='"+comments_content+"'>"
 					 +"<input type='hidden' value='"+comments_num+"'>"
+					 +"<input type='hidden' value='"+pageNum+"'>"
 					 +"<input type='button' value='확인' onclick='update_comment("+j+")'>"
 					 +"<input type='button' value='취소' onclick='return_comment("+j+")'>";
 	}
@@ -144,11 +148,13 @@
 		var users_id=com[2].value;
 		var comments_content=com[3].value;
 		var comments_num=com[4].value;
+		var pageNum=com[5].value;
 		div.style.border="2px solid black";
 		div.innerHTML="<strong>"+users_id +" :"+comments_content+"</strong>"
 		+"<input type='hidden' value='"+users_id+"'>"
 		+"<input type='hidden' value='"+comments_content+"'>"
 		+"<input type='hidden' value='"+comments_num+"'>"
+		+"<input type='hidden' value='"+pageNum+"'>"
         +"<input type='button' value='수정' onclick='modify("+j+")'>"
 		+"<input type='button' value='삭제'>";
 	}
@@ -183,12 +189,22 @@
 		var div=document.getElementById("comment"+j);
 		var com=div.childNodes;
 		var comments_num=com[3].value;
+		var pageNum=com[4].value;
 		var xhr=new XMLHttpRequest();
 		xhr.onreadystatechange=function(){
-			
+			if(xhr.status==200&xhr.readyState==4){
+				var data=xhr.responseText;
+				var json=JSON.parse(data);
+				if(json.result){
+					paging(pageNum);
+				}else{
+					alert("삭제실패!!")
+					paging(pageNum);
+				}
+			}
 		}
-		xhr.open('post','',true);
-		xhr.send();
-		
+		xhr.open('post','${cp}/comments/delete.do',true);
+		xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+		xhr.send('comments_num='+comments_num);
 	}
 </script>

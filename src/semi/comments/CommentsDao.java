@@ -14,7 +14,7 @@ public class CommentsDao {
 	public static CommentsDao getInstance() {
 		return instance;
 	}
-	public int getCount(int contents_num) { // ÇØ´ç°Ô½Ã±ÛÀÇ ´ñ±Û ÀüÃ¼Çà
+	public int getCount(int contents_num) { // ï¿½Ø´ï¿½Ô½Ã±ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼ï¿½ï¿½
 		Connection con=null;
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
@@ -42,7 +42,7 @@ public class CommentsDao {
 		}
 	}
 	public ArrayList<CommentsVo> comList(int contents_num ,int startRow,int endRow) {
-		Connection con=null; //´ñ±ÛÆäÀÌÂ¡Ã³¸®¸¦ À§ÇØ ÆäÀÌÁö¸¶´Ù ÆäÀÌÁö¿¡ ÇØ´çÇÏ´Â Çà Ãâ·Â
+		Connection con=null; //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â¡Ã³ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ø´ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
 		try {
@@ -83,7 +83,7 @@ public class CommentsDao {
 			}
 		}
 	}
-	public int insert(int contents_num,String comments_content,int users_num) { //´ñ±ÛÀÔ·Â
+	public int insert(int contents_num,String comments_content,int users_num) { //ï¿½ï¿½ï¿½ï¿½Ô·ï¿½
 		Connection con=null;  
 		PreparedStatement pstmt=null;
 		try {
@@ -107,14 +107,14 @@ public class CommentsDao {
 		}
 	}
 	
-	public int update(String comments_content, int comments_num) { //´ñ±Û¼öÁ¤
+	public int update(String comments_content, int comments_num) { //ï¿½ï¿½Û¼ï¿½ï¿½ï¿½
 		Connection con=null;
 		PreparedStatement pstmt=null;
 		try {
 			con=ConnectionPool.getCon();
 			String sql="update comments set comments_content=? where comments_num=?";
 			pstmt=con.prepareStatement(sql);
-			System.out.println("´ñ±Û update ¸Þ¼ÒµåÀÇ comments_content : "+comments_content);
+			System.out.println("ï¿½ï¿½ï¿½ update ï¿½Þ¼Òµï¿½ï¿½ï¿½ comments_content : "+comments_content);
 			pstmt.setString(1, comments_content);
 			pstmt.setInt(2, comments_num);
 			return pstmt.executeUpdate();
@@ -152,13 +152,7 @@ public class CommentsDao {
 		}
 	}
 	
-	
-	
-	
-	
-	
-	
-	public int deleteCom(int comments_num) {
+	public int delete_comments(int comments_num) {
 		Connection con=null;
 		PreparedStatement pstmt=null;
 		try {
@@ -166,8 +160,7 @@ public class CommentsDao {
 			String sql="delete from comments where comments_num=?";
 			pstmt=con.prepareStatement(sql);
 			pstmt.setInt(1, comments_num);
-			int n=pstmt.executeUpdate();
-			return n;
+			return pstmt.executeUpdate();
 		}catch(SQLException se) {
 			se.printStackTrace();
 			return -1;
@@ -181,6 +174,8 @@ public class CommentsDao {
 		}
 		
 	}
+	
+	
 	public UserVo getUserId(int users_num) {
 		String sql="select users_id from users where users_num=?";
 		Connection con=null;

@@ -38,16 +38,12 @@ public class Contents_insertController extends HttpServlet{
 			dao.updatePoint(users_num);
 		}
 		int cafe_num=dao.getCafe_Num(notice_num);
-		if(n>0) {
-			System.out.println("���༺��!!");
-		}else {
-			System.out.println("�������!!");
-		}
+		
 		HttpSession session=req.getSession();
 
 		session.setAttribute("notice_num", notice_num);
 		session.setAttribute("cafe_num", cafe_num);
-		session.setAttribute("mfile", "/semi/contents.do");
+		session.setAttribute("mfile", "/contents/contents.do");
 		req.getRequestDispatcher("/home/main.jsp").forward(req, resp);;
 	}
 }

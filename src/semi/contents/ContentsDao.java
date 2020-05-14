@@ -16,6 +16,33 @@ public class ContentsDao {
 	public static ContentsDao getDao() {
 		return dao;
 	}
+	public int getComments(int contents_num) {
+		Connection con=null; 
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		try {
+			con=ConnectionPool.getCon();
+			String sql="select count(*) from comments where contents_num=?";
+			pstmt=con.prepareStatement(sql);
+			pstmt.setInt(1, contents_num);
+			rs=pstmt.executeQuery();
+			rs.next();
+			return rs.getInt(1);
+		}catch(SQLException se) {
+			se.printStackTrace();
+			return -1;
+		}finally {
+			try {
+				if(rs!=null)rs.close();
+				if(pstmt!=null)pstmt.close();
+				if(con!=null)con.close();
+			}catch(SQLException se) {
+				se.printStackTrace();
+			}
+		}
+	}
+	
+	
 	//게시판 이름 가져오기
 	public String getNotice_name(int notice_num) {
 		Connection con=null; 
@@ -156,10 +183,10 @@ public class ContentsDao {
 		}	
 	}
 	public int getCount(int cafe_num,int notice_num) { //�ش�ī���� �Խñ� ��ü �హ�� ����
+		
 		Connection con=null;
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
-		
 		try {
 			con=ConnectionPool.getCon();
 			String sql="select nvl(count(*),0) cnt from contents where ";
