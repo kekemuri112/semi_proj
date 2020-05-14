@@ -60,9 +60,12 @@ public class CafeInsertController extends HttpServlet {
 		if(n>0) {
 			bl=true;
 		}
+		req.getRequestDispatcher("/cafe/cafelist.jsp").forward(req, resp);
+		/*
 		json.put("bl", bl);
 		resp.setContentType("text/plain;charset=utf-8");
 		PrintWriter pw=resp.getWriter();
 		pw.print(json);
+		*/
 	}
 }

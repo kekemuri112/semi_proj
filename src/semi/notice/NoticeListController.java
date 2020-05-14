@@ -8,7 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-@WebServlet("/notice/noticeList.do")
+@WebServlet("/notice/noticelist.do")
 public class NoticeListController extends HttpServlet{
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -25,10 +25,5 @@ public class NoticeListController extends HttpServlet{
 			req.setAttribute("vo",vo );
 			req.getRequestDispatcher("/notice/noticeAdd.jsp").forward(req, resp);
 		}
-	}
-	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-	
 	}
 }
