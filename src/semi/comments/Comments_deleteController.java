@@ -12,19 +12,20 @@ import javax.servlet.http.HttpServletResponse;
 import org.json.JSONObject;
 
 @WebServlet("/comments/delete.do")
-public class DeleteController extends HttpServlet {
+public class Comments_deleteController extends HttpServlet {
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		int comments_num=Integer.parseInt(req.getParameter("comments_num"));
+		String scomments_num=req.getParameter("comments_num");
+		int comments_num=Integer.parseInt(scomments_num);
 		CommentsDao dao=CommentsDao.getInstance();
-		int n=dao.deleteCom(comments_num);
-		boolean using=false;
+		int n=dao.delete_comments(comments_num);
+		boolean result=false;
 		if(n>0) {
-			using=true;
+			result=true;
 		}
+		resp.setCharacterEncoding("text/plain;charset=utf-8");
 		JSONObject json=new JSONObject();
-		resp.setContentType("text/plain;charset=utf-8");
-		json.put("using", using);
+		json.put("result", result);
 		PrintWriter pw=resp.getWriter();
 		pw.print(json);
 	}

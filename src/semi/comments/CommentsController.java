@@ -19,7 +19,6 @@ public class CommentsController extends HttpServlet{
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		int contents_num=Integer.parseInt(req.getParameter("contents_num"));
-		int users_num=Integer.parseInt(req.getParameter("users_num"));
 		int pageNum=1;
 		String spageNum=req.getParameter("pageNum");
 		if(spageNum!=null) {
@@ -36,15 +35,15 @@ public class CommentsController extends HttpServlet{
 		}
 		System.out.println("comments pageNum : "+pageNum);
 		System.out.println("comments startPage:"+startPage);
-		UserVo vos=dao.getUserId(users_num);
-		System.out.println("comments users_num : "+users_num);
 		System.out.println("comments pageCount: "+pageCount);
 		ArrayList<CommentsVo> comList=dao.comList(contents_num,startRow,endRow);
 		JSONArray jarr=new JSONArray();
 		for(CommentsVo vo1:comList) {
 			JSONObject json=new JSONObject();
 			System.out.println("comments_num : "+vo1.getComments_num());
-			json.put("users_id", vos.getUsers_id());
+			int users_num1=vo1.getUsers_num();
+			UserVo vo2=dao.getUserId(users_num1);
+			json.put("users_id", vo2.getUsers_id());
 			json.put("comments_num", vo1.getComments_num());
 			json.put("contents_num", vo1.getContents_num());
 			json.put("users_num", vo1.getUsers_num());

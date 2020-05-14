@@ -30,7 +30,7 @@ public class Contents_UpdateController extends HttpServlet{
 		String contents_post=req.getParameter("contents_post");
 		contents_post=contents_post.replaceAll("\r\n", "<br>");
 		ContentsDao dao=ContentsDao.getDao();
-		int n=dao.update(contents_title, contents_post, contents_num);
+		int n=dao.update_point(contents_title, contents_post, contents_num);
 		req.setAttribute("contents_num", contents_num);
 		req.getRequestDispatcher("/contents/detail.do").forward(req, resp);
 	}

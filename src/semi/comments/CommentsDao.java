@@ -83,8 +83,8 @@ public class CommentsDao {
 			}
 		}
 	}
-	public int insert(int contents_num,String comments_content,int users_num) {
-		Connection con=null;
+	public int insert(int contents_num,String comments_content,int users_num) { //´ñ±ÛÀÔ·Â
+		Connection con=null;  
 		PreparedStatement pstmt=null;
 		try {
 			con=ConnectionPool.getCon();
@@ -107,17 +107,17 @@ public class CommentsDao {
 		}
 	}
 	
-	public int modifyCom(String comments_content, int comments_num) {
+	public int update(String comments_content, int comments_num) { //´ñ±Û¼öÁ¤
 		Connection con=null;
 		PreparedStatement pstmt=null;
 		try {
 			con=ConnectionPool.getCon();
 			String sql="update comments set comments_content=? where comments_num=?";
 			pstmt=con.prepareStatement(sql);
+			System.out.println("´ñ±Û update ¸Þ¼ÒµåÀÇ comments_content : "+comments_content);
 			pstmt.setString(1, comments_content);
 			pstmt.setInt(2, comments_num);
-			int n=pstmt.executeUpdate();
-			return n;
+			return pstmt.executeUpdate();
 		}catch(SQLException se) {
 			se.getStackTrace();
 			return -1;
@@ -129,9 +129,30 @@ public class CommentsDao {
 				s.printStackTrace();
 			}
 		}
-		
 	}
-	public int deleteCom(int comments_num) {
+	public int update_point(int users_num) {
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		try {
+			con=ConnectionPool.getCon();
+			String sql="update users_cafe set users_cafe_point=users_cafe_point+10 where users_num=? ";
+			pstmt=con.prepareStatement(sql);
+			pstmt.setInt(1, users_num);
+			return pstmt.executeUpdate();		
+		}catch(SQLException se) {
+			se.printStackTrace();
+			return -1;
+		}finally {
+			try {
+				if(pstmt!=null) pstmt.close();
+				if(con!=null) con.close();	
+			}catch(SQLException se) {
+				se.printStackTrace();
+			}
+		}
+	}
+	
+	public int delete_comments(int comments_num) {
 		Connection con=null;
 		PreparedStatement pstmt=null;
 		try {
@@ -139,8 +160,7 @@ public class CommentsDao {
 			String sql="delete from comments where comments_num=?";
 			pstmt=con.prepareStatement(sql);
 			pstmt.setInt(1, comments_num);
-			int n=pstmt.executeUpdate();
-			return n;
+			return pstmt.executeUpdate();
 		}catch(SQLException se) {
 			se.printStackTrace();
 			return -1;

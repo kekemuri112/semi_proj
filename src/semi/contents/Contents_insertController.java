@@ -44,6 +44,6 @@ public class Contents_insertController extends HttpServlet{
 		}
 		req.setAttribute("notice_num", notice_num);
 		req.setAttribute("cafe_num", cafe_num);
-		req.getRequestDispatcher("/semi/contents.do").forward(req, resp);;
+		req.getRequestDispatcher("/contents/contents.do").forward(req, resp);;
 	}
 }

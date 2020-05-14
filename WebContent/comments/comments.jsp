@@ -11,19 +11,14 @@
 <div id="page">
 </div><br>
 	<div>
-		<textarea rows="3" cols="3
-		
-		
-		0" id="comments"></textarea><br>
+		<textarea rows="3" cols="30" id="comments"></textarea><br>
 		<input type="button" value="등록하기" onclick="comments_write()">
 	</div>
-
 <script type="text/javascript">
 	window.onload=function(){
 		getList();
 		page();
 	}
-
 	function getList(pageNum){ //리스트출력
 		console.log("list 함수 실행!!");
 		console.log("pageNum : "+pageNum)
@@ -35,14 +30,24 @@
 				var json=JSON.parse(data);
 				var commList=document.getElementById("commList");
 				for(var i=0;i<json.length-1;i++){
+					var pageNum=json[i].pageNum;
 					var users_id=json[i].users_id;
 					var comments_content=json[i].comments_content;
 					var comments_num=json[i].comments_num;
 					var div=document.createElement("div");
-					div.innerHTML="<strong>"+users_id +" : "+comments_content+"</strong>"
-						        +"<input type='button' value='수정' ><input type='button' value='삭제'>";
+					var pageNum=json[json.length-1].pageNum
+					const j=i;
+					div.innerHTML="<strong>"+users_id +" :"+comments_content+"</strong>"
+								+"<input type='hidden' value='"+users_id+"'>"
+								+"<input type='hidden' value='"+comments_content+"'>"
+								+"<input type='hidden' value='"+comments_num+"'>"
+								+"<input type='hidden' value='"+pageNum+"'>"
+								+"<input type='button' value='답글' onclick=''>"
+						        +"<input type='button' value='수정' onclick='modify("+j+")'>"
+								+"<input type='button' value='삭제' onclick='comments_delete("+j+")'>";
+					div.id="comment"+j;
 					div.className="comments"
-					commList.appendChild(div);
+					commList.appendChild(div);		
 				}
 			}
 		}
@@ -128,5 +133,84 @@
 		getList(pageNum);
 		page(pageNum);
 	}
-
+	function modify(j){
+		var div=document.getElementById("comment"+j);
+		div.style.border="3px solid salmon";
+		var com=div.childNodes;
+		var users_id=com[1].value;
+		var comments_content=com[2].value;
+		var comments_num=com[3].value;
+		var pageNum=com[4].value;
+		div.innerHTML=users_id+"<input type='text' value='"+comments_content+"'>"
+					 +"<input type='hidden' value='"+users_id+"'>"
+					 +"<input type='hidden' value='"+comments_content+"'>"
+					 +"<input type='hidden' value='"+comments_num+"'>"
+					 +"<input type='hidden' value='"+pageNum+"'>"
+					 +"<input type='button' value='확인' onclick='update_comment("+j+")'>"
+					 +"<input type='button' value='취소' onclick='return_comment("+j+")'>";
+	}
+	function return_comment(j){
+		var div=document.getElementById("comment"+j);
+		var com=div.childNodes;
+		var users_id=com[2].value;
+		var comments_content=com[3].value;
+		var comments_num=com[4].value;
+		div.style.border="2px solid black";
+		div.innerHTML="<strong>"+users_id +" :"+comments_content+"</strong>"
+		+"<input type='hidden' value='"+users_id+"'>"
+		+"<input type='hidden' value='"+comments_content+"'>"
+		+"<input type='hidden' value='"+comments_num+"'>"
+        +"<input type='button' value='수정' onclick='modify("+j+")'>"
+		+"<input type='button' value='삭제'>";
+	}
+	function update_comment(j){
+		var div=document.getElementById("comment"+j);
+		var com=div.childNodes;
+		var users_id=com[2].value;
+		console.log("update 함수의 user_id : "+users_id)
+		var comments_content=com[1].value;
+		console.log("update 함수의 comments_content : "+comments_content)
+		var comments_num=com[4].value
+		console.log("update 함수의 comments_num : "+comments_num)
+		var xhr=new XMLHttpRequest();
+		xhr.onreadystatechange=function(){
+			if(xhr.status==200&xhr.readyState==4){
+				var data=xhr.responseText;
+				var json=JSON.parse(data);
+				if(json.result){
+					paging();
+				}else{
+					alert("댓글수정을 실패하였습니다");
+					paging();
+				}
+			}
+		}
+		xhr.open('post','${cp}/comments/update.do',true);
+		xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+		xhr.send("users_id="+users_id+"&comments_content="+comments_content+"&comments_num="+comments_num);
+	}
+	function comments_delete(j){
+		var div=document.getElementById("comment"+j);
+		var com=div.childNodes;
+		var comments_num=com[3].value;
+		var pageNum=com[4].value;
+		var xhr=new XMLHttpRequest();
+		xhr.onreadystatechange=function(){
+			if(xhr.status==200&xhr.readyState==4){
+				var data=xhr.responseText;
+				var json=JSON.parse(data);
+				if(json.result){
+					paging(pageNum);
+				}else{
+					alert("삭제실패!!")
+					paging(pageNum);
+				}
+				
+			}
+		}
+		xhr.open('post','${cp}/comments/delete.do',true);
+		xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+		xhr.send('comments_num='+comments_num);
+		
+	}
 </script>

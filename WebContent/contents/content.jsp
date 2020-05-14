@@ -25,7 +25,7 @@
 
 <c:choose>
 	<c:when test="${startPage>5}">
-		<a href="${cp }/semi/contents.do?cafe_num=${cafe_num}&pageNum=${startPage-1}&notice_num=${notice_num}">[이전]</a>
+		<a href="${cp }/contents/contents.do?cafe_num=${cafe_num}&pageNum=${startPage-1}&notice_num=${notice_num}">[이전]</a>
 	</c:when>
 	<c:otherwise>
 		[이전]
@@ -34,16 +34,16 @@
 <c:forEach	var="i" begin="${startPage}" end="${endPage}">
 	<c:choose>
 		<c:when test="${i==pageNum }">
-			<a href="${cp }/semi/contents.do?cafe_num=${cafe_num}&pageNum=${i}&notice_num=${notice_num}">[${i}]</a>
+			<a href="${cp }/contents/contents.do?cafe_num=${cafe_num}&pageNum=${i}&notice_num=${notice_num}">[${i}]</a>
 		</c:when>
 		<c:otherwise>
-			<a href="${cp }/semi/contents.do?cafe_num=${cafe_num}&pageNum=${i}&notice_num=${notice_num}">[${i}]</a>
+			<a href="${cp }/contents/contents.do?cafe_num=${cafe_num}&pageNum=${i}&notice_num=${notice_num}">[${i}]</a>
 		</c:otherwise>
 	</c:choose>
 </c:forEach>
 <c:choose>
 	<c:when test="${endPage<pageCount}">
-		<a href="${cp }/semi/contents.do?cafe_num=${cafe_num}&pageNum=${endPage+1}&notice_num=${notice_num}">[다음]</a>
+		<a href="${cp }/contents/contents.do?cafe_num=${cafe_num}&pageNum=${endPage+1}&notice_num=${notice_num}">[다음]</a>
 	</c:when>
 	<c:otherwise>
 		[다음]

@@ -11,18 +11,21 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.json.JSONObject;
 
-@WebServlet("/comments/modify.do")
-public class ModifyController extends HttpServlet {
+@WebServlet("/comments/insert.do")
+public class Comments_insertController extends HttpServlet {
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		req.setCharacterEncoding("utf-8");
-		String comments_content=req.getParameter("comments_cotent");
-		int comments_num=Integer.parseInt(req.getParameter("commnets_num"));
-		CommentsVo vo=new CommentsVo(comments_num, 0, 0, comments_content, 0,0,0);
+		String scontents_num=req.getParameter("contents_num");
+		System.out.println("scontents_num : "+scontents_num);
+		int contents_num=Integer.parseInt(scontents_num);
+		String comments_content=req.getParameter("comments_content");
+		int users_num=(int)req.getSession().getAttribute("users_num");
 		CommentsDao dao=CommentsDao.getInstance();
-		int n=dao.modifyCom(comments_content, comments_num);
+		int n=dao.insert(contents_num,comments_content,users_num);
 		boolean using=false;
 		if(n>0) {
+			dao.update_point(users_num);
 			using=true;
 		}
 		JSONObject json=new JSONObject();
@@ -30,6 +33,5 @@ public class ModifyController extends HttpServlet {
 		PrintWriter pw=resp.getWriter();
 		json.put("using", using);
 		pw.print(json);
-		
 	}
 }

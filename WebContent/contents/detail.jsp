@@ -18,7 +18,7 @@ ${vo.contents_post }
 	<a href="${cp }/contents/update.do?contents_num=${vo.contents_num}"><input type="button" value="수정하기"></a>
 	<a href="#"><input type="button" value="삭제하기"></a>
 </c:if>
-<input type="button" value="뒤로가기" onclick="return_contents();"></a><br>
+<input type="button" value="뒤로가기" onclick="return_contents()"><br>
 <div>
 	<jsp:include page="../comments/comments.jsp?contents_num=${vo.contents_num }&users_num=${vo.users_num }"/>
 </div>

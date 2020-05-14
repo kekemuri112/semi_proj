@@ -251,7 +251,7 @@ public class ContentsDao {
 			}
 		}
 	}
-	public int update(String contents_title,String contents_post,int contents_num) {
+	public int update_point(String contents_title,String contents_post,int contents_num) { //포인트업
 		Connection con=null;
 		PreparedStatement pstmt=null;
 		try {
