@@ -17,8 +17,6 @@ public class ContentsController extends HttpServlet {
 		int cafe_num=0;
 		if(scafe_num!=null) {
 			cafe_num=Integer.parseInt(scafe_num);
-		}else {
-			cafe_num=(int)req.getAttribute("cafe_num");
 		}
 		String spageNum=req.getParameter("pageNum");
 		String snotice_num=req.getParameter("notice_num");

@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<h1> 전체글보기 </h1>
+<h1> 글보기 </h1>
 <table border="1">
 	<tr>
 		<th>게시글번호</th><th>제목</th><th>작성자</th><th>작성일</th>
@@ -9,7 +9,7 @@
 	<c:forEach var="vo" items="${list }">
 	<tr>
 		<td>${vo.contents_num}</td>
-		<td><a href="${cp }/semi/detail.do?contents_num=${vo.contents_num}">${vo.contents_title }</a></td>
+		<td><a href="${cp }/contents/detail.do?contents_num=${vo.contents_num}">${vo.contents_title }</a></td>
 		<td>${vo.users_id }</td>
 		<td>${vo.contents_modifyDate }</td>
 	</tr>

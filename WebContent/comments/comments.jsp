@@ -11,7 +11,10 @@
 <div id="page">
 </div><br>
 	<div>
-		<textarea rows="3" cols="30" id="comments"></textarea><br>
+		<textarea rows="3" cols="3
+		
+		
+		0" id="comments"></textarea><br>
 		<input type="button" value="등록하기" onclick="comments_write()">
 	</div>
 

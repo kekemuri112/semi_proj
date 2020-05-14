@@ -27,8 +27,8 @@ public class Contents_insertController extends HttpServlet{
 		int notice_num=Integer.parseInt(req.getParameter("notice_num"));
 		int users_num=(int)req.getSession().getAttribute("users_num");
 		ContentsDao dao=ContentsDao.getDao();
-		String contents_title=req.getParameter("title");
-		String contents_post=req.getParameter("post");
+		String contents_title=req.getParameter("contents_title");
+		String contents_post=req.getParameter("contents_post");
 		ContentsVo vo=new ContentsVo(0, notice_num, users_num, contents_title, contents_post, null, null);
 		int n=dao.insert(vo);
 		if(n>0) {

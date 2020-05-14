@@ -10,20 +10,29 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/contents/update.do")
 public class Contents_UpdateController extends HttpServlet{
 	@Override
-	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		String contents_title=req.getParameter("contents_title");
-		String contents_post=req.getParameter("contents_post");
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		int contents_num=Integer.parseInt(req.getParameter("contents_num"));
+		ContentsDao dao=ContentsDao.getDao();
+		Contents_detailVo vo=dao.detail(contents_num);
+		req.setAttribute("vo", vo);
+		String contents_post=vo.getContents_post();
+		contents_post=contents_post.replaceAll("<br>", "\r\n");
+		vo.setContents_post(contents_post);
+		req.setAttribute("file","/contents/contents_update.jsp" );
+		req.getRequestDispatcher("/home/main.jsp").forward(req, resp);
+	}
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		req.setCharacterEncoding("utf-8");
 		String scontents_num=req.getParameter("contents_num");
 		int contents_num=Integer.parseInt(scontents_num);
+		String contents_title=req.getParameter("contents_title");
+		String contents_post=req.getParameter("contents_post");
+		contents_post=contents_post.replaceAll("\r\n", "<br>");
 		ContentsDao dao=ContentsDao.getDao();
-		int n=dao.update(contents_title,contents_post,contents_num);
-		if(n>0) {
-			req.setAttribute("contents_num",contents_num );
-			req.getRequestDispatcher("/semi/detail.do").forward(req, resp);
-		}else {
-			req.setAttribute("msg", "수정실패!!!");
-		}
-		
+		int n=dao.update(contents_title, contents_post, contents_num);
+		req.setAttribute("contents_num", contents_num);
+		req.getRequestDispatcher("/contents/detail.do").forward(req, resp);
 	}
 	
 }
