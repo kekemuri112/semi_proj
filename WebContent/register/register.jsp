@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <body>
 	<div>
-		<form method="post" action="/registercontroller.do">
+		<form method="post" action="${cp }/reg/registercontroller.do">
 			<table>
 				<tr>
 					<th colspan="2" style="font-size: 40px">회원 가입</th>
@@ -31,6 +31,10 @@
 				<tr>
 					<th>이메일</th>
 					<td><input type="text" name="users_email"></td>
+				</tr>
+				<tr>
+					<th>이름</th>
+					<td><input type="text" name="users_name"></td>
 				</tr>
 				<tr>
 					<th>생년월일</th>

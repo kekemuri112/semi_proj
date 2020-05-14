@@ -13,21 +13,24 @@ public class PageController extends HttpServlet {
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		req.setCharacterEncoding("utf-8");
-		int check=Integer.parseInt(req.getParameter("check"));
 		resp.setContentType("text/plain;charset=utf-8");
+		int check=Integer.parseInt(req.getParameter("check"));
 		HttpSession session= req.getSession();
+		String[] checks= {"/register/login.jsp","/register/register.jsp","/register/regsearch.jsp",
+				"/register/logout.jsp","",""};
 		switch(check) {
-			case 1:	session.setAttribute("mfile", "/register/register.jsp");
+			//로그인
+			case 1:	session.setAttribute("mfile", checks[check-1]);
 				break;
-			case 2:	session.setAttribute("mfile", "/register/register.jsp");
+			case 2:	session.setAttribute("mfile", checks[check-1]);
 				break;
-			case 3:	session.setAttribute("mfile", "/register/register.jsp");
+			case 3:	session.setAttribute("mfile", checks[check-1]);
 				break;
-			case 4:	session.setAttribute("mfile", "/register/register.jsp");
+			case 4:	session.setAttribute("mfile", checks[check-1]);
 				break;
-			case 5:	session.setAttribute("mfile", "/register/register.jsp");
+			case 5:	session.setAttribute("mfile", checks[check-1]);
 				break;
-			case 6:	session.setAttribute("mfile", "/register/register.jsp");
+			case 6:	session.setAttribute("mfile", checks[check-1]);
 				break;
 		}
 		req.getRequestDispatcher("/home/main.jsp").forward(req, resp);

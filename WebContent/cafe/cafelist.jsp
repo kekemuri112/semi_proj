@@ -6,7 +6,7 @@
 	<div>
 	<ul>
 	<c:forEach var="vo" items="${cafelist}">
-		<a href="${cp }/notice/noticelist.do?cafe_num=${vo.cafe_num }"><li>${vo.cafe_name }</li></a>
+		<a href="${cp }/notice/noticelist.do?cafe_num=${vo.cafe_num }&cafe_name=${vo.cafe_name}"><li>${vo.cafe_name }</li></a>
 	</c:forEach>
 	</ul>
 	</div>

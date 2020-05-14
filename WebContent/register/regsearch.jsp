@@ -1,11 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>/register/regsearch.jsp</title>
-</head>
+
 <body>
 	<div>
 		<table>
@@ -14,7 +9,7 @@
 			</tr>
 			<tr>
 				<th>
-					<a href="idsearch">아이디 찾기</a>
+					<a href="#">아이디 찾기</a>
 				</th>
 				<th>
 					<a href="#">비밀번호찾기</a>
@@ -33,4 +28,3 @@
 		window.history.back();
 	}
 </script>
-</html>

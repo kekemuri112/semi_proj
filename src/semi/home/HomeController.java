@@ -18,12 +18,15 @@ public class HomeController extends HttpServlet{
 		String cp=req.getContextPath();
 		req.getServletContext().setAttribute("cp", cp);
 		HttpSession session= req.getSession();
+		String cafe_name=(String)session.getAttribute("cafe_name");
+		if(cafe_name!=null) {
+			session.removeAttribute("cafe_name");
+		}
 		session.setAttribute("header1", "/home/wraphome.jsp");
-		session.setAttribute("headerLog", "/register/rmain.jsp");
 		session.setAttribute("header2", "/home/wrapmain.jsp");
+		session.setAttribute("headerLog", "/register/rmain.jsp");
 		session.setAttribute("mlist", "/cafe/cafelist.do");
 		session.setAttribute("mfile", "/contents/cmain.jsp");
 		req.getRequestDispatcher("/home/main.jsp").forward(req, resp);
-
 	}
 }

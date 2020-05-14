@@ -16,17 +16,19 @@ public class LoginController extends HttpServlet{
 		resp.setContentType("text/plain;charset=utf-8");
 		String users_id=req.getParameter("users_id");
 		String users_pwd=req.getParameter("users_pwd");
-		int n=UsersDao.getInstance().loginOk(users_id, users_pwd);
+		UsersDao dao= UsersDao.getInstance();
+		int n=dao.loginOk(users_id, users_pwd);
+		HttpSession session=req.getSession();
 		if(n>0) {
+			UsersVo vo=dao.information(users_id);
+			session.setAttribute("users_id", users_id);
+			session.setAttribute("users_num", vo.getUsers_no());
 			req.setAttribute("msg", "로그인 완료되었습니다.");
 		}else {
 			req.setAttribute("msg", "로그인 실패하였습니다.");
 		}
-		HttpSession session=req.getSession();
 		session.setAttribute("headerLog", "/register/rmain.jsp");
-		session.setAttribute("header2", "/home/wrapmain.jsp");
-		session.setAttribute("mlist", "/cafe/cafelist.do");
-		session.setAttribute("mfile", "/contents/cmain.jsp");
-		req.getRequestDispatcher("").forward(req, resp);
+		session.setAttribute("mfile", "/home/result.jsp");
+		req.getRequestDispatcher("/home/main.jsp").forward(req, resp);
 	}
 }

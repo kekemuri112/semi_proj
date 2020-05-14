@@ -16,25 +16,27 @@ public class NoticeListController extends HttpServlet{
 		req.setCharacterEncoding("utf-8");
 		resp.setContentType("text/plain;charset=utf-8");
 		NoticeDao dao=NoticeDao.getInstance();
+		HttpSession session= req.getSession();
 		int cafe_num=Integer.parseInt(req.getParameter("cafe_num"));
 		String snum=req.getParameter("notice_num");
 		//카페번호가 눌렸을때
-		if(snum==null) {
+		if(snum==null || snum.equals("")) {
 			ArrayList<NoticeVo> noticelist=dao.listAll(cafe_num);
-			req.setAttribute("noticelist", noticelist);
-			HttpSession session= req.getSession();
-			session.setAttribute("headerLog", "/register/rmain.jsp");
+			session.setAttribute("cafe_name", req.getParameter("cafe_name"));
+			session.setAttribute("noticelist", noticelist);
+			session.setAttribute("cafe_num", cafe_num);
+			session.setAttribute("notice_num", req.getAttribute("notice_num"));
 			session.setAttribute("header2", "/home/wrapmain.jsp");
 			session.setAttribute("mlist", "/notice/noticelist.jsp");
-			session.setAttribute("mfile", "/contents/cmain.jsp");
+			session.setAttribute("mfile", "/contents/contents.do");
 			req.getRequestDispatcher("/home/main.jsp").forward(req, resp);
 		}else {
-			// + 버튼 눌렀을때
+			// 게시글 버튼 눌렀을때
 			int notice_num=Integer.parseInt(snum);
 			NoticeVo vo=dao.getVo(notice_num);
 			req.setAttribute("vo",vo );
-			HttpSession session= req.getSession();
-			session.setAttribute("mfile", "/notice/noticeInsert.jsp");
+			session.setAttribute("notice_num", notice_num);
+			session.setAttribute("mfile", "/contents/contents.do");
 			req.getRequestDispatcher("/home/main.jsp").forward(req, resp);
 		}
 	}

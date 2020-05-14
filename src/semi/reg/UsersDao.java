@@ -21,7 +21,7 @@ public class UsersDao {
 		PreparedStatement pstmt=null;
 		try {
 			con=ConnectionPool.getCon();
-			String sql="insert into users values(users_num.users_seq.nextval,?,?,?,?,?,?)";
+			String sql="insert into users values(users_seq.nextval,?,?,?,?,?,?)";
 			pstmt=con.prepareStatement(sql);
 			pstmt.setString(1, vo.getUsers_id());
 			pstmt.setString(2, vo.getUsers_pwd());
@@ -98,6 +98,7 @@ public class UsersDao {
 			}
 		}
 	}
+	//유저아이디 찾아오기
 	public UsersVo information(String users_id) {
 		Connection con=null;
 		PreparedStatement pstmt=null;
@@ -116,7 +117,7 @@ public class UsersDao {
 						rs.getString("users_pwd"),
 						rs.getString("users_name"),
 						rs.getString("users_email"),
-						rs.getString("users_brith"),
+						rs.getString("users_birth"),
 						rs.getString("users_phone")
 					);
 			}

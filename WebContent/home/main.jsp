@@ -28,7 +28,7 @@
 		<jsp:include page="${header2 }"/>
 	</div>
 	<div id="header3">
-		<h1>대가리3</h1>
+		<h3>상태표시줄..</h3>
 		<div id="headerLog">
 			<jsp:include page="${headerLog }"/>
 		</div>

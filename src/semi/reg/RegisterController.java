@@ -30,10 +30,7 @@ public class RegisterController extends HttpServlet{
 			req.setAttribute("msg", "회원 가입이 실패하였습니다.");
 		}
 		HttpSession session=req.getSession();
-		session.setAttribute("headerLog", "/register/rmain.jsp");
-		session.setAttribute("header2", "/home/wrapmain.jsp");
-		session.setAttribute("mlist", "/cafe/cafelist.do");
-		session.setAttribute("mfile", "/contents/cmain.jsp");
-		req.getRequestDispatcher("").forward(req, resp);
+		session.setAttribute("mfile", "/home/result.jsp");
+		req.getRequestDispatcher("/home/main.jsp").forward(req, resp);
 	}
 }

@@ -18,13 +18,9 @@ public class CafeListController extends HttpServlet {
 		resp.setContentType("text/plain;charset=utf-8");
 		CafeDao dao=CafeDao.getInstance();
 		ArrayList<CafeVo> cafelist=dao.listAll();
-		req.setAttribute("cafelist", cafelist);
 		HttpSession session= req.getSession();
-		session.setAttribute("header1", "/home/wraphome.jsp");
-		session.setAttribute("headerLog", "/register/rmain.jsp");
-		session.setAttribute("header2", "/home/wrapmain.jsp");
+		session.setAttribute("cafelist", cafelist);
 		session.setAttribute("mlist", "/cafe/cafelist.jsp");
-		session.setAttribute("mfile", "/contents/cmain.jsp");
 		req.getRequestDispatcher("/home/main.jsp").forward(req, resp);
 	}
 }

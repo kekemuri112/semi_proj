@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <div>
-	<form method="post" action="/reg/logincontroller.do">
+	<form method="post" action="${cp }/reg/logincontroller.do">
 		<table>
 			<tr>
 				<th colspan="2" style="font-size: 40px">로 그 인</th>
