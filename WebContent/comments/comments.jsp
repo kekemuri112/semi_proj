@@ -60,8 +60,12 @@
 		xhr.open();
 		xhr.send();
 	}
-	function page(){ //페이지처리
+	function page(pageNum){ //페이지처리
 		console.log("page함수 호출!!!");
+		var pageNum1=1;
+		if(pageNum!=null){
+			pageNum1=pageNum;
+		}
 		var xhr=new XMLHttpRequest();
 		xhr.onreadystatechange=function(){
 			if(xhr.status==200&&xhr.readyState==4){
@@ -73,12 +77,13 @@
 				var pageCount=json[i].pageCount;
 				var pageNum=json[i].pageNum;
 				console.log(startPage);
-				var div=document.getElementById("page");
+				var div=document.getElementById("page");		
 				if(startPage>5){
 					div.innerHTML+=
-						"<a href='javascript:getList("+(startPage-1)+")'>[이전]</a>";
+						//"<a href='javascript:getList("+(startPage-1)+")'>[이전]</a>";
+						"<a href='javascript:doing("+(startPage-1)+")'>[이전]</a>"
 				}
-				for(var j=1;j<=endPage;j++){
+				for(var j=startPage;j<=endPage;j++){
 					console.log("j:"+j);
 					div.innerHTML+=
 						<%--"<a href='${cp}/comments/comments.do?contents_num=<%=contents_num%>&users_num=<%=users_num%>&pageNum='"+j+">["+j+"]</a>"--%>
@@ -86,11 +91,13 @@
 				}
 				if(pageCount>endPage){
 					div.innerHTML+=
-						"<a href='javascript:getList("+(endPage+1)+")'>[다음]</a>";
+						//"<a href='javascript:getList("+(endPage+1)+")'>[다음]</a>";
+						"<a href='javascript:doing("+(endPage+1)+")'>[다음]</a>";
+						
 				}
 			}
 		}
-		xhr.open('get','${cp}/comments/comments.do?contents_num=<%=contents_num%>&users_num=<%=users_num%>',true);
+		xhr.open('get','${cp}/comments/comments.do?contents_num=<%=contents_num%>&users_num=<%=users_num%>&pageNum='+pageNum1,true);
 		xhr.send();
 	}
 	function deleteDiv(){
@@ -100,5 +107,11 @@
 			var comments=chiled.item(i);
 			commList.removeChild(comments);
 		}
+	}
+	function doing(pageNum){
+		var div=document.getElementById("page");
+		div.innerHTML=" "
+		getList(pageNum);
+		page(pageNum);
 	}
 </script>
