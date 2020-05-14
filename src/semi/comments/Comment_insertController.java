@@ -12,17 +12,17 @@ import javax.servlet.http.HttpServletResponse;
 import org.json.JSONObject;
 
 @WebServlet("/comments/insert.do")
-public class InsertController extends HttpServlet {
+public class Comment_insertController extends HttpServlet {
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		req.setCharacterEncoding("utf-8");
-		String user_id=req.getParameter("user_id");
-		String comments_content=req.getParameter("commnets_content");
-		int comments_num=Integer.parseInt(req.getParameter("comments_num"));
-		CommentsVo vo=new CommentsVo(comments_num,0,0,comments_content,0,0,0);
-		UserVo uvo=new UserVo(0,user_id);
+		String scontents_num=req.getParameter("contents_num");
+		System.out.println("scontents_num : "+scontents_num);
+		int contents_num=Integer.parseInt(scontents_num);
+		String comments_content=req.getParameter("comments_content");
+		int users_num=(int)req.getSession().getAttribute("users_num");
 		CommentsDao dao=CommentsDao.getInstance();
-		int n=dao.insertCom(vo);
+		int n=dao.insert(contents_num,comments_content,users_num);
 		boolean using=false;
 		if(n>0) {
 			using=true;

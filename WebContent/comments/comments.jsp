@@ -2,13 +2,14 @@
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%
-	String contents_num=request.getParameter("contents_num");
+	String scontents_num=request.getParameter("contents_num");
+	int contents_num=Integer.parseInt(scontents_num);
 	int users_num=Integer.parseInt(request.getParameter("users_num"));
 %>
 <div id="commList">
 </div>
 <div id="page">
-</div>
+</div><br>
 	<div>
 		<textarea rows="3" cols="30" id="comments"></textarea><br>
 		<input type="button" value="등록하기" onclick="comments_write()">
@@ -51,14 +52,28 @@
 		xhr.send();
 	}
 	function comments_write(){ //댓글쓰기
+		console.log("쓰기 함수 호출!!!!");
+		console.log("contents_num : "+<%=contents_num%>);
 		var textarea_comments_content=document.getElementById("comments")
 		var comments_content=textarea_comments_content.value;
 		var xhr=new XMLHttpRequest();
 		xhr.onreadystatechange=function(){
-			
+			if(xhr.status==200&xhr.readyState==4){
+				var data=xhr.responseText;
+				var json=JSON.parse(data);
+				if(json.using){
+					paging();
+				}else{
+					alert("댓글작성에러발생!!");
+					paging();
+				}
+				var textarea_comments_content=document.getElementById("comments");
+				textarea_comments_content.value="";
+			}			
 		}
-		xhr.open();
-		xhr.send();
+		xhr.open('post','${cp}/comments/insert.do',true);
+		xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+		xhr.send("contents_num=<%=contents_num%>&comments_content="+comments_content);
 	}
 	function page(pageNum){ //페이지처리
 		console.log("page함수 호출!!!");
@@ -79,21 +94,17 @@
 				console.log(startPage);
 				var div=document.getElementById("page");		
 				if(startPage>5){
-					div.innerHTML+=
-						//"<a href='javascript:getList("+(startPage-1)+")'>[이전]</a>";
-						"<a href='javascript:doing("+(startPage-1)+")'>[이전]</a>"
+					div.innerHTML+=			
+						"<a href='javascript:paging("+(startPage-1)+")'>[이전]</a>"
 				}
 				for(var j=startPage;j<=endPage;j++){
 					console.log("j:"+j);
-					div.innerHTML+=
-						<%--"<a href='${cp}/comments/comments.do?contents_num=<%=contents_num%>&users_num=<%=users_num%>&pageNum='"+j+">["+j+"]</a>"--%>
+					div.innerHTML+=		
 						"<a href='javascript:getList("+j+")'>["+j+"]</a>"
 				}
 				if(pageCount>endPage){
 					div.innerHTML+=
-						//"<a href='javascript:getList("+(endPage+1)+")'>[다음]</a>";
-						"<a href='javascript:doing("+(endPage+1)+")'>[다음]</a>";
-						
+						"<a href='javascript:paging("+(endPage+1)+")'>[다음]</a>";			
 				}
 			}
 		}
@@ -108,10 +119,11 @@
 			commList.removeChild(comments);
 		}
 	}
-	function doing(pageNum){
+	function paging(pageNum){
 		var div=document.getElementById("page");
 		div.innerHTML=" "
 		getList(pageNum);
 		page(pageNum);
 	}
+
 </script>
