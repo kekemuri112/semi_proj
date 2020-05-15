@@ -51,9 +51,14 @@ public class CommentsDao {
 			con=ConnectionPool.getCon();
 			String sql="select * " + 
 					"from(select aa.*, rownum rnum " + 
-					"from (select * from comments where contents_num=? order by comments_ref desc,comments_step asc)aa" + 
+					"from (select * from comments where contents_num=? order by comments_ref desc, comments_step asc)aa " + 
 					")" + 
 					" where rnum>=? and rnum<=?";
+//			String sql="select * " + 
+//					"from(select aa.*, rownum rnum " + 
+//					"from (select * from comments where contents_num=? order by comments_ref desc, comments_step asc)aa " + 
+//					")" + 
+//					" where rnum>=? and rnum<=?";
 			pstmt=con.prepareStatement(sql);
 			pstmt.setInt(1, contents_num);
 			pstmt.setInt(2, startRow);
