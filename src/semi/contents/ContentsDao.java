@@ -79,7 +79,6 @@ public class ContentsDao {
 		ResultSet rs=null;
 		try {
 			con=ConnectionPool.getCon();
-			
 			String sql="select * from (select "+
 			"aa.*, rownum rnum from (select * from contents where ";
 			if(notice_num==0) { 

@@ -40,13 +40,17 @@
 					var pageNum=json[json.length-1].pageNum
 					var comments_lev=json[i].comments_lev;
 					const j=i;
+					console.log("list 함수 lev : "+comments_lev);
+				
 					if(comments_lev>0){
 						var span=document.createElement("span");
 						for(var z=1;z<=comments_lev;z++){
-							span.innerHTML="&nbps;"
+							span.innerHTML+="&ensp;&ensp;&ensp;"
 						}
 						span.innerHTML+="ㄴ";
+						commList.appendChild(span);
 					}
+					
 					div.innerHTML="<strong>"+users_id +" :"+comments_content+"</strong>"
 								+"<input type='hidden' value='"+users_id+"'>"
 								+"<input type='hidden' value='"+comments_content+"'>"
@@ -54,17 +58,19 @@
 								+"<input type='hidden' value='"+pageNum+"'>"
 								+"<input type='button' value='답글' onclick='comments_reply("+j+")'>"
 						        +"<input type='button' value='수정' onclick='modify("+j+")'>"
-								+"<input type='button' value='삭제' onclick='comments_delete("+j+")'>";
+								+"<input type='button' value='삭제' onclick='comments_delete("+j+")'>"
 					div.id="comment"+j;
-					div.className="comments"
-					commList.appendChild(div);	
+					div.className="comments";
 					var div2=document.createElement("div");
-					div2.innerHTML="<textarea rows='3' cols='30' id='reply_value'"+j+"></textarea><br>"
-								 +"<input type='button' value='확인' onclick='reply_insert("+comments_num+","+j+")'>"
-								 +"<input type='button' value='취소' onclick=''>";
+					div2.innerHTML=	"<textarea rows='3' cols='30' id='reply_value"+j+"'></textarea><br>"			   
+								  +"<input type='button' value='확인' onclick='reply_insert("+comments_num+","+j+")'>"
+								  +"<input type='button' value='취소' >";
 					div2.style="display:none";
 					div2.id="comments_re"+j;
+					commList.appendChild(div);
 					div.appendChild(div2);
+					commList.innerHTML+="<br>";
+					
 				}
 			}
 		}
@@ -77,20 +83,33 @@
 		xhr.send();
 	}
 	function reply_insert(comments_num,j){
+		console.log("답글함수 실행!!")
 		var text_area_reply=document.getElementById("reply_value"+j);
-		var replay_value=text_area_reply.value;
+		var comments_content=text_area_reply.value;
+		console.log("답글 함수 comments_num : "+comments_num);
+		console.log("답글 함수 j : "+j);
+		console.log("답글함수 내용 : "+comments_content);
+		
 		var xhr=new XMLHttpRequest();
 		xhr.onreadystatechange=function(){
-			
+			if(xhr.status==200&&xhr.readyState==4){
+				var data=xhr.responseText;
+				var json=JSON.parse(data);
+				if(json.using){
+					paging();
+				}else{
+					alert("답글작성에러발생!!");
+					paging();
+				}
+			}
 		}
-		xhr.open('post','',true);
+		xhr.open('post','${cp}/comments/insert.do',true);
 		xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-		xhr.send();
-		
+		xhr.send('comments_num='+comments_num+'&comments_content='+comments_content);
 	}
 	function comments_reply(j){ // 숨겨진 div 보여지게하기
 		var div=document.getElementById("comments_re"+j);
-		div.style="display:block";
+		div.style="display:inline-block";
 	}
 	function comments_write(){ //댓글쓰기
 		console.log("쓰기 함수 호출!!!!");
@@ -185,7 +204,7 @@
 					 +"<input type='hidden' value='"+comments_num+"'>"
 					 +"<input type='hidden' value='"+pageNum+"'>"
 					 +"<input type='button' value='확인' onclick='update_comment("+j+")'>"
-					 +"<input type='button' value='취소' onclick='return_comment("+j+")'>";
+					 +"<input type='button' value='취소' onclick='return_comment("+j+")'><br>";
 	}
 	function return_comment(j){
 		var div=document.getElementById("comment"+j);
