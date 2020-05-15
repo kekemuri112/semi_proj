@@ -15,12 +15,10 @@
 					<c:forEach var="i" begin="1" end="${vo.notice_lev }">
 					 &ensp;&ensp;&ensp; 
 					</c:forEach>
-					└ <a href="${cp }/contents/contents.do?notice_num=${vo.notice_num}">${vo.notice_name }</a><br>
+					└ <a href="${cp }/contents/contents.do?notice_num=${vo.notice_num}">${vo.notice_name }</a>
+					<a href="#">[+]</a><br>
 				</c:otherwise>
 			</c:choose>
-		
-			
 		</c:forEach>
-		
 	</div>
 </body>

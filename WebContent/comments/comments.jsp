@@ -142,21 +142,12 @@
 					 +"<input type='button' value='확인' onclick='update_comment("+j+")'>"
 					 +"<input type='button' value='취소' onclick='return_comment("+j+")'>";
 	}
+	
 	function return_comment(j){
 		var div=document.getElementById("comment"+j);
 		var com=div.childNodes;
-		var users_id=com[2].value;
-		var comments_content=com[3].value;
-		var comments_num=com[4].value;
 		var pageNum=com[5].value;
-		div.style.border="2px solid black";
-		div.innerHTML="<strong>"+users_id +" :"+comments_content+"</strong>"
-		+"<input type='hidden' value='"+users_id+"'>"
-		+"<input type='hidden' value='"+comments_content+"'>"
-		+"<input type='hidden' value='"+comments_num+"'>"
-		+"<input type='hidden' value='"+pageNum+"'>"
-        +"<input type='button' value='수정' onclick='modify("+j+")'>"
-		+"<input type='button' value='삭제'>";
+		paging(pageNum);
 	}
 	
 	function update_comment(j){
