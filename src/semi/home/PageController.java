@@ -17,7 +17,8 @@ public class PageController extends HttpServlet {
 		int check=Integer.parseInt(req.getParameter("check"));
 		HttpSession session= req.getSession();
 		String[] checks= {"/register/login.jsp","/register/register.jsp","/register/regsearch.jsp",
-				"/register/logout.jsp","",""};
+				"/register/logout.jsp","","","/cafe/cafeapproval.jsp"};
+		
 		switch(check) {
 			//로그인
 			case 1:	session.setAttribute("mfile", checks[check-1]);
@@ -31,6 +32,8 @@ public class PageController extends HttpServlet {
 			case 5:	session.setAttribute("mfile", checks[check-1]);
 				break;
 			case 6:	session.setAttribute("mfile", checks[check-1]);
+				break;
+			case 7:	session.setAttribute("mfile", checks[check-1]);
 				break;
 		}
 		req.getRequestDispatcher("/home/main.jsp").forward(req, resp);

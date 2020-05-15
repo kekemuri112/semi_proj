@@ -1,13 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<body>
-	<h1>카페목록</h1>
-	<div>
+<h1>카페목록</h1>
+<div>
 	<ul>
-	<c:forEach var="vo" items="${cafelist}">
-		<a href="${cp }/notice/noticelist.do?cafe_num=${vo.cafe_num }&cafe_name=${vo.cafe_name}"><li>${vo.cafe_name }</li></a>
-	</c:forEach>
+		<c:forEach var="vo" items="${cafelist}">
+			<a href="${cp }/notice/noticelist.do?cafe_num=${vo.cafe_num }&cafe_name=${vo.cafe_name}">
+			<li>${vo.cafe_name }</li></a>
+		</c:forEach>
+		<c:if test="${empty users_id }">
+			<a href="${cp }/cafe/cafeinsert.do"><li>카페개설요청</li></a>
+		</c:if>
+		<c:if test="${users_id=='admin' }">
+			<a href="${cp }/semi/pagecontroller.do?check=7"><li>카페승인대기리스트</li></a>
+		</c:if>
 	</ul>
-	</div>
-</body>
+</div>
