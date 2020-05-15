@@ -195,19 +195,44 @@ public class NoticeDao {
 			}
 		}
 	}
-	public int delete(int notice_num) {
+	public int delete(NoticeVo vo,Contents Vo,) {
 		Connection con=null;
-		PreparedStatement pstmt=null;
+		PreparedStatement pstmt1=null;
+		PreparedStatement pstmt2=null;
+		PreparedStatement pstmt3=null;
+		PreparedStatement pstmt4=null;
+		PreparedStatement pstmt5=null;
+		PreparedStatement pstmt6=null;
 		try {
 			con=ConnectionPool.getCon();
-			/*String sql2="DELETE FROM board WHERE num in (SELECT num FROM START WITH num = 글번호"
-					+ "  CONNECT BY PRIOR  num = parent_id)";
-			*/
+
+			//대댓글지우기(lev이 1인 자식게시판)
+			String sql1="delete from comments where comments_num=? and comments_ref=?";
+			pstmt1=con.prepareStatement(sql1);
+			pstmt1.setInt(1, comments_num);
+			pstmt1.setInt(2, comments_ref);
+			//댓글지우기(lev이 0인 부모게시판)
+			String sql2="delete from (select contents_num from comments ref=?)";
+			pstmt2=con.prepareStatement(sql2);
+			pstmt2.setInt(1, comments_ref);
+			//게시물 지우기
+			String sql3="delete from (select notice_num from contents where notice_num=?)";
+			pstmt3=con.prepareStatement(sql3);
+			pstmt3.setInt(1, notice_num);
+			//작은게시판 지우기(lev이 0이상인 자식게시판)
+			String sql4="DELETE FROM notice WHERE notice_num = ? and notice_ref = ?";
+			pstmt4=con.prepareStatement(sql4);
+			pstmt4.setInt(1, notice_num);
+			pstmt4.setInt(2, notice_ref);
+			//큰게시판 지우기(lev이 0인 부모게시판)
+			String sql5="delete from notice where notice_num=?";
+			pstmt5=con.prepareStatement(sql5);
+			pstmt5.setInt(1, notice_num);
 			
-			//String sql3="DELETE FROM `테이블명` WHERE `wr_parent` = 글번호 and `wr_is_comment` = 1";
-			
-			String sql3="DELETE FROM notice WHERE notice_num = ? and notice_ref = ?";
-					
+/*String sql2="DELETE FROM board WHERE num in (SELECT num FROM START WITH num = 글번호"
+			+ "  CONNECT BY PRIOR  num = parent_id)";
+*/
+//String sql3="DELETE FROM `테이블명` WHERE `wr_parent` = 글번호 and `wr_is_comment` = 1";					
 /*
 START WITH num = 글번호 : 검색을 시작할 번호
 CONNECT BY PRIOR num = parent_id :  검색 대상을 트리 형태로 검색
@@ -217,16 +242,19 @@ PRIOR 의 위치
 - CONNECT BY  자식컬럼 = PRIOR 부모컬럼  : 자식에서 부모으로 트리 구성
 */
 
-			String sql="delete from notice where notice_num=?";
-			pstmt=con.prepareStatement(sql);
-			pstmt.setInt(1, notice_num);
-			return pstmt.executeUpdate();
+			pstmt6=pstmt5;
+			return pstmt6.executeUpdate();
+
 		}catch (SQLException se) {
 			se.printStackTrace();
 			return -1;
 		}finally {
 			try {
-				if(pstmt!=null)pstmt.close();
+				if(pstmt1!=null)pstmt1.close();
+				if(pstmt2!=null)pstmt2.close();
+				if(pstmt3!=null)pstmt3.close();
+				if(pstmt4!=null)pstmt4.close();
+				if(pstmt5!=null)pstmt5.close();
 				if(con!=null)con.close();
 			}catch (SQLException s) {
 				s.printStackTrace();
