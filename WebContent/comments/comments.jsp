@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+
+
 <%
 	String scontents_num=request.getParameter("contents_num");
 	int contents_num=Integer.parseInt(scontents_num);
@@ -30,24 +33,38 @@
 				var json=JSON.parse(data);
 				var commList=document.getElementById("commList");
 				for(var i=0;i<json.length-1;i++){
-					var pageNum=json[i].pageNum;
 					var users_id=json[i].users_id;
 					var comments_content=json[i].comments_content;
 					var comments_num=json[i].comments_num;
 					var div=document.createElement("div");
 					var pageNum=json[json.length-1].pageNum
+					var comments_lev=json[i].comments_lev;
 					const j=i;
+					if(comments_lev>0){
+						var span=document.createElement("span");
+						for(var z=1;z<=comments_lev;z++){
+							span.innerHTML="&nbps;"
+						}
+						span.innerHTML+="ㄴ";
+					}
 					div.innerHTML="<strong>"+users_id +" :"+comments_content+"</strong>"
 								+"<input type='hidden' value='"+users_id+"'>"
 								+"<input type='hidden' value='"+comments_content+"'>"
 								+"<input type='hidden' value='"+comments_num+"'>"
 								+"<input type='hidden' value='"+pageNum+"'>"
-								+"<input type='button' value='답글' onclick=''>"
+								+"<input type='button' value='답글' onclick='comments_reply("+j+")'>"
 						        +"<input type='button' value='수정' onclick='modify("+j+")'>"
 								+"<input type='button' value='삭제' onclick='comments_delete("+j+")'>";
 					div.id="comment"+j;
 					div.className="comments"
-					commList.appendChild(div);		
+					commList.appendChild(div);	
+					var div2=document.createElement("div");
+					div2.innerHTML="<textarea rows='3' cols='30' id='reply_value'"+j+"></textarea><br>"
+								 +"<input type='button' value='확인' onclick='reply_insert("+comments_num+","+j+")'>"
+								 +"<input type='button' value='취소' onclick=''>";
+					div2.style="display:none";
+					div2.id="comments_re"+j;
+					div.appendChild(div2);
 				}
 			}
 		}
@@ -58,6 +75,22 @@
 		console.log("pageNum1 :"+pageNum1);
 		xhr.open('get', '${cp}/comments/comments.do?contents_num=<%=contents_num%>&users_num=<%=users_num%>&pageNum='+pageNum1, true);
 		xhr.send();
+	}
+	function reply_insert(comments_num,j){
+		var text_area_reply=document.getElementById("reply_value"+j);
+		var replay_value=text_area_reply.value;
+		var xhr=new XMLHttpRequest();
+		xhr.onreadystatechange=function(){
+			
+		}
+		xhr.open('post','',true);
+		xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+		xhr.send();
+		
+	}
+	function comments_reply(j){ // 숨겨진 div 보여지게하기
+		var div=document.getElementById("comments_re"+j);
+		div.style="display:block";
 	}
 	function comments_write(){ //댓글쓰기
 		console.log("쓰기 함수 호출!!!!");
@@ -107,8 +140,13 @@
 				}
 				for(var j=startPage;j<=endPage;j++){
 					console.log("j:"+j);
-					div.innerHTML+=		
-						"<a href='javascript:getList("+j+")'>["+j+"]</a>"
+					if(j==pageNum){
+						div.innerHTML+=		
+							"<a href='javascript:getList("+j+")'><span style='color'>["+j+"]</span></a>"
+					}else{
+						div.innerHTML+=		
+							"<a href='javascript:getList("+j+")'>["+j+"]</a>"
+					}	
 				}
 				if(pageCount>endPage){
 					div.innerHTML+=
@@ -152,16 +190,9 @@
 	function return_comment(j){
 		var div=document.getElementById("comment"+j);
 		var com=div.childNodes;
-		var users_id=com[2].value;
-		var comments_content=com[3].value;
-		var comments_num=com[4].value;
-		div.style.border="2px solid black";
-		div.innerHTML="<strong>"+users_id +" :"+comments_content+"</strong>"
-		+"<input type='hidden' value='"+users_id+"'>"
-		+"<input type='hidden' value='"+comments_content+"'>"
-		+"<input type='hidden' value='"+comments_num+"'>"
-        +"<input type='button' value='수정' onclick='modify("+j+")'>"
-		+"<input type='button' value='삭제'>";
+		var pageNum=com[5].value;
+		paging(pageNum);
+		
 	}
 	function update_comment(j){
 		var div=document.getElementById("comment"+j);
@@ -171,6 +202,7 @@
 		var comments_content=com[1].value;
 		console.log("update 함수의 comments_content : "+comments_content)
 		var comments_num=com[4].value
+		var pageNum=com[5].value
 		console.log("update 함수의 comments_num : "+comments_num)
 		var xhr=new XMLHttpRequest();
 		xhr.onreadystatechange=function(){
@@ -178,10 +210,10 @@
 				var data=xhr.responseText;
 				var json=JSON.parse(data);
 				if(json.result){
-					paging();
+					paging(pageNum);
 				}else{
 					alert("댓글수정을 실패하였습니다");
-					paging();
+					paging(pageNum);
 				}
 			}
 		}
