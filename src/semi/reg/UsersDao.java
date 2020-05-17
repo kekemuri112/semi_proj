@@ -21,7 +21,7 @@ public class UsersDao {
 		PreparedStatement pstmt=null;
 		try {
 			con=ConnectionPool.getCon();
-			String sql="insert into users values(users_seq.nextval,?,?,?,?,?,?)";
+			String sql="insert into users values(users_seq.nextval,?,?,?,?,to_date(?,'yyyymmdd'),?)";
 			pstmt=con.prepareStatement(sql);
 			pstmt.setString(1, vo.getUsers_id());
 			pstmt.setString(2, vo.getUsers_pwd());

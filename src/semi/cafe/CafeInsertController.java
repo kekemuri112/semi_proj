@@ -26,7 +26,8 @@ public class CafeInsertController extends HttpServlet {
 		String cafe_name=req.getParameter("cafe_name");
 		String cafe_desc=req.getParameter("cafe_desc");
 		String cafe_intent=req.getParameter("cafe_intent");
-		CafeVo vo=new CafeVo(0,cafe_name,cafe_desc,cafe_intent,null,null,null);
+		String cafe_admin=(String)req.getSession().getAttribute("users_id");
+		CafeVo vo=new CafeVo(0,cafe_name,cafe_desc,cafe_intent,cafe_admin,null,null);
 		CafeDao dao=CafeDao.getInstance();
 		int n=dao.insert(vo);
 		if(n>0) {
