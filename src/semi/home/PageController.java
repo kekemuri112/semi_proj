@@ -19,6 +19,10 @@ public class PageController extends HttpServlet {
 		int check=Integer.parseInt(req.getParameter("check"));
 		req.setAttribute("cafelist", CafeDao.getInstance().listAll());
 		HttpSession session= req.getSession();
+		
+		
+		
+		
 		String[] checks= {"/register/login.jsp","/register/register.jsp","/register/regsearch.jsp",
 				"/reg/logoutcontroller.do","","","/cafe/cafeapproval.jsp",""};
 		
