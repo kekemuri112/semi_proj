@@ -21,6 +21,7 @@ public class PageController extends HttpServlet {
 		HttpSession session= req.getSession();
 		
 		System.out.println("222222222");
+		System.out.println("222222222222222222");
 		
 		
 		String[] checks= {"/register/login.jsp","/register/register.jsp","/register/regsearch.jsp",
