@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import semi.cafe.CafeDao;
+
 @WebServlet("/reg/registercontroller.do")
 public class RegisterController extends HttpServlet{
 	@Override
@@ -30,6 +32,7 @@ public class RegisterController extends HttpServlet{
 			req.setAttribute("msg", "회원 가입이 실패하였습니다.");
 		}
 		HttpSession session=req.getSession();
+		req.setAttribute("cafelist", CafeDao.getInstance().listAll());
 		session.setAttribute("mfile", "/home/result.jsp");
 		req.getRequestDispatcher("/home/main.jsp").forward(req, resp);
 	}

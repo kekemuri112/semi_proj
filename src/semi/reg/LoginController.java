@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import semi.cafe.CafeDao;
 @WebServlet("/reg/logincontroller.do")
 public class LoginController extends HttpServlet{
 	@Override
@@ -27,6 +29,7 @@ public class LoginController extends HttpServlet{
 		}else {
 			req.setAttribute("msg", "로그인 실패하였습니다.");
 		}
+		req.setAttribute("cafelist", CafeDao.getInstance().listAll());
 		session.setAttribute("headerLog", "/register/rmain.jsp");
 		session.setAttribute("mfile", "/home/result.jsp");
 		req.getRequestDispatcher("/home/main.jsp").forward(req, resp);

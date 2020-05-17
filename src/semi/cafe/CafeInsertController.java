@@ -15,6 +15,7 @@ public class CafeInsertController extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		req.setCharacterEncoding("utf-8");
 		resp.setContentType("text/plain;charset=utf-8");
+		req.setAttribute("cafelist", CafeDao.getInstance().listAll());
 		req.getSession().setAttribute("mfile", "/cafe/cafeInsert.jsp");
 		req.getRequestDispatcher("/home/main.jsp").forward(req, resp);
 	}
@@ -27,7 +28,12 @@ public class CafeInsertController extends HttpServlet {
 		String cafe_desc=req.getParameter("cafe_desc");
 		String cafe_intent=req.getParameter("cafe_intent");
 		String cafe_admin=(String)req.getSession().getAttribute("users_id");
-		CafeVo vo=new CafeVo(0,cafe_name,cafe_desc,cafe_intent,cafe_admin,null,null);
+		String scafe_image=req.getParameter("cafe_image");
+		String cafe_image=null;
+		if(scafe_image!=null) {
+			cafe_image=scafe_image;
+		}
+		CafeVo vo=new CafeVo(0,cafe_name,cafe_desc,cafe_intent,cafe_admin,null,cafe_image);
 		CafeDao dao=CafeDao.getInstance();
 		int n=dao.insert(vo);
 		if(n>0) {
@@ -35,6 +41,7 @@ public class CafeInsertController extends HttpServlet {
 		}else {
 			req.setAttribute("msg", "요청실패");
 		}
+		req.setAttribute("cafelist", CafeDao.getInstance().listAll());
 		req.getSession().setAttribute("mfile", "/home/result.jsp");
 		req.getRequestDispatcher("/home/main.jsp").forward(req, resp);
 	}

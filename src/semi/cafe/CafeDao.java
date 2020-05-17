@@ -159,20 +159,14 @@ public class CafeDao {
 		PreparedStatement pstmt=null;
 		try {
 			con=ConnectionPool.getCon();
-			String sql="insert into cafe (cafe_num,cafe_name,cafe_desc,cafe_intent,cafe_admin,cafe_approved,cafe_img)"
+			String sql="insert into cafe (cafe_num,cafe_name,cafe_desc,cafe_intent,cafe_admin,cafe_approved,cafe_image)"
 					+ " values(cafe_seq.nextval,?,?,?,?,'대기',?)";
 			pstmt=con.prepareStatement(sql);
 			pstmt.setString(1, vo.getCafe_name());
 			pstmt.setString(2, vo.getCafe_desc());
 			pstmt.setString(3, vo.getCafe_intent());
 			pstmt.setString(4, vo.getCafe_admin());
-			if(vo.getCafe_image()==null) {
-				System.out.println("if문 첫번째");
-				pstmt.setString(5, "null");
-			}else {
-				System.out.println("if문 두번째");
-				pstmt.setString(5, vo.getCafe_image());
-			}
+			pstmt.setString(5, vo.getCafe_image());
 			return pstmt.executeUpdate();
 		}catch (SQLException se) {
 			se.printStackTrace();

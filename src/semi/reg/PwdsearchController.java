@@ -15,7 +15,8 @@ public class PwdsearchController extends HttpServlet{
 		req.setCharacterEncoding("utf-8");
 		resp.setContentType("text/plain;charset=utf-8");
 		HttpSession session=req.getSession();
-		session.setAttribute("mfile", "/register/search.jsp");
+		session.setAttribute("mfile", "/register/search.jsp?idsearch=2");
+		req.setAttribute("idsearch", 2);
 		req.getRequestDispatcher("/home/main.jsp").forward(req, resp);
 	}
 	@Override

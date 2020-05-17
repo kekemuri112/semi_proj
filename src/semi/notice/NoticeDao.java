@@ -58,8 +58,67 @@ public class NoticeDao {
 			}
 		}
 	}
+	
+	//카페장인인지 아닌지 알려줌
+	public String cafeAdmin(String users_id,int cafe_num) {
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		try {
+			con=ConnectionPool.getCon();
+			String sql="select * from cafe where cafe_admin=? and cafe_num=?";
+			pstmt=con.prepareStatement(sql);
+			pstmt.setString(1, users_id);
+			pstmt.setInt(2, cafe_num);
+			int n=pstmt.executeUpdate();
+			if(n>0) {
+				return "true";	
+			}else {
+				return "false";
+			}
+		}catch (SQLException se) {
+			se.printStackTrace();
+			return "false";
+		}finally {
+			try {
+				if(pstmt!=null)pstmt.close();
+				if(con!=null)con.close();
+			}catch (SQLException s) {
+				s.printStackTrace();
+			}
+		}
+	}
+
+	//회원인지 아닌지 알려줌
+	public String usersCafe(int users_num,int cafe_num) {
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		try {
+			con=ConnectionPool.getCon();
+			String sql="select * from userscafe where users_num=? and cafe_num=? and userscafe_approved='승인'";
+			pstmt=con.prepareStatement(sql);
+			pstmt.setInt(1, users_num);
+			pstmt.setInt(2, cafe_num);
+			int n=pstmt.executeUpdate();
+			if(n>0) {
+				return "true";	
+			}else {
+				return "false";
+			}
+		}catch (SQLException se) {
+			se.printStackTrace();
+			return "false";
+		}finally {
+			try {
+				if(pstmt!=null)pstmt.close();
+				if(con!=null)con.close();
+			}catch (SQLException s) {
+				s.printStackTrace();
+			}
+		}
+	}
+	
+	//모든 게시판 목록 올려줌
 	public ArrayList<NoticeVo> listAll(int cafe_num){
-		System.out.println(cafe_num+"listAll메소드에 접근함.");
 		Connection con=null;
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
@@ -117,9 +176,9 @@ public class NoticeDao {
 			return -1;
 		}finally {
 			try {
-			if(rs!=null)rs.close();
-			if(pstmt!=null)rs.close();
-			if(con!=null)rs.close();
+				if(rs!=null)rs.close();
+				if(pstmt!=null)rs.close();
+				if(con!=null)rs.close();
 			}catch(SQLException s) {
 				s.printStackTrace();
 			}

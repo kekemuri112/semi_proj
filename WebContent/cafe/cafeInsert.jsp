@@ -7,7 +7,7 @@
 		카페소개글<br>
 		<input type="text" name="cafe_desc"><br>
 		개설의도<br>
-		<input type="text" name="cafe_intent"><br>
+		<textarea rows="5" cols="50" name="cafe_intent"></textarea>
 		<input type="submit" value="개설요청">
 	</form>
 </div>
