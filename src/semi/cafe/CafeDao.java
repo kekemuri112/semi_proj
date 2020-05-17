@@ -123,7 +123,7 @@ public class CafeDao {
 		ResultSet rs=null;
 		try {
 			con=ConnectionPool.getCon();
-			String sql="select * from cafe where cafe_approved='승인' order by cafe_name desc";
+			String sql="select * from cafe where cafe_approved='승인' order by cafe_name";
 			pstmt=con.prepareStatement(sql);
 			rs=pstmt.executeQuery();
 			ArrayList<CafeVo> list=new ArrayList<CafeVo>();

@@ -9,10 +9,10 @@
 			</tr>
 			<tr>
 				<th>
-					<a href="#">아이디 찾기</a>
+					<a href="${cp }/reg/idsearch.do">아이디 찾기</a>
 				</th>
 				<th>
-					<a href="#">비밀번호찾기</a>
+					<a href="${cp }/reg/pwdsearch.do">비밀번호찾기</a>
 				</th>
 			</tr>		
 			<tr>

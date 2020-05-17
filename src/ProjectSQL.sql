@@ -14,6 +14,7 @@ CREATE TABLE CAFE
 (
 	cafe_num number(4) primary key,
 	cafe_name varchar2(30) unique,
+	cafe_desc varchar2(30),
 	cafe_intent varchar2(50),
 	cafe_admin varchar2(20),
 	cafe_approved varchar2(10),

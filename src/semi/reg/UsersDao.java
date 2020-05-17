@@ -87,6 +87,7 @@ public class UsersDao {
 				return rs.getString("users_id");
 			}
 		}catch(SQLException se) {
+			System.out.println("search메소드 실행시...sqlexception...입니다..");
 			se.printStackTrace();
 			return null;
 		}finally {

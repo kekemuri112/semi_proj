@@ -99,6 +99,7 @@
 		xhr.open('get','${cp}/cafe/cafestatus.do?cafe_num='+cafe_num,true);
 		xhr.send();
 	}
+	
 	function cafeAcc(cafe_num,pageNum) {
 		var xhr=new XMLHttpRequest();
 		xhr.onreadystatechange=function(){

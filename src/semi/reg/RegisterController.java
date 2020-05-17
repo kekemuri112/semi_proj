@@ -19,7 +19,8 @@ public class RegisterController extends HttpServlet{
 		String users_pwd = req.getParameter("users_pwd");				
 		String users_name = req.getParameter("users_name");				
 		String users_email = req.getParameter("users_email");				
-		String users_birth = req.getParameter("users_birth");				
+		String users_birth = req.getParameter("users_birth");
+		System.out.println("users_birth"+users_birth);
 		String users_phone = req.getParameter("users_phone");
 		UsersVo vo=new UsersVo(0, users_id, users_pwd, users_name, users_email, users_birth, users_phone);
 		UsersDao dao=UsersDao.getInstance();
