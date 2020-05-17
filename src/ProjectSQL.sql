@@ -14,6 +14,7 @@ CREATE TABLE CAFE
 (
 	cafe_num number(4) primary key,
 	cafe_name varchar2(30) unique,
+	cafe_desc varchar2(30),
 	cafe_intent varchar2(50),
 	cafe_admin varchar2(20),
 	cafe_approved varchar2(10),
@@ -52,7 +53,7 @@ CREATE TABLE CONTENTS
 	contents_regdate date,
 	contents_modifydate date
 )
-CREATE SEQUENCE CONTENT_SEQ;
+CREATE SEQUENCE CONTENTS_SEQ;
 
 CREATE TABLE COMMENTS
 (
@@ -63,8 +64,8 @@ CREATE TABLE COMMENTS
 	comments_lev number(5),
 	comments_ref number(5),
 	comments_step number(5)
-)
-       CREATE SEQUENCE COMMENT_SEQ;
+);
+CREATE SEQUENCE COMMENTS_SEQ;
 
 CREATE TABLE CAFEREG
 (
