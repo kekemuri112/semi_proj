@@ -20,7 +20,7 @@ public class PageController extends HttpServlet {
 		req.setAttribute("cafelist", CafeDao.getInstance().listAll());
 		HttpSession session= req.getSession();
 		
-		
+		System.out.println("222222222222222222");
 		
 		
 		String[] checks= {"/register/login.jsp","/register/register.jsp","/register/regsearch.jsp",
