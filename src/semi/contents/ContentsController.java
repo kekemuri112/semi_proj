@@ -18,6 +18,8 @@ public class ContentsController extends HttpServlet {
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String scafe_num=req.getParameter("cafe_num");
+		String field=req.getParameter("field");
+		String keyword=req.getParameter("keyword");
 		int cafe_num=0;
 		if(scafe_num!=null) {
 			cafe_num=Integer.parseInt(scafe_num);
@@ -37,8 +39,10 @@ public class ContentsController extends HttpServlet {
 		}
 		int startRow=(pageNum-1)*10+1;
 		int endRow=startRow+9;
-		ArrayList<Contents_ListVo> list=dao.listAll(cafe_num, startRow, endRow,notice_num);
-		int pageCount=(int)Math.ceil(dao.getCount(cafe_num,notice_num)/10.0);
+		
+		System.out.println("notice_num:"+notice_num);
+		ArrayList<Contents_ListVo> list=dao.listAll(cafe_num, startRow, endRow, notice_num, field, keyword);
+		int pageCount=(int)Math.ceil(dao.getCount(cafe_num,notice_num, field, keyword)/10.0);
 		int startPage=((pageNum-1)/5)*5+1;
 		int endPage=startPage+4;
 		if(endPage>pageCount){
@@ -66,6 +70,7 @@ public class ContentsController extends HttpServlet {
 			bl=ndao.cafeAdmin(users_id,cafe_num);
 			int users_num=(int)session.getAttribute("users_num");
 			bl2=ndao.usersCafe(users_num, cafe_num);
+			System.out.println("카페들어왔을때...."+bl+"유저일때..."+bl2);
 		}
 		req.setAttribute("cafe_admin", bl);
 		req.setAttribute("userscafe", bl2);

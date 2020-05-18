@@ -28,7 +28,7 @@ public class Contents_insertController extends HttpServlet{
 		resp.setContentType("text/plain;charset=utf-8");
 		int notice_num=Integer.parseInt(req.getParameter("notice_num"));
 		int users_num=(int)req.getSession().getAttribute("users_num");
-		ContentsDao dao=ContentsDao.getDao();
+		ContentsDaoBackup dao=ContentsDaoBackup.getDao();
 		String contents_title=req.getParameter("title");
 		String contents_post=req.getParameter("post");
 		ContentsVo vo=new ContentsVo(0, notice_num, users_num, contents_title, contents_post, null, null);

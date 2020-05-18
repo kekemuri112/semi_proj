@@ -19,7 +19,7 @@ public class Contents_DetailController extends HttpServlet{
 			scontents_num=(String)req.getAttribute("contents_num");
 		}
 		int contents_num=Integer.parseInt(scontents_num);
-		ContentsDao dao=ContentsDao.getDao();
+		ContentsDaoBackup dao=ContentsDaoBackup.getDao();
 		Contents_detailVo vo=dao.detail(contents_num);
 		req.setAttribute("vo", vo);
 		req.setAttribute("noticelist", req.getAttribute("noticelist"));

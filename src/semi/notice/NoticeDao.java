@@ -94,7 +94,7 @@ public class NoticeDao {
 		PreparedStatement pstmt=null;
 		try {
 			con=ConnectionPool.getCon();
-			String sql="select * from userscafe where users_num=? and cafe_num=? and userscafe_approved='승인'";
+			String sql="select * from users_cafe where users_num=? and cafe_num=? and users_cafe_approved='승인'";
 			pstmt=con.prepareStatement(sql);
 			pstmt.setInt(1, users_num);
 			pstmt.setInt(2, cafe_num);
