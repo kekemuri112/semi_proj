@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import semi.cafe.CafeDao;
+import semi.notice.NoticeDao;
 
 @WebServlet("/contents/contents.do")
 public class ContentsController extends HttpServlet {
@@ -43,16 +44,39 @@ public class ContentsController extends HttpServlet {
 		if(endPage>pageCount){
 			endPage=pageCount;
 		}
-		HttpSession session=req.getSession();
-		session.setAttribute("notice_num", notice_num);
-		session.setAttribute("notice_name", notice_name);
-		session.setAttribute("cafe_num", cafe_num);
-		session.setAttribute("list", list);
+		req.setAttribute("notice_num", notice_num);
+		req.setAttribute("notice_name", notice_name);
+		req.setAttribute("cafe_num", cafe_num);
+		req.setAttribute("list", list);
 		req.setAttribute("pageCount", pageCount);
 		req.setAttribute("startPage", startPage);
 		req.setAttribute("endPage", endPage);
 		req.setAttribute("pageNum",pageNum);
-		session.setAttribute("mfile","/contents/content.jsp");
+		
+		req.setAttribute("header1", "/home/wraphome.jsp");
+		req.setAttribute("header2", "/home/wrapmain.jsp");
+		req.setAttribute("headerLog", "/register/rmain.jsp");
+		
+		HttpSession session= req.getSession();
+		NoticeDao ndao=NoticeDao.getInstance();
+		String users_id=(String)session.getAttribute("users_id");
+		String bl="false";
+		String bl2="false";
+		if(users_id!=null) {
+			bl=ndao.cafeAdmin(users_id,cafe_num);
+			int users_num=(int)session.getAttribute("users_num");
+			bl2=ndao.usersCafe(users_num, cafe_num);
+		}
+		req.setAttribute("cafe_admin", bl);
+		req.setAttribute("userscafe", bl2);
+		if(cafe_num!=0&&notice_num!=0) {
+			req.setAttribute("noticelist", NoticeDao.getInstance().listAll(notice_num));
+			req.setAttribute("mlist", "/notice/noteiclist.jsp");
+		}else {
+			req.setAttribute("cafelist", CafeDao.getInstance().listAll());
+			req.setAttribute("mlist", "/cafe/cafelist.jsp");
+		}
+		req.setAttribute("mfile","/contents/content.jsp");
 		req.getRequestDispatcher("/home/main.jsp").forward(req, resp);
 	}
 }

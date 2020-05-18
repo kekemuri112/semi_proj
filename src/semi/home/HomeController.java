@@ -29,11 +29,11 @@ public class HomeController extends HttpServlet{
 		CafeDao dao=CafeDao.getInstance();
 		ArrayList<CafeVo> cafelist=dao.listAll();	
 		req.setAttribute("cafelist", cafelist);
-		session.setAttribute("header1", "/home/wraphome.jsp");
-		session.setAttribute("header2", "/home/wrapmain.jsp");
-		session.setAttribute("headerLog", "/register/rmain.jsp");
-		session.setAttribute("mlist", "/cafe/cafelist.jsp");
-		session.setAttribute("mfile", "/contents/cmain.jsp");
+		req.setAttribute("header1", "/home/wraphome.jsp");
+		req.setAttribute("header2", "/home/wrapmain.jsp");
+		req.setAttribute("headerLog", "/register/rmain.jsp");
+		req.setAttribute("mlist", "/cafe/cafelist.jsp");
+		req.setAttribute("mfile", "/contents/cmain.jsp");
 		req.getRequestDispatcher("/home/main.jsp").forward(req, resp);
 	}
 }

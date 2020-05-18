@@ -17,12 +17,11 @@ public class UpdateController extends HttpServlet{
 		String users_id=req.getParameter("users_id");
 		UsersVo vo=UsersDao.getInstance().information(users_id);
 		req.setAttribute("vo", vo);
-		HttpSession session=req.getSession();
-		session.setAttribute("headerLog", "/register/rmain.jsp");
-		session.setAttribute("header2", "/home/wrapmain.jsp");
-		session.setAttribute("mlist", "/cafe/cafelist.do");
-		session.setAttribute("mfile", "/contents/cmain.jsp");
-		req.getRequestDispatcher("").forward(req, resp);
+		req.setAttribute("headerLog", "/register/rmain.jsp");
+		req.setAttribute("header2", "/home/wrapmain.jsp");
+		req.setAttribute("mlist", "/cafe/cafelist.do");
+		req.setAttribute("mfile", "/contents/cmain.jsp");
+		req.getRequestDispatcher("/home/main.jsp").forward(req, resp);
 	}
 	
 	

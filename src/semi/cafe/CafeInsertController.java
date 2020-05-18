@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import semi.notice.NoticeDao;
+
 
 @WebServlet("/cafe/cafeinsert.do")
 public class CafeInsertController extends HttpServlet {
@@ -15,8 +17,12 @@ public class CafeInsertController extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		req.setCharacterEncoding("utf-8");
 		resp.setContentType("text/plain;charset=utf-8");
+		req.setAttribute("header1", "/home/wraphome.jsp");
+		req.setAttribute("header2", "/home/wrapmain.jsp");
+		req.setAttribute("headerLog", "/register/rmain.jsp");
 		req.setAttribute("cafelist", CafeDao.getInstance().listAll());
-		req.getSession().setAttribute("mfile", "/cafe/cafeInsert.jsp");
+		req.setAttribute("mlist", "/cafe/cafelist.jsp");
+		req.setAttribute("mfile", "/cafe/cafeInsert.jsp");
 		req.getRequestDispatcher("/home/main.jsp").forward(req, resp);
 	}
 	
@@ -41,8 +47,12 @@ public class CafeInsertController extends HttpServlet {
 		}else {
 			req.setAttribute("msg", "요청실패");
 		}
+		req.setAttribute("header1", "/home/wraphome.jsp");
+		req.setAttribute("header2", "/home/wrapmain.jsp");
+		req.setAttribute("headerLog", "/register/rmain.jsp");
 		req.setAttribute("cafelist", CafeDao.getInstance().listAll());
-		req.getSession().setAttribute("mfile", "/home/result.jsp");
+		req.setAttribute("mlist", "/cafe/cafelist.jsp");
+		req.setAttribute("mfile", "/home/result.jsp");
 		req.getRequestDispatcher("/home/main.jsp").forward(req, resp);
 	}
 	

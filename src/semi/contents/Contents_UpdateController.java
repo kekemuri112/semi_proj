@@ -7,6 +7,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import semi.cafe.CafeDao;
 @WebServlet("/contents/update.do")
 public class Contents_UpdateController extends HttpServlet{
 	@Override
@@ -18,8 +20,15 @@ public class Contents_UpdateController extends HttpServlet{
 		ContentsDao dao=ContentsDao.getDao();
 		int n=dao.update_point(contents_title,contents_post,contents_num);
 		if(n>0) {
-			req.setAttribute("contents_num",contents_num );
-			req.getRequestDispatcher("/semi/detail.do").forward(req, resp);
+			req.setAttribute("noticelist", req.getAttribute("noticelist"));
+			req.setAttribute("cafelist", CafeDao.getInstance().listAll());
+			req.setAttribute("header1", req.getAttribute("header1"));
+			req.setAttribute("header2", req.getAttribute("header2"));
+			req.setAttribute("headerLog", req.getAttribute("headerLog"));
+			req.setAttribute("mlist", "/notice/noticelist.jsp");
+			req.setAttribute("mfile", "/home/result.jsp");
+			req.setAttribute("msg","수정완료" );
+			req.getRequestDispatcher("/home/main.jsp").forward(req, resp);
 		}else {
 			req.setAttribute("msg", "��������!!!");
 		}

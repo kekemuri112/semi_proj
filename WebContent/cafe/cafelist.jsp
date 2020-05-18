@@ -4,8 +4,8 @@
 <h1>카페목록</h1>
 <div>
 	<ul>
-		<c:forEach var="vo" items="${cafelist}">
-			<a href="${cp }/notice/noticelist.do?cafe_num=${vo.cafe_num }&cafe_name=${vo.cafe_name}">
+		<c:forEach var="vo" items="${cafelist }">
+			<a href="${cp }/contents/contents.do?cafe_num=${vo.cafe_num }&cafe_name=${vo.cafe_name}">
 			<li>${vo.cafe_name }</li></a>
 		</c:forEach>
 		<c:choose>

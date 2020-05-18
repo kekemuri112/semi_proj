@@ -30,11 +30,11 @@ public class AnswerController extends HttpServlet{
 		}
 		ArrayList<String> list=CaferegDao.getInstance().getQuestions(cafe_num);
 		req.setAttribute("list", list);
-		session.setAttribute("headerLog", "/register/rmain.jsp");
-		session.setAttribute("header2", "/home/wrapmain.jsp");
-		session.setAttribute("mlist", "/cafe/cafelist.do");
-		session.setAttribute("mfile", "/contents/cmain.jsp");
-		req.getRequestDispatcher("/questions/answer.jsp").forward(req, resp);
+		req.setAttribute("headerLog", "/register/rmain.jsp");
+		req.setAttribute("header2", "/home/wrapmain.jsp");
+		req.setAttribute("mlist", "/cafe/cafelist.do");
+		req.setAttribute("mfile", "/questions/answer.jsp");
+		req.getRequestDispatcher("/home/main.jsp").forward(req, resp);
 	}
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

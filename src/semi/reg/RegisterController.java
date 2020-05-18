@@ -33,7 +33,7 @@ public class RegisterController extends HttpServlet{
 		}
 		HttpSession session=req.getSession();
 		req.setAttribute("cafelist", CafeDao.getInstance().listAll());
-		session.setAttribute("mfile", "/home/result.jsp");
+		req.setAttribute("mfile", "/home/result.jsp");
 		req.getRequestDispatcher("/home/main.jsp").forward(req, resp);
 	}
 }

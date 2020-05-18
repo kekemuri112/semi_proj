@@ -46,7 +46,7 @@ public class IdsearchController extends HttpServlet{
 			req.setAttribute("msg", users_id+"입니다.");
 		}
 		req.setAttribute("cafelist", CafeDao.getInstance().listAll());
-		session.setAttribute("mfile", "/home/result.jsp");
+		req.setAttribute("mfile", "/home/result.jsp");
 		req.getRequestDispatcher("/home/main.jsp").forward(req, resp);
 	}
 }

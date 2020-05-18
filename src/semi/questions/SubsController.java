@@ -7,7 +7,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+
 @WebServlet("/questions/subscontroller.do")
 public class SubsController extends HttpServlet {
 	@Override
@@ -26,11 +26,10 @@ public class SubsController extends HttpServlet {
 		}else {
 			req.setAttribute("msg", "질문저장실패");
 		}
-		HttpSession session=req.getSession();
-		session.setAttribute("headerLog", "/register/rmain.jsp");
-		session.setAttribute("header2", "/home/wrapmain.jsp");
-		session.setAttribute("mlist", "/cafe/cafelist.do");
-		session.setAttribute("mfile", "/contents/cmain.jsp");
+		req.setAttribute("headerLog", "/register/rmain.jsp");
+		req.setAttribute("header2", "/home/wrapmain.jsp");
+		req.setAttribute("mlist", "/cafe/cafelist.do");
+		req.setAttribute("mfile", "/contents/cmain.jsp");
 		req.getRequestDispatcher("/questions/subscription.jsp").forward(req, resp);
 	}
 }

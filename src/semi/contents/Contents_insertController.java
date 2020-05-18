@@ -17,10 +17,9 @@ public class Contents_insertController extends HttpServlet{
 		resp.setContentType("text/plain;charset=utf-8");
 		int cafe_num=Integer.parseInt(req.getParameter("cafe_num"));
 		int notice_num=Integer.parseInt(req.getParameter("notice_num"));
-		HttpSession session=req.getSession();
-		session.setAttribute("cafe_num", cafe_num);
-		session.setAttribute("notice_num", notice_num);
-		session.setAttribute("mfile", "/contents/contents_write.jsp");
+		req.setAttribute("cafe_num", cafe_num);
+		req.setAttribute("notice_num", notice_num);
+		req.setAttribute("mfile", "/contents/contents_write.jsp");
 		req.getRequestDispatcher("/home/main.jsp").forward(req, resp);	
 	}
 	@Override
@@ -38,12 +37,10 @@ public class Contents_insertController extends HttpServlet{
 			dao.updatePoint(users_num);
 		}
 		int cafe_num=dao.getCafe_Num(notice_num);
-		
-		HttpSession session=req.getSession();
 
-		session.setAttribute("notice_num", notice_num);
-		session.setAttribute("cafe_num", cafe_num);
-		session.setAttribute("mfile", "/contents/contents.do");
+		req.setAttribute("notice_num", notice_num);
+		req.setAttribute("cafe_num", cafe_num);
+		req.setAttribute("mfile", "/contents/contents.do");
 		req.getRequestDispatcher("/home/main.jsp").forward(req, resp);;
 	}
 }
