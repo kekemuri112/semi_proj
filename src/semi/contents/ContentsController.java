@@ -26,6 +26,7 @@ public class ContentsController extends HttpServlet {
 		}
 		String spageNum=req.getParameter("pageNum");
 		String snotice_num=req.getParameter("notice_num");
+		System.out.println(snotice_num);
 		int notice_num=0;
 		String notice_name=null;
 		ContentsDao dao=ContentsDao.getDao();
@@ -39,24 +40,28 @@ public class ContentsController extends HttpServlet {
 		}
 		int startRow=(pageNum-1)*10+1;
 		int endRow=startRow+9;
-		
-		System.out.println("notice_num:"+notice_num);
-		ArrayList<Contents_ListVo> list=dao.listAll(cafe_num, startRow, endRow, notice_num, field, keyword);
-		int pageCount=(int)Math.ceil(dao.getCount(cafe_num,notice_num, field, keyword)/10.0);
-		int startPage=((pageNum-1)/5)*5+1;
-		int endPage=startPage+4;
-		if(endPage>pageCount){
-			endPage=pageCount;
+		ArrayList<Integer> list2=dao.getNotice_num(cafe_num);
+		if(list2!=null) {
+			ArrayList<Contents_ListVo> list=dao.listAll(cafe_num, startRow, endRow, notice_num, field, keyword);
+			int pageCount=(int)Math.ceil(dao.getCount(cafe_num,notice_num, field, keyword)/10.0);
+			int startPage=((pageNum-1)/5)*5+1;
+			int endPage=startPage+4;
+			if(endPage>pageCount){
+				endPage=pageCount;
+			}
+			req.setAttribute("notice_num", notice_num);
+			req.setAttribute("notice_name", notice_name);
+			req.setAttribute("cafe_num", cafe_num);
+			req.setAttribute("list", list);
+			req.setAttribute("pageCount", pageCount);
+			req.setAttribute("startPage", startPage);
+			req.setAttribute("endPage", endPage);
+			req.setAttribute("pageNum",pageNum);
+			req.setAttribute("mfile","/contents/content.jsp");
+		}else {
+			req.setAttribute("msg","게시글이 없습니다.");
+			req.setAttribute("mfile","/home/result.jsp");
 		}
-		req.setAttribute("notice_num", notice_num);
-		req.setAttribute("notice_name", notice_name);
-		req.setAttribute("cafe_num", cafe_num);
-		req.setAttribute("list", list);
-		req.setAttribute("pageCount", pageCount);
-		req.setAttribute("startPage", startPage);
-		req.setAttribute("endPage", endPage);
-		req.setAttribute("pageNum",pageNum);
-		
 		req.setAttribute("header1", "/home/wraphome.jsp");
 		req.setAttribute("header2", "/home/wrapmain.jsp");
 		req.setAttribute("headerLog", "/register/rmain.jsp");
@@ -70,10 +75,9 @@ public class ContentsController extends HttpServlet {
 			bl=ndao.cafeAdmin(users_id,cafe_num);
 			int users_num=(int)session.getAttribute("users_num");
 			bl2=ndao.usersCafe(users_num, cafe_num);
-			System.out.println("카페들어왔을때...."+bl+"유저일때..."+bl2);
 		}
-		req.setAttribute("cafe_admin", bl);
-		req.setAttribute("userscafe", bl2);
+		session.setAttribute("cafe_admin", bl);
+		session.setAttribute("userscafe", bl2);
 		if(cafe_num!=0&&notice_num!=0) {
 			req.setAttribute("noticelist", NoticeDao.getInstance().listAll(notice_num));
 			req.setAttribute("mlist", "/notice/noteiclist.jsp");
@@ -81,7 +85,6 @@ public class ContentsController extends HttpServlet {
 			req.setAttribute("cafelist", CafeDao.getInstance().listAll());
 			req.setAttribute("mlist", "/cafe/cafelist.jsp");
 		}
-		req.setAttribute("mfile","/contents/content.jsp");
 		req.getRequestDispatcher("/home/main.jsp").forward(req, resp);
 	}
 }

@@ -9,10 +9,10 @@
 <body>
 	<div>
 		<h1>가입 질문 생성</h1>
-		<form method="post" action="/questions/subscontroller.do">
-			<input type="hidden" name="cafe_num" value='111'><br>
-			<textarea rows="5" cols="50" name="cafereg_question"></textarea><br>
-			<input type="submit" value="가입목록">
+		<form method="post" action="${cp }/questions/subscontroller.do">
+			<input type="hidden" name="cafe_num" value="${cafe_num }">
+			<textarea rows="5" cols="50" name="question"></textarea><br>
+			<input type="submit" value="등록">
 			<input type="button" value="등록취소" onclick="subsCancel()">
 		</form>
 	</div>

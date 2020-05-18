@@ -17,7 +17,7 @@ public class Contents_UpdateController extends HttpServlet{
 		String contents_post=req.getParameter("contents_post");
 		String scontents_num=req.getParameter("contents_num");
 		int contents_num=Integer.parseInt(scontents_num);
-		ContentsDaoBackup dao=ContentsDaoBackup.getDao();
+		ContentsDao dao=ContentsDao.getDao();
 		int n=dao.update_point(contents_title,contents_post,contents_num);
 		if(n>0) {
 			req.setAttribute("noticelist", req.getAttribute("noticelist"));

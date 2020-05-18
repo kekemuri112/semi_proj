@@ -1,7 +1,6 @@
 package semi.questions;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,32 +9,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import semi.notice.NoticeDao;
+
 //카페 가입 버튼 눌렀을때...컨트롤러
 @WebServlet("/questions/answer.do")
 public class AnswerController extends HttpServlet{
-	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		req.setCharacterEncoding("utf-8");
-		resp.setContentType("text/plain;charset=utf-8");
-		String scafe_num=req.getParameter("cafe_num");
-		int cafe_num=0;
-		if(scafe_num!=null) {
-			cafe_num=Integer.parseInt(scafe_num);
-		}
-		HttpSession session=req.getSession();
-		String susers_num=(String)session.getAttribute("users_num");
-		if(susers_num==null) {
-			req.setAttribute("msg", "fail");
-			req.getRequestDispatcher("").forward(req, resp);
-		}
-		ArrayList<String> list=CaferegDao.getInstance().getQuestions(cafe_num);
-		req.setAttribute("list", list);
-		req.setAttribute("headerLog", "/register/rmain.jsp");
-		req.setAttribute("header2", "/home/wrapmain.jsp");
-		req.setAttribute("mlist", "/cafe/cafelist.do");
-		req.setAttribute("mfile", "/questions/answer.jsp");
-		req.getRequestDispatcher("/home/main.jsp").forward(req, resp);
-	}
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		req.setCharacterEncoding("utf-8");
@@ -44,15 +22,25 @@ public class AnswerController extends HttpServlet{
 		String scafereg_num=req.getParameter("cafereg_num");
 		String scafe_num=req.getParameter("cafe_num");
 		HttpSession session=req.getSession();
-		String susers_num=(String)session.getAttribute("users_num");
+		int users_num=(int)session.getAttribute("users_num");
 		int cafereg_num=0;
 		int cafe_num=0;
-		int users_num=0;
 		if(scafereg_num!=null) {
 			cafereg_num=Integer.parseInt(scafereg_num);
 			cafe_num=Integer.parseInt(scafe_num);
-			users_num=Integer.parseInt(susers_num);
 		}
 		int n=CaferegDao.getInstance().usersCafeInsert(contents, cafereg_num, cafe_num, users_num);
+		if(n>0) {
+			req.setAttribute("msg", "가입요청성공");
+		}else {
+			req.setAttribute("msg", "가입요청실패");
+		}
+		req.setAttribute("noticelist", NoticeDao.getInstance().listAll(cafe_num));
+		req.setAttribute("header1", "/home/wraphome.jsp");
+		req.setAttribute("header2", "/home/wrapmain.jsp");
+		req.setAttribute("headerLog", "/register/rmain.jsp");
+		req.setAttribute("mlist", "/notice/noticelist.jsp");
+		req.setAttribute("mfile", "/home/result.jsp");
+		req.getRequestDispatcher("/home/main.jsp").forward(req, resp);
 	}
 }

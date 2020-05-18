@@ -15,10 +15,10 @@ public class CafeDao {
 	public static CafeDao getInstance() {
 		return instance;
 	}
+	
 	public int cafeStatus(int cafe_num,boolean bl) {
 		Connection con=null;
 		PreparedStatement pstmt=null;
-		System.out.println("cafe_num"+cafe_num);
 		try {
 			con=ConnectionPool.getCon();
 			String sql=null;
@@ -32,8 +32,7 @@ public class CafeDao {
 			pstmt.setInt(1, cafe_num);
 			return pstmt.executeUpdate();
 		}catch(SQLException se) {
-			System.out.println("cafedao.cafeStatus()여기서 터짐");
-			//se.printStackTrace();
+			se.printStackTrace();
 			return -1;
 		}finally {
 			try {

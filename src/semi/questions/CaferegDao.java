@@ -20,6 +20,7 @@ public class CaferegDao {
 		PreparedStatement pstmt=null;
 		try {
 			con=ConnectionPool.getCon();
+			System.out.println("cafe_num:"+cafe_num+",cafereg_question:"+cafereg_question);
 			String sql="insert into cafereg values(cafereg_seq.nextval,?,?)";
 			pstmt=con.prepareStatement(sql);
 			pstmt.setInt(1, cafe_num);
@@ -44,13 +45,13 @@ public class CaferegDao {
 		ResultSet rs=null;
 		try {
 			con=ConnectionPool.getCon();
-			String sql="select answer_contents from answer where cafe_num=?";
+			String sql="select cafereg_question from cafereg where cafe_num=?";
 			pstmt=con.prepareStatement(sql);
 			pstmt.setInt(1, cafe_num);
 			rs=pstmt.executeQuery();
 			ArrayList<String> list=new ArrayList<String>();
 			while(rs.next()) {
-				list.add(rs.getString("answer_contents"));
+				list.add(rs.getString("cafereg_question"));
 			}
 			return list;
 		}catch(SQLException se) {
@@ -74,8 +75,10 @@ public class CaferegDao {
 		try {
 			con=ConnectionPool.getCon();
 			//카페가입목록 인설트
-			String sql1="insert into users_cafe values(users_cafe_seq.nextval,?,?,'대기중',0)";
+			String sql1="insert into users_cafe values(users_cafe_seq.nextval,?,?,0,'대기')";
 			pstmt1=con.prepareStatement(sql1);
+			pstmt1.setInt(1, cafe_num);
+			pstmt1.setInt(2, users_num);
 			pstmt1.executeUpdate();
 			int n=0;
 			for(String aContent:contents) {
@@ -83,6 +86,10 @@ public class CaferegDao {
 				pstmt2=con.prepareStatement(sql2);
 				pstmt2.setInt(1, cafereg_num);
 				pstmt2.setString(2, aContent);
+				System.out.println("aContent:"+aContent);
+				System.out.println("cafereg_num:"+cafereg_num);
+				System.out.println("cafe_num:"+cafe_num);
+				System.out.println("users_num:"+users_num);
 				n += pstmt2.executeUpdate();
 			}
 			return n;

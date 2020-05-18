@@ -23,3 +23,8 @@
 		</table>
 	</form>
 </div>
+<script type="text/javascript">
+	function loginCancel(){
+		window.history.back();
+	}
+</script>
