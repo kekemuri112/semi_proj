@@ -17,6 +17,7 @@ public class HomeController extends HttpServlet{
 		req.setCharacterEncoding("utf-8");
 		resp.setContentType("text/plain;charset=utf-8");
 		String cp=req.getContextPath();
+		req.getSession().setAttribute("cafe_num", 0);
 		req.getServletContext().setAttribute("cp", cp);
 		req.setAttribute("cafelist", CafeDao.getInstance().listAll());
 		req.setAttribute("header1", "/home/wraphome.jsp");

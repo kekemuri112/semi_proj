@@ -16,10 +16,12 @@
 		<input type="button" value="등록하기" onclick="comments_write()">
 	</div>
 <script type="text/javascript">
-	window.onload=function(){
-		getList();
-		page();
-	}
+
+window.addEventListener('load',function(){
+	getList();
+	page();
+});
+
 	function getList(pageNum){ //리스트출력
 		var xhr=new XMLHttpRequest(); 
 		xhr.onreadystatechange=function(){

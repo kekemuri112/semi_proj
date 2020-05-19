@@ -25,7 +25,7 @@ public class LoginController extends HttpServlet{
 		if(n>0) {
 			UsersVo vo=dao.information(users_id);
 			session.setAttribute("users_id", users_id);
-			session.setAttribute("users_num", vo.getUsers_no());
+			session.setAttribute("users_num", vo.getUsers_num());
 			req.setAttribute("msg", "로그인 완료되었습니다.");
 		}else {
 			req.setAttribute("msg", "로그인 실패하였습니다.");

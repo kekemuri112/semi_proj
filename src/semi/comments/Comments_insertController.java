@@ -23,11 +23,7 @@ public class Comments_insertController extends HttpServlet {
 			contents_num=Integer.parseInt(scontents_num);
 		}
 		String comments_content=req.getParameter("comments_content");
-		String susers_num=(String)req.getSession().getAttribute("users_num");
-		int users_num=0;
-		if(susers_num!=null) {
-			users_num=Integer.parseInt(susers_num);
-		}
+		int users_num=(int)req.getSession().getAttribute("users_num");
 		CommentsDao dao=CommentsDao.getInstance();
 		int comments_num=0;
 		int comments_ref=0;

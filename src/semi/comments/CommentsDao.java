@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import semi.contents.Contents_ListVo;
 import semi.db.ConnectionPool;
 
 public class CommentsDao {
@@ -14,6 +15,7 @@ public class CommentsDao {
 	public static CommentsDao getInstance() {
 		return instance;
 	}
+	
 	public Comments_infoVo getInfo(int comments_num) {
 		Connection con=null;
 		PreparedStatement pstmt=null;

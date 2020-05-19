@@ -19,11 +19,11 @@ public class UsersVo {
 		this.users_birth = users_birth;
 		this.users_phone = users_phone;
 	}
-	public int getUsers_no() {
+	public int getUsers_num() {
 		return users_num;
 	}
-	public void setUsers_no(int users_no) {
-		this.users_num = users_no;
+	public void setUsers_num(int users_num) {
+		this.users_num = users_num;
 	}
 	public String getUsers_id() {
 		return users_id;
@@ -61,6 +61,4 @@ public class UsersVo {
 	public void setUsers_phone(String users_phone) {
 		this.users_phone = users_phone;
 	}
-	
-	
 }

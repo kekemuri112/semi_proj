@@ -14,6 +14,8 @@ import semi.cafe.CafeDao;
 import semi.notice.NoticeDao;
 import semi.questions.CaferegDao;
 import semi.questions.CaferegVo;
+import semi.reg.UsersDao;
+import semi.reg.UsersVo;
 @WebServlet("/semi/pagecontroller.do")
 public class PageController extends HttpServlet {
 	@Override
@@ -24,7 +26,7 @@ public class PageController extends HttpServlet {
 		req.setAttribute("cafelist", CafeDao.getInstance().listAll());
 		String[] checks= {"/register/login.jsp","/register/register.jsp","/register/regsearch.jsp",
 				"/home/result.jsp","/questions/answer.jsp","","/cafe/cafeapproval.jsp",
-				"/questions/questions.jsp",""};
+				"/questions/questions.jsp","/register/regupdate.jsp"};
 		/*
 		 * 	1.로그인	2.회원가입	3.id/pwd찾기	4.로그아웃	5.카페가입
 		 * 	6.카페탈퇴	7.가입한카페목록  8.카페관리  9.정보수정
@@ -63,14 +65,16 @@ public class PageController extends HttpServlet {
 				req.setAttribute("cafe_num", req.getParameter("cafe_num"));
 				break;
 			case 9:	req.setAttribute("mfile", checks[check-1]);
+				String users_id=(String)session.getAttribute("users_id");
+				UsersVo vo= UsersDao.getInstance().information(users_id);
+				req.setAttribute("vo", vo);
 				break;
 		}
 		req.setAttribute("header1", "/home/wraphome.jsp");
 		req.setAttribute("header2", "/home/wrapmain.jsp");
 		req.setAttribute("headerLog", "/register/rmain.jsp");
 		int cafe_num=(int)req.getSession().getAttribute("cafe_num");
-		if(cafe_num!=0&&cafe_num==0) {
-			req.setAttribute("noticelist", NoticeDao.getInstance().listAll(cafe_num));
+		if(cafe_num!=0 ) {
 			req.setAttribute("mlist", "/notice/noticelist.jsp");
 		}else {
 			req.setAttribute("cafelist", CafeDao.getInstance().listAll());

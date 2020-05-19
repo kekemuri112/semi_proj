@@ -24,6 +24,7 @@ public class ContentsController extends HttpServlet {
 		int cafe_num=0;
 		if(scafe_num!=null) {
 			cafe_num=Integer.parseInt(scafe_num);
+			System.out.println(cafe_num+"이것은 카페번호를 받은것임. 세션에 저장함.");
 			session.setAttribute("cafe_num", cafe_num);
 		}
 		
@@ -84,7 +85,7 @@ public class ContentsController extends HttpServlet {
 		session.setAttribute("userscafe", bl2);
 		
 		if(scafe_num!=null) {
-			req.setAttribute("noticelist", ndao.listAll(cafe_num));
+			//req.setAttribute("noticelist", ndao.listAll(cafe_num));
 			req.setAttribute("mlist", "/notice/noticelist.jsp");
 		}else {
 			req.setAttribute("cafelist", CafeDao.getInstance().listAll());

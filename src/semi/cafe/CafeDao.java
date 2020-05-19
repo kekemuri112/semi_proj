@@ -15,6 +15,7 @@ public class CafeDao {
 	public static CafeDao getInstance() {
 		return instance;
 	}
+	
 	public CafeVo getVo(int cafe_num) {
 		Connection con=null;
 		PreparedStatement pstmt=null;

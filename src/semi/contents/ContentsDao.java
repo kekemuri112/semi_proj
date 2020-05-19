@@ -184,12 +184,13 @@ public class ContentsDao {
 			ArrayList<Contents_ListVo> list=new ArrayList<Contents_ListVo>();
 			while(rs.next()) {
 				int contents_num=rs.getInt("contents_num");
-				String title=rs.getString("contents_title");
+				String contents_title=rs.getString("contents_title");
+				int count=getComment(contents_num);
 				int users_num=rs.getInt("users_num");
 				String users_id=getUsers_id(users_num);
 				Date contents_regDate=rs.getDate("contents_regdate");
 				Date contents_modifyDate=rs.getDate("contents_modifydate");
-				Contents_ListVo vo=new Contents_ListVo(contents_num, notice_num, title, users_id, users_num, contents_regDate, contents_modifyDate);
+				Contents_ListVo vo=new Contents_ListVo(contents_num, notice_num, count, contents_title, users_id, users_num, contents_regDate, contents_modifyDate);
 				list.add(vo);
 			}
 			return list;
@@ -206,6 +207,36 @@ public class ContentsDao {
 			}
 		}	
 	}
+	
+	public int getComment(int contents_num) {
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		try {
+			con=ConnectionPool.getCon();
+			String sql="select nvl(count(*),0) cnum from comments where contents_num=?";
+			pstmt=con.prepareStatement(sql);
+			pstmt.setInt(1, contents_num);
+			rs=pstmt.executeQuery();
+			int n=-1;
+			if(rs.next()) { 
+				n=rs.getInt("cnum");
+			}
+			return n;
+		}catch(SQLException se) {
+			se.printStackTrace();
+			return -1;
+		}finally {
+			try {
+				if(rs!=null)rs.close();
+				if(pstmt!=null)pstmt.close();
+				if(con!=null)con.close();
+			}catch(SQLException se) {
+				se.printStackTrace();
+			}
+		}
+	}
+	
 	public int getCount(int cafe_num,int notice_num,String field,String keyword) { //해당카페의 게시글 전체 행갯수 구함
 		Connection con=null;
 		PreparedStatement pstmt=null;
