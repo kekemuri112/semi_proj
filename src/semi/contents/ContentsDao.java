@@ -51,7 +51,7 @@ public class ContentsDao {
 		ResultSet rs=null;
 		try {
 			con=ConnectionPool.getCon();
-			String sql="select nvl(notice_num,0) notice_num from notice where cafe_num=?";
+			String sql="select * from contents where notice_num in (select notice_num from notice where cafe_num=?)";
 			pstmt=con.prepareStatement(sql);
 			pstmt.setInt(1, cafe_num);
 			rs=pstmt.executeQuery();

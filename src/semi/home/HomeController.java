@@ -7,6 +7,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import semi.cafe.CafeDao;
 
@@ -17,7 +18,9 @@ public class HomeController extends HttpServlet{
 		req.setCharacterEncoding("utf-8");
 		resp.setContentType("text/plain;charset=utf-8");
 		String cp=req.getContextPath();
-		req.getSession().setAttribute("cafe_num", 0);
+		HttpSession session= req.getSession();
+		session.setAttribute("cafe_num", 0);
+		session.removeAttribute("cafe_name");
 		req.getServletContext().setAttribute("cp", cp);
 		req.setAttribute("cafelist", CafeDao.getInstance().listAll());
 		req.setAttribute("header1", "/home/wraphome.jsp");

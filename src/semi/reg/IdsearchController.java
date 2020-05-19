@@ -16,10 +16,18 @@ public class IdsearchController extends HttpServlet{
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		req.setCharacterEncoding("utf-8");
 		resp.setContentType("text/plain;charset=utf-8");
-		HttpSession session=req.getSession();
-		session.setAttribute("mfile", "/register/search.jsp?idsearch=1");
 		req.setAttribute("idsearch", 1);
-		req.setAttribute("cafelist", CafeDao.getInstance().listAll());
+		req.setAttribute("header1", "/home/wraphome.jsp");
+		req.setAttribute("header2", "/home/wrapmain.jsp");
+		req.setAttribute("headerLog", "/register/rmain.jsp");
+		int cafe_num=(int)req.getSession().getAttribute("cafe_num");
+		if(cafe_num!=0 ) {
+			req.setAttribute("mlist", "/notice/noticelist.jsp");
+		}else {
+			req.setAttribute("cafelist", CafeDao.getInstance().listAll());
+			req.setAttribute("mlist", "/cafe/cafelist.jsp");
+		}
+		req.setAttribute("mfile", "/register/search.jsp");
 		req.getRequestDispatcher("/home/main.jsp").forward(req, resp);
 	}
 	
@@ -30,7 +38,6 @@ public class IdsearchController extends HttpServlet{
 		String users_name=req.getParameter("users_name");
 		String users_email=req.getParameter("users_email");
 		String id=UsersDao.getInstance().search(null, users_name, users_email);
-		HttpSession session=req.getSession();
 		if(id==null) {
 			req.setAttribute("msg", "정보를 잘 못 입력하였습니다.");
 		}else {
@@ -45,7 +52,16 @@ public class IdsearchController extends HttpServlet{
 			}
 			req.setAttribute("msg", users_id+"입니다.");
 		}
-		req.setAttribute("cafelist", CafeDao.getInstance().listAll());
+		req.setAttribute("header1", "/home/wraphome.jsp");
+		req.setAttribute("header2", "/home/wrapmain.jsp");
+		req.setAttribute("headerLog", "/register/rmain.jsp");
+		int cafe_num=(int)req.getSession().getAttribute("cafe_num");
+		if(cafe_num!=0 ) {
+			req.setAttribute("mlist", "/notice/noticelist.jsp");
+		}else {
+			req.setAttribute("cafelist", CafeDao.getInstance().listAll());
+			req.setAttribute("mlist", "/cafe/cafelist.jsp");
+		}
 		req.setAttribute("mfile", "/home/result.jsp");
 		req.getRequestDispatcher("/home/main.jsp").forward(req, resp);
 	}

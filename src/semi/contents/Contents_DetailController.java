@@ -24,6 +24,7 @@ public class Contents_DetailController extends HttpServlet{
 		req.setAttribute("header2", "/home/wrapmain.jsp");
 		req.setAttribute("headerLog", "/register/rmain.jsp");
 		req.setAttribute("mlist", "/notice/noticelist.jsp");
+		
 		req.setAttribute("mfile", "/contents/detail.jsp");
 		req.getRequestDispatcher("/home/main.jsp").forward(req, resp);
 	}

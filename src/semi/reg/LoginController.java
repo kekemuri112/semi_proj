@@ -26,9 +26,9 @@ public class LoginController extends HttpServlet{
 			UsersVo vo=dao.information(users_id);
 			session.setAttribute("users_id", users_id);
 			session.setAttribute("users_num", vo.getUsers_num());
-			req.setAttribute("msg", "로그인 완료되었습니다.");
+			req.setAttribute("msg", "LOGIN완료!");
 		}else {
-			req.setAttribute("msg", "로그인 실패하였습니다.");
+			req.setAttribute("msg", "LOGIN실패T.T");
 		}
 		req.setAttribute("header1", "/home/wraphome.jsp");
 		req.setAttribute("header2", "/home/wrapmain.jsp");
@@ -36,9 +36,6 @@ public class LoginController extends HttpServlet{
 		req.setAttribute("mfile", "/home/result.jsp");
 		String cafe_num=req.getParameter("cafe_num");
 		if(cafe_num!=null&&!cafe_num.equals("")) {
-			String snotice_num=req.getParameter("notice_num");
-			int notice_num=Integer.parseInt(snotice_num);
-			req.setAttribute("noticelist", NoticeDao.getInstance().listAll(notice_num));
 			req.setAttribute("mlist", "notice/noticelist.jsp");
 		}else {
 			req.setAttribute("cafelist", CafeDao.getInstance().listAll());

@@ -229,7 +229,7 @@ window.addEventListener('load',function(){
 	function comments_delete(j){
 		var div=document.getElementById("comment"+j);
 		var com=div.childNodes;
-		var users_id=com[2].value;
+		var users_id=com[1].value;
 		var comments_num=com[3].value;
 		var pageNum=com[4].value;
 		var xhr=new XMLHttpRequest();

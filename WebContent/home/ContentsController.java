@@ -26,8 +26,7 @@ public class ContentsController extends HttpServlet {
 			cafe_num=Integer.parseInt(scafe_num);
 			session.setAttribute("cafe_num", cafe_num);
 		}
-		String cafe_name=CafeDao.getInstance().getVo(cafe_num).getCafe_name();
-		session.setAttribute("cafe_name", cafe_name);
+		
 		String spageNum=req.getParameter("pageNum");
 		String snotice_num=req.getParameter("notice_num");
 		int notice_num=0;
@@ -52,11 +51,11 @@ public class ContentsController extends HttpServlet {
 			if(endPage>pageCount){
 				endPage=pageCount;
 			}
-			
+			String cafe_name=CafeDao.getInstance().getVo(cafe_num).getCafe_name();
 			req.setAttribute("notice_num", notice_num);
 			req.setAttribute("notice_name", notice_name);
 			req.setAttribute("cafe_num", cafe_num);
-			
+			session.setAttribute("cafe_name", cafe_name);
 			req.setAttribute("list", list);
 			req.setAttribute("pageCount", pageCount);
 			req.setAttribute("startPage", startPage);
@@ -67,10 +66,11 @@ public class ContentsController extends HttpServlet {
 			req.setAttribute("msg","게시글이 없습니다.");
 			req.setAttribute("mfile","/home/result.jsp");
 		}
-		
 		req.setAttribute("header1", "/home/wraphome.jsp");
 		req.setAttribute("header2", "/home/wrapmain.jsp");
 		req.setAttribute("headerLog", "/register/rmain.jsp");
+		
+		
 		NoticeDao ndao=NoticeDao.getInstance();
 		String users_id=(String)session.getAttribute("users_id");
 		String bl="false";

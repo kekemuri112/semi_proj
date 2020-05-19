@@ -4,14 +4,14 @@
 
 <c:choose>
 	<c:when test="${empty notice_name}">
-		<h1> 전체글보기 </h1>		
+		<h1 style="font-size: 80px; color:#F45D00; " > 전체글보기 </h1>		
 	</c:when>
 	<c:otherwise>
 		<h1> ${notice_name } </h1>
 	</c:otherwise>
 </c:choose>
 
-<table border="1">
+<table style="font-size:27px; background-color: rgba(255,255,255,0.8);" border="1">
 	<tr>
 		<th>게시글번호</th><th>제목</th><th>작성자</th><th>작성일</th>
 	</tr>
@@ -23,7 +23,7 @@
 		<td>${vo.contents_modifyDate }</td>
 	</tr>
 	</c:forEach>
-</table>
+</table><br>
 <select id="op">
 <option value="">작성자</option>
 <option value="">제목</option>

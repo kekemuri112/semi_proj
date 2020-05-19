@@ -1,13 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <div>
-	<form method="post" action="${cp }/reg/registercontroller.do" onsubmit="return check()">
+	<form style="border-radius: 100px / 100px ; background-color: rgba(355,355,355,0.8);width:450px;margin: auto;margin-top: 180px;" method="post" action="${cp }/reg/registercontroller.do" onsubmit="return check()">
 		<table>
 			<tr>
-				<th colspan="2" style="font-size: 40px">회원 가입</th>
+				<th colspan="2" style="color:#F45D00 ; font-size: 40px">회원 가입</th>
 			</tr>
 			<tr>
-				<th>사용자 아이디</th>
+				<th style="color:#F45D00 ;" >사용자 아이디</th>
 				<td>
 					<input type="text" name="users_id" id="users_id" placeholder="아이디 입력(6~14자리)" onkeyup="idsearch(); idResult();"
 					onfocusout="delmsg()">
@@ -15,7 +15,7 @@
 				</td>
 			</tr>			
 			<tr>
-				<th>비밀번호</th>
+				<th style="color:#F45D00 ;">비밀번호</th>
 				<td>
 					<input type="password" name="users_pwd" id="users_pwd" placeholder="비밀번호 입력(6~12자리)" onkeyup="pwdConfirm()"
 					onfocusout="delmsg()">
@@ -23,7 +23,7 @@
 				</td>
 			</tr>
 			<tr>
-				<th>비밀번호 확인</th>
+				<th style="color:#F45D00 ;">비밀번호 확인</th>
 				<td>
 					<input type="password" id="pwd2" onkeyup="pwdCheck()"
 					onfocusout="delmsg()">
@@ -31,19 +31,19 @@
 				</td>
 			</tr>
 			<tr>
-				<th>이메일</th>
+				<th style="color:#F45D00 ;">이메일</th>
 				<td><input type="text" name="users_email"></td>
 			</tr>
 			<tr>
-				<th>생년월일</th>
+				<th style="color:#F45D00 ;">생년월일</th>
 				<td><input type="text" name="users_birth" placeholder="19000101로 작성"></td>
 			</tr>
 			<tr>
-				<th>핸드폰번호</th>
+				<th style="color:#F45D00 ;">핸드폰번호</th>
 				<td><input type="text" name="users_phone"></td>
 			</tr>
 			<tr>
-				<th colspan="2">
+				<th style="color:#F45D00 ;" colspan="2">
 					<input type="submit" value="가입하기">
 					<input type="button" value="가입취소" onclick="regCancel()">
 				</th>

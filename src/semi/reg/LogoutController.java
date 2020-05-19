@@ -21,16 +21,13 @@ public class LogoutController extends HttpServlet{
 		HttpSession session=req.getSession();
 		session.removeAttribute("users_id");
 		session.removeAttribute("users_num");
-		req.setAttribute("msg", "로그아웃 하였습니다.");
+		req.setAttribute("msg", "로그아웃완료!");
 		req.setAttribute("header1", "/home/wraphome.jsp");
 		req.setAttribute("header2", "/home/wrapmain.jsp");
 		req.setAttribute("headerLog", "/register/rmain.jsp");
 		req.setAttribute("mfile", "/home/result.jsp");
 		String cafe_num=req.getParameter("cafe_num");
 		if(cafe_num!=null&&!cafe_num.equals("")) {
-			String snotice_num=req.getParameter("notice_num");
-			int notice_num=Integer.parseInt(snotice_num);
-			req.setAttribute("noticelist", NoticeDao.getInstance().listAll(notice_num));
 			req.setAttribute("mlist", "notice/noteiclist.jsp");
 		}else {
 			req.setAttribute("cafelist", CafeDao.getInstance().listAll());

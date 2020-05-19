@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import semi.cafe.CafeDao;
+
 @WebServlet("/reg/updatecontroller.do")
 public class UpdateController extends HttpServlet{
 	@Override
@@ -31,8 +33,9 @@ public class UpdateController extends HttpServlet{
 		}
 		int cafe_num=(int)req.getSession().getAttribute("cafe_num");
 		if(cafe_num!=0) {
-			req.setAttribute("mfile", "/notice/notice.jsp");
+			req.setAttribute("mlist", "/notice/noticelist.jsp");
 		}else {
+			req.setAttribute("cafelist", CafeDao.getInstance().listAll());
 			req.setAttribute("mlist", "/cafe/cafelist.jsp");
 		}
 		req.setAttribute("headerLog", "/register/rmain.jsp");

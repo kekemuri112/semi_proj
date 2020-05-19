@@ -80,7 +80,6 @@ public class PageController extends HttpServlet {
 			req.setAttribute("cafelist", CafeDao.getInstance().listAll());
 			req.setAttribute("mlist", "/cafe/cafelist.jsp");
 		}
-		
 		req.getRequestDispatcher("/home/main.jsp").forward(req, resp);
 	}
 }

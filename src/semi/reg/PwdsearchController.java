@@ -16,11 +16,18 @@ public class PwdsearchController extends HttpServlet{
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		req.setCharacterEncoding("utf-8");
 		resp.setContentType("text/plain;charset=utf-8");
-		HttpSession session=req.getSession();
-		session.setAttribute("mfile", "/register/search.jsp?idsearch=2");
-		req.setAttribute("cafelist", CafeDao.getInstance().listAll());
-		
 		req.setAttribute("idsearch", 2);
+		req.setAttribute("header1", "/home/wraphome.jsp");
+		req.setAttribute("header2", "/home/wrapmain.jsp");
+		req.setAttribute("headerLog", "/register/rmain.jsp");
+		int cafe_num=(int)req.getSession().getAttribute("cafe_num");
+		if(cafe_num!=0 ) {
+			req.setAttribute("mlist", "/notice/noticelist.jsp");
+		}else {
+			req.setAttribute("cafelist", CafeDao.getInstance().listAll());
+			req.setAttribute("mlist", "/cafe/cafelist.jsp");
+		}
+		req.setAttribute("mfile", "/register/search.jsp");
 		req.getRequestDispatcher("/home/main.jsp").forward(req, resp);
 	}
 	@Override
@@ -31,9 +38,8 @@ public class PwdsearchController extends HttpServlet{
 		String users_name=req.getParameter("users_name");
 		String users_email=req.getParameter("users_email");
 		String pwd=UsersDao.getInstance().search(users_id, users_name, users_email);
-		HttpSession session=req.getSession();
 		if(pwd==null ) {
-			session.setAttribute("msg", "맞는 정보가 없습니다 다시 한번 확인 바랍니다.");
+			req.setAttribute("msg", "맞는 정보가 없습니다 다시 한번 확인 바랍니다.");
 		}else {
 			String[] pwds=pwd.split("");
 			String users_pwd="";
@@ -44,10 +50,19 @@ public class PwdsearchController extends HttpServlet{
 					users_pwd+=pwds[i];
 				}
 			}
-			session.setAttribute("msg", users_pwd+"비밀번호는 입니다.");
+			req.setAttribute("msg", users_pwd+"비밀번호는 입니다.");
 		}
-		req.setAttribute("cafelist", CafeDao.getInstance().listAll());
-		session.setAttribute("mfile", "/home/result.jsp");
+		req.setAttribute("header1", "/home/wraphome.jsp");
+		req.setAttribute("header2", "/home/wrapmain.jsp");
+		req.setAttribute("headerLog", "/register/rmain.jsp");
+		int cafe_num=(int)req.getSession().getAttribute("cafe_num");
+		if(cafe_num!=0 ) {
+			req.setAttribute("mlist", "/notice/noticelist.jsp");
+		}else {
+			req.setAttribute("cafelist", CafeDao.getInstance().listAll());
+			req.setAttribute("mlist", "/cafe/cafelist.jsp");
+		}
+		req.setAttribute("mfile", "/home/result.jsp");
 		req.getRequestDispatcher("/home/main.jsp").forward(req, resp);
 	}
 }

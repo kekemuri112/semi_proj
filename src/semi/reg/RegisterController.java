@@ -38,12 +38,6 @@ public class RegisterController extends HttpServlet{
 		req.setAttribute("mlist", "/cafe/cafelist.jsp");
 		String cafe_num=req.getParameter("cafe_num");
 		if(cafe_num!=null&&!cafe_num.equals("")) {
-			String snotice_num=req.getParameter("notice_num");
-			int notice_num=0;
-			if(snotice_num!=null) {
-				notice_num=Integer.parseInt(snotice_num);
-			}
-			req.setAttribute("noticelist", NoticeDao.getInstance().listAll(notice_num));
 			req.setAttribute("mlist", "/notice/noticelist.jsp");
 		}else {
 			req.setAttribute("cafelist", CafeDao.getInstance().listAll());

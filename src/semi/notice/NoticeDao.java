@@ -14,52 +14,65 @@ public class NoticeDao {
 	public static NoticeDao getInstance() {
 		return instance;
 	}
-	
-
-	public int insert(NoticeVo vo) {
+	public int getStep(int notice_ref) { //step 구하기
 		Connection con=null;
-		PreparedStatement pstmt1=null;
-		PreparedStatement pstmt2=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
 		try {
 			con=ConnectionPool.getCon();
-			int cafe_num=vo.getCafe_num();
-			String notice_name=vo.getNotice_name();
-			int notice_ref=vo.getNotice_ref();
-			int notice_lev=vo.getNotice_lev();
-			int notice_step=vo.getNotice_step();
-			int notice_grade=vo.getNotice_grade();
-				String sql1="update notice set step=step+1 where ref=? and step>?";
-				pstmt1=con.prepareStatement(sql1);
-				pstmt1.setInt(1, notice_ref);
-				pstmt1.setInt(2, notice_step);
-				pstmt1.executeUpdate();
-				notice_lev++;//(step=step+1)
-				notice_step++;
-			
-			String sql2="insert into notice values(notice_seq.nextval,?,?,?,?,?,?)";
-			pstmt2=con.prepareStatement(sql2);
-			pstmt2.setInt(1, cafe_num);
-			pstmt2.setString(2, notice_name);
-			pstmt2.setInt(3, notice_ref);
-			pstmt2.setInt(4, notice_lev);
-			pstmt2.setInt(5, notice_step);
-			pstmt2.setInt(6, notice_grade);
-			pstmt2.executeUpdate();
-			return 1;
+			String sql="select NVL(max(notice_step),0) step from notice";
+			if(notice_ref>0) {
+				sql+=" where notice_ref="+notice_ref;
+			}
+			pstmt=con.prepareStatement(sql);
+			rs=pstmt.executeQuery();
+			if(rs.next()) {
+				return rs.getInt("step");
+			}
+			return -1;
 		}catch(SQLException se) {
 			se.printStackTrace();
 			return -1;
 		}finally {
 			try {
-			if(pstmt1!=null)pstmt1.close();
-			if(pstmt2!=null)pstmt2.close();
-			if(con!=null)pstmt2.close();
-			}catch (SQLException s) {
-				s.printStackTrace();
+				if(rs!=null)rs.close();
+				if(pstmt!=null)pstmt.close();
+				if(con!=null)con.close();
+			}catch(SQLException se) {
+				se.printStackTrace();
 			}
 		}
 	}
 	
+	public int insert(int cafe_num,int notice_ref,String notice_name) { //게시판 만들기
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		try {
+			con=ConnectionPool.getCon();
+			String sql="insert into notice(notice_num,cafe_num,notice_name,notice_ref,notice_lev,notice_step) "
+					+ "values(notice_seq.nextval,'"+cafe_num+"','"+notice_name+"',";
+			int notice_step=getStep(notice_ref)+1;
+			if(notice_ref>0) { // 작은게시판
+				sql+="'"+notice_ref+"',1,'"+notice_step+"')";
+			}else if(notice_ref==0){ //큰게시판
+				sql+="notice_seq.currval,0,'"+notice_step+"')";
+			}
+			pstmt=con.prepareStatement(sql);
+			System.out.println("notice_insert 메소드 SQL 2: "+sql);
+			return pstmt.executeUpdate();
+		}catch(SQLException se) {
+			se.printStackTrace();
+			return -1;
+		}finally {
+			try {
+			if(pstmt!=null)pstmt.close();
+			if(con!=null)con.close();
+			}catch (SQLException se) {
+				se.printStackTrace();
+			}
+		}
+	}
+
 	//카페장인인지 아닌지 알려줌
 	public String cafeAdmin(String users_id,int cafe_num) {
 		Connection con=null;
