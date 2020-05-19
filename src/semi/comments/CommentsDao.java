@@ -43,6 +43,12 @@ public class CommentsDao {
 			}
 		}
 	}
+	
+	
+	
+	
+	
+	
 	public ArrayList<CommentsVo> comList(int contents_num ,int startRow,int endRow) {
 		Connection con=null; //댓글페이징처리를 위해 페이지마다 페이지에 해당하는 행 출력
 		PreparedStatement pstmt=null;
@@ -131,12 +137,12 @@ public class CommentsDao {
 				comments_ref=vo.getComments_ref();
 				comments_lev=vo.getComments_lev();
 				comments_step=vo.getComments_step();
-				/*String sql1="update comments set comments_step=comments_step+1 "
-						+ "where comments_ref=? and comments_step=?";
+				String sql1="update comments set comments_step=comments_step+1 "
+						+ "where comments_ref=? and comments_step>?";
 				pstmt1=con.prepareStatement(sql1);
 				pstmt1.setInt(1, comments_ref);
 				pstmt1.setInt(2, comments_step);
-				pstmt1.executeUpdate();*/
+				pstmt1.executeUpdate();
 				comments_step++;
 				comments_lev++;
 			}
@@ -187,7 +193,7 @@ public class CommentsDao {
 			}
 		}
 	}
-	public int update_point(int users_num) {
+	public int update_point(int users_num) {//댓글작성시 포인트 +10;
 		Connection con=null;
 		PreparedStatement pstmt=null;
 		try {
@@ -280,6 +286,34 @@ public class CommentsDao {
 				vo.setComments_step(rs.getInt("comments_step"));
 			}
 			return vo;
+		}catch(SQLException se) {
+			se.printStackTrace();
+			return null;
+		}finally {
+			try {
+				if(rs!=null)rs.close();
+				if(pstmt!=null)pstmt.close();
+				if(con!=null)con.close();
+			}catch(SQLException se) {
+				se.printStackTrace();
+			}
+		}
+	}
+	public ArrayList<Integer> getComments_num(int contents_num){
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		try {
+			con=ConnectionPool.getCon();
+			String sql="select comments_num from comments where contents_num=?";
+			pstmt=con.prepareStatement(sql);
+			pstmt.setInt(1, contents_num);
+			rs=pstmt.executeQuery();
+			ArrayList<Integer>list=new ArrayList<Integer>();
+			while(rs.next()) {
+				list.add(rs.getInt("comments_num"));
+			}
+			return list;
 		}catch(SQLException se) {
 			se.printStackTrace();
 			return null;

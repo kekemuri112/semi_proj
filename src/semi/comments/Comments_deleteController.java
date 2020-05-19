@@ -15,6 +15,7 @@ import org.json.JSONObject;
 public class Comments_deleteController extends HttpServlet {
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		req.setCharacterEncoding("utf-8");
 		String scomments_num=req.getParameter("comments_num");
 		int comments_num=Integer.parseInt(scomments_num);
 		CommentsDao dao=CommentsDao.getInstance();
@@ -23,7 +24,7 @@ public class Comments_deleteController extends HttpServlet {
 		if(n>0) {
 			result=true;
 		}
-		resp.setCharacterEncoding("text/plain;charset=utf-8");
+		//resp.setCharacterEncoding("text/plain;charset=utf-8");
 		JSONObject json=new JSONObject();
 		json.put("result", result);
 		PrintWriter pw=resp.getWriter();

@@ -13,7 +13,11 @@ import javax.servlet.http.HttpServletResponse;
 public class ContentsController extends HttpServlet {
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		req.setCharacterEncoding("utf-8");
 		String scafe_num=req.getParameter("cafe_num");
+		String field=req.getParameter("field");
+		String keyword=req.getParameter("keyword");
+		System.out.println(field);
 		int cafe_num=0;
 		if(scafe_num!=null) {
 			cafe_num=Integer.parseInt(scafe_num);
@@ -31,8 +35,9 @@ public class ContentsController extends HttpServlet {
 		int startRow=(pageNum-1)*10+1;
 		int endRow=startRow+9;
 		ContentsDao dao=ContentsDao.getDao();
-		ArrayList<Contents_ListVo>list=dao.listAll(cafe_num, startRow, endRow,notice_num);
-		int pageCount=(int)Math.ceil(dao.getCount(cafe_num,notice_num)/10.0);
+		ArrayList<Contents_ListVo>list=dao.listAll(cafe_num, startRow, endRow,notice_num,field,keyword);
+		int pageCount=(int)Math.ceil(dao.getCount(cafe_num,notice_num,field,keyword)/10.0);
+		System.out.println("컨트롤러안 pageCount : "+pageCount);
 		int startPage=((pageNum-1)/5)*5+1;
 		int endPage=startPage+4;
 		if(endPage>pageCount){
@@ -40,6 +45,8 @@ public class ContentsController extends HttpServlet {
 		}
 		
 		req.getSession().setAttribute("users_num", 2);
+		req.setAttribute("field", field);
+		req.setAttribute("keyword", keyword);
 		req.setAttribute("notice_num", notice_num);
 		req.getServletContext().setAttribute("cp", req.getContextPath());
 		req.setAttribute("cafe_num", cafe_num);

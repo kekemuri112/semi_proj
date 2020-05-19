@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @WebServlet("/contents/insert.do")
-public class Contents_insertController extends HttpServlet{
+public class Contents_InsertController extends HttpServlet{
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		int cafe_num=Integer.parseInt(req.getParameter("cafe_num"));

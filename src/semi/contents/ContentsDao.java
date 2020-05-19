@@ -7,6 +7,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
+import semi.comments.CommentsDao;
 import semi.db.ConnectionPool;
 
 public class ContentsDao {
@@ -73,29 +75,85 @@ public class ContentsDao {
 			}
 		}
 	}
-	public ArrayList<Contents_ListVo> listAll (int cafe_num,int startRow,int endRow,int notice_num){
+	public ArrayList<Integer> getUsers_num(String keyword) { //아이디입력받아 비슷한 아이디인 users_num 출력
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		try {
+			con=ConnectionPool.getCon();
+			String sql="select users_num from users where users_id like '%"+keyword+"%'";
+			pstmt=con.prepareStatement(sql);
+			System.out.println("users_num 구하는 메소드 안 sql : "+sql);
+			rs=pstmt.executeQuery();
+			ArrayList<Integer>list=new ArrayList<Integer>();
+			while(rs.next()) {
+				list.add(rs.getInt("users_num"));
+			}
+			return list;
+			
+		}catch(SQLException se) {
+			se.printStackTrace();
+			return null;
+		}finally {
+			try {
+				if(rs!=null)rs.close();
+				if(pstmt!=null)pstmt.close();
+				if(con!=null)con.close();
+			}catch(SQLException se) {
+				se.printStackTrace();
+			}
+		}
+	}
+	public ArrayList<Contents_ListVo> listAll (int cafe_num,int startRow,int endRow,int notice_num,String field,String keyword){
 		Connection con=null;  //전체리스트뽑기
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
 		try {
 			con=ConnectionPool.getCon();
 			String sql="select * from (select "+
-			"aa.*, rownum rnum from (select * from contents where ";
+			        "aa.*, rownum rnum from (select * from contents where ";
+			if(field!=null&&!field.equals("")) {
+				if(field.equals("users_id")) {
+					ArrayList<Integer> list=getUsers_num(keyword);
+					if(list.size()==1) {
+						sql+="(users_num="+list.get(0)+") and ";
+					}else if(list.size()>1){
+						for(int i=0;i<list.size();i++) {
+							if(i!=list.size()-1) {
+								sql+="(users_num="+list.get(i)+" or ";
+							}else {
+								sql+="users_num="+list.get(i)+") and ";
+							}
+						}
+					}
+					if(list.size()==0) { // 해당 아이디를 가진 회원이 없을때.
+						sql+="users_num=0 and ";
+					}
+				}else {
+					sql+=field+" like '%"+keyword+"%' and ";		
+				}
+			}
+			System.out.println("dao안 field: " +field);
+			System.out.println("dao안 keyword: " +keyword);
+			System.out.println("sql문1: " +sql);
 			if(notice_num==0) { 
 				ArrayList<Integer> list2=getNotice_num(cafe_num);
+				sql+="(";
 				for(int i=0;i<list2.size();i++) {		
 					int num=list2.get(i);
 					if(i!=list2.size()-1) {
-						sql+="notice_num="+num+" or ";
+						sql+=" notice_num="+num+" or ";
 					}else{
-						sql+="notice_num="+num;
+						sql+=" notice_num="+num+")";
 					}
 				}
 			}else {
-				sql+="notice_num="+notice_num;
+				sql+="(notice_num="+notice_num+")";
 			}	
 			sql+=" order by contents_num desc)aa  ) where rnum>=? and rnum<=? ";
+			System.out.println("sql문2: " +sql);
 			pstmt=con.prepareStatement(sql);
+			
 			pstmt.setInt(1, startRow);
 			pstmt.setInt(2, endRow);
 			rs=pstmt.executeQuery();
@@ -124,27 +182,52 @@ public class ContentsDao {
 			}
 		}	
 	}
-	public int getCount(int cafe_num,int notice_num) { //해당카페의 게시글 전체 행갯수 구함
+	public int getCount(int cafe_num,int notice_num,String field,String keyword) { //해당카페의 게시글 전체 행갯수 구함
 		Connection con=null;
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
-		
 		try {
 			con=ConnectionPool.getCon();
+
 			String sql="select nvl(count(*),0) cnt from contents where ";
+			if(field!=null&&!field.equals("")) {
+				if(field.equals("users_id")) {
+					ArrayList<Integer> list=getUsers_num(keyword);
+					System.out.println("list.size():"+list.size());
+					if(list.size()==1) {
+						sql+="(users_num="+list.get(0)+") and ";
+					}else if(list.size()>1){
+						sql+="(";
+						for(int i=0;i<list.size();i++) {
+							if(i!=list.size()-1) {
+								sql+="users_num="+list.get(i)+" or ";
+							}else {
+								sql+="users_num="+list.get(i)+") and ";
+							}
+						}
+					}
+					if(list.size()==0) { // 해당 아이디를 가진 회원이 없을때.
+						sql+="users_num=0 and ";
+					}
+				}else {
+					sql+=field+" like '%"+keyword+"%' and ";		
+				}
+			}
 			if(notice_num>0) {
 				sql+="notice_num="+notice_num;
 			}else{
 				ArrayList<Integer> list2=getNotice_num(cafe_num);
+				sql+="(";
 				for(int i=0;i<list2.size();i++) {
 					int num=list2.get(i);
 					if(i!=list2.size()-1) {
 						sql+="notice_num="+num+" or ";
 					}else{
-						sql+="notice_num="+num;
+						sql+="notice_num="+num+")";
 					}
 				}
 			}
+			System.out.println("전체행구하는 sql : "+sql);
 			pstmt=con.prepareStatement(sql);
 			rs=pstmt.executeQuery();
 			if(rs.next()) {
@@ -250,7 +333,7 @@ public class ContentsDao {
 			}
 		}
 	}
-	public int update_point(String contents_title,String contents_post,int contents_num) { //포인트업
+	public int update_point(String contents_title,String contents_post,int contents_num) { //내용수정
 		Connection con=null;
 		PreparedStatement pstmt=null;
 		try {
@@ -273,7 +356,7 @@ public class ContentsDao {
 			}
 		}
 	}
-	public int updatePoint(int users_num) {
+	public int updatePoint(int users_num) { //글작성시 100포인트 up
 		Connection con=null;
 		PreparedStatement pstmt=null;
 		try {
@@ -287,6 +370,41 @@ public class ContentsDao {
 			return -1;
 		}finally {
 			try {
+				if(pstmt!=null)pstmt.close();
+				if(con!=null)con.close();
+			}catch(SQLException se) {
+				se.printStackTrace();
+			}
+		}
+	}
+	public int delete(int contents_num) {
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		PreparedStatement pstmt2=null;
+		try {
+			con=ConnectionPool.getCon();
+			con.setAutoCommit(false);
+			String sql="delete from comments where contents_num=?";
+			pstmt=con.prepareStatement(sql);
+			pstmt.setInt(1, contents_num);
+			pstmt.executeUpdate();
+			String sql1="delete from contents where contents_num=?";
+			pstmt2=con.prepareStatement(sql1);
+			pstmt2.setInt(1, contents_num);
+			int n=pstmt2.executeUpdate();
+			con.commit();
+			return n;
+		}catch(SQLException se) {
+			se.printStackTrace();
+			try {
+				con.rollback();
+			}catch(SQLException se1) {
+				se1.printStackTrace();
+			}
+			return -1;
+		}finally {
+			try {
+				con.setAutoCommit(true);
 				if(pstmt!=null)pstmt.close();
 				if(con!=null)con.close();
 			}catch(SQLException se) {

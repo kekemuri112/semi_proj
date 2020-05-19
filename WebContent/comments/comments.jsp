@@ -2,8 +2,6 @@
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-
-
 <%
 	String scontents_num=request.getParameter("contents_num");
 	int contents_num=Integer.parseInt(scontents_num);
@@ -18,14 +16,14 @@
 		<input type="button" value="등록하기" onclick="comments_write()">
 	</div>
 <script type="text/javascript">
-	window.onload=function(){
-		getList();
-		page();
-	}
+window.addEventListener('load', function() {
+	getList();
+	page();
+})
 	function getList(pageNum){ //리스트출력
 		console.log("list 함수 실행!!");
 		console.log("pageNum : "+pageNum)
-		var xhr=new XMLHttpRequest();
+		var xhr=new XMLHttpRequest(); 
 		xhr.onreadystatechange=function(){
 			if(xhr.readyState==4 && xhr.status==200){
 				deleteDiv();
@@ -41,7 +39,6 @@
 					var comments_lev=json[i].comments_lev;
 					const j=i;
 					console.log("list 함수 lev : "+comments_lev);
-				
 					if(comments_lev>0){
 						var span=document.createElement("span");
 						for(var z=1;z<=comments_lev;z++){
@@ -89,7 +86,6 @@
 		console.log("답글 함수 comments_num : "+comments_num);
 		console.log("답글 함수 j : "+j);
 		console.log("답글함수 내용 : "+comments_content);
-		
 		var xhr=new XMLHttpRequest();
 		xhr.onreadystatechange=function(){
 			if(xhr.status==200&&xhr.readyState==4){
