@@ -15,6 +15,43 @@ public class CafeDao {
 	public static CafeDao getInstance() {
 		return instance;
 	}
+	public CafeVo getVo(int cafe_num) {
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		try {
+			con=ConnectionPool.getCon();
+			String sql="select * from cafe where cafe_num=?";
+			pstmt=con.prepareStatement(sql);
+			pstmt.setInt(1, cafe_num);
+			rs=pstmt.executeQuery();
+			CafeVo vo=null;
+			if(rs.next()) {
+				vo=new CafeVo(
+						rs.getInt("cafe_num"),
+						rs.getString("cafe_name"),
+						rs.getString("cafe_desc"),
+						rs.getString("cafe_intent"),
+						rs.getString("cafe_admin"),
+						rs.getString("cafe_approved"),
+						null
+					);
+			}
+			return vo;
+		}catch(SQLException se) {
+			se.printStackTrace();
+			return null;
+		}finally {
+			try {
+				if(rs!=null)rs.close();
+				if(pstmt!=null)pstmt.close();
+				if(con!=null)con.close();
+			}catch(SQLException s) {
+				s.printStackTrace();
+			}
+		}
+	}
+	
 	
 	public int cafeStatus(int cafe_num,boolean bl) {
 		Connection con=null;

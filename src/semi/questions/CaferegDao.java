@@ -39,19 +39,22 @@ public class CaferegDao {
 		}
 	}
 	
-	public ArrayList<String> getQuestions(int cafe_num){
+	public ArrayList<CaferegVo> getQuestions(int cafe_num){
 		Connection con=null;
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
 		try {
 			con=ConnectionPool.getCon();
-			String sql="select cafereg_question from cafereg where cafe_num=?";
+			String sql="select cafereg_question, cafereg_num from cafereg where cafe_num=?";
 			pstmt=con.prepareStatement(sql);
 			pstmt.setInt(1, cafe_num);
 			rs=pstmt.executeQuery();
-			ArrayList<String> list=new ArrayList<String>();
+			ArrayList<CaferegVo> list=new ArrayList<CaferegVo>();
 			while(rs.next()) {
-				list.add(rs.getString("cafereg_question"));
+				CaferegVo vo=new CaferegVo();
+				vo.setCafereg_num(rs.getInt("cafereg_num"));
+				vo.setCafereg_question(rs.getString("cafereg_question"));
+				list.add(vo);
 			}
 			return list;
 		}catch(SQLException se) {
@@ -68,7 +71,7 @@ public class CaferegDao {
 		}
 	}
 	//질의응답, 목록 인서트
-	public int usersCafeInsert(String[] contents, int cafereg_num,int cafe_num,int users_num) {
+	public int usersCafeInsert(String[] contents, String[] scafereg_num,int cafe_num,int users_num) {
 		Connection con=null;
 		PreparedStatement pstmt1=null;
 		PreparedStatement pstmt2=null;
@@ -81,15 +84,15 @@ public class CaferegDao {
 			pstmt1.setInt(2, users_num);
 			pstmt1.executeUpdate();
 			int n=0;
-			for(String aContent:contents) {
+			for(int i=0;i<contents.length;i++) {
+				String aContent=contents[i];
+				String acafereg_num=scafereg_num[i];
 				String sql2="insert into answer values(?,users_cafe_seq.currval,?)";
 				pstmt2=con.prepareStatement(sql2);
-				pstmt2.setInt(1, cafereg_num);
+				pstmt2.setString(1, acafereg_num);
 				pstmt2.setString(2, aContent);
-				System.out.println("aContent:"+aContent);
-				System.out.println("cafereg_num:"+cafereg_num);
-				System.out.println("cafe_num:"+cafe_num);
-				System.out.println("users_num:"+users_num);
+				System.out.println(i+"번째aContent:"+aContent);
+				System.out.println(i+"번쨰acafereg_num:"+acafereg_num);
 				n += pstmt2.executeUpdate();
 			}
 			return n;

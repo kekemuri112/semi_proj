@@ -180,7 +180,6 @@ public class ContentsDao {
 			pstmt=con.prepareStatement(sql);
 			pstmt.setInt(1, startRow);
 			pstmt.setInt(2, endRow);
-			System.out.println("list:"+sql);
 			rs=pstmt.executeQuery();
 			ArrayList<Contents_ListVo> list=new ArrayList<Contents_ListVo>();
 			while(rs.next()) {
@@ -251,7 +250,6 @@ public class ContentsDao {
 					}
 				}
 			}
-			System.out.println("전체행구하는 sql : "+sql);
 			pstmt=con.prepareStatement(sql);
 			rs=pstmt.executeQuery();
 			if(rs.next()) {

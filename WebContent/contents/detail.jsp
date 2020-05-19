@@ -2,8 +2,8 @@
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <style>
-h2{display:inline-block;}
-.comments{border:2px solid black ;width:450px;}
+	h2{display:inline-block;}
+	.comments{border:2px solid black ;width:450px;display: inline-block;}
 </style>
 <h1>상세글보기</h1>
 <h2>${vo.contents_title }</h2>&nbsp; &nbsp; <span>${vo.users_id }</span>&nbsp; &nbsp;

@@ -39,7 +39,7 @@ public class LoginController extends HttpServlet{
 			String snotice_num=req.getParameter("notice_num");
 			int notice_num=Integer.parseInt(snotice_num);
 			req.setAttribute("noticelist", NoticeDao.getInstance().listAll(notice_num));
-			req.setAttribute("mlist", "notice/noteiclist.jsp");
+			req.setAttribute("mlist", "notice/noticelist.jsp");
 		}else {
 			req.setAttribute("cafelist", CafeDao.getInstance().listAll());
 			req.setAttribute("mlist", "/cafe/cafelist.jsp");

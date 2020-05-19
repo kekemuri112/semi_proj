@@ -8,14 +8,14 @@
 		<c:forEach var="vo" items="${noticelist }">
 			<c:choose>
 				<c:when test="${vo.notice_lev==0 }">
-					<a href="${cp }/contents/contents.do?notice_num=${vo.notice_num}">${vo.notice_name }</a>
+					<a href="${cp }/contents/contents.do?cafe_num=${cafe_num }&notice_num=${vo.notice_num}">${vo.notice_name }</a>
 					<a href="#">[+]</a><br>
 				</c:when>
 				<c:otherwise>
 					<c:forEach var="i" begin="1" end="${vo.notice_lev }">
 					 &ensp;&ensp;&ensp; 
 					</c:forEach>
-					└ <a href="${cp }/contents/contents.do?notice_num=${vo.notice_num}">${vo.notice_name }</a>
+					└ <a href="${cp }/contents/contents.do?cafe_num=${cafe_num }&notice_num=${vo.notice_num}">${vo.notice_name }</a>
 					<a href="#">[+]</a><br>
 				</c:otherwise>
 			</c:choose>

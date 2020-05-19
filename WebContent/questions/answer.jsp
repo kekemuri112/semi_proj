@@ -4,13 +4,13 @@
 <div>
 	<h1>카페에 질문들입니다.</h1>
 	<form method="post" action="${cp }/questions/answer.do">
-		<c:forEach var="q" items="${qlist }">
+		<c:forEach var="vo" items="${qlist }">
 			<c:set var="i" value="${i+1 }"/>
 			<h3>${i }번째 질문</h3>
-			<h3>${q }</h3>
-			<textarea rows="5" cols="50" name="answer">
-			
-			</textarea><br>
+			<h3>${vo.cafereg_question }</h3>
+			<textarea rows="5" cols="50" name="answer"></textarea><br>
+			<input type="text" value=${vo.cafereg_num } name="cafereg_num">
+			<input type="text" value=${cafe_num } name="cafe_num">
 		</c:forEach>
 		<input type="submit" value="가입요청">
 		<input type="button" value="뒤로가기" onclick="qCancel()">

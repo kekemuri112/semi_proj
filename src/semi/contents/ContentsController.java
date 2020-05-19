@@ -20,13 +20,15 @@ public class ContentsController extends HttpServlet {
 		String scafe_num=req.getParameter("cafe_num");
 		String field=req.getParameter("field");
 		String keyword=req.getParameter("keyword");
+		HttpSession session= req.getSession();
 		int cafe_num=0;
 		if(scafe_num!=null) {
 			cafe_num=Integer.parseInt(scafe_num);
+			session.setAttribute("cafe_num", cafe_num);
 		}
+		
 		String spageNum=req.getParameter("pageNum");
 		String snotice_num=req.getParameter("notice_num");
-		System.out.println(snotice_num);
 		int notice_num=0;
 		String notice_name=null;
 		ContentsDao dao=ContentsDao.getDao();
@@ -49,9 +51,11 @@ public class ContentsController extends HttpServlet {
 			if(endPage>pageCount){
 				endPage=pageCount;
 			}
+			String cafe_name=CafeDao.getInstance().getVo(cafe_num).getCafe_name();
 			req.setAttribute("notice_num", notice_num);
 			req.setAttribute("notice_name", notice_name);
 			req.setAttribute("cafe_num", cafe_num);
+			req.setAttribute("cafe_name", cafe_name);
 			req.setAttribute("list", list);
 			req.setAttribute("pageCount", pageCount);
 			req.setAttribute("startPage", startPage);
@@ -66,7 +70,7 @@ public class ContentsController extends HttpServlet {
 		req.setAttribute("header2", "/home/wrapmain.jsp");
 		req.setAttribute("headerLog", "/register/rmain.jsp");
 		
-		HttpSession session= req.getSession();
+		
 		NoticeDao ndao=NoticeDao.getInstance();
 		String users_id=(String)session.getAttribute("users_id");
 		String bl="false";
@@ -78,13 +82,16 @@ public class ContentsController extends HttpServlet {
 		}
 		session.setAttribute("cafe_admin", bl);
 		session.setAttribute("userscafe", bl2);
-		if(cafe_num!=0&&notice_num!=0) {
-			req.setAttribute("noticelist", NoticeDao.getInstance().listAll(notice_num));
-			req.setAttribute("mlist", "/notice/noteiclist.jsp");
+		
+		if(scafe_num!=null) {
+			req.setAttribute("noticelist", ndao.listAll(cafe_num));
+			req.setAttribute("mlist", "/notice/noticelist.jsp");
 		}else {
 			req.setAttribute("cafelist", CafeDao.getInstance().listAll());
 			req.setAttribute("mlist", "/cafe/cafelist.jsp");
 		}
+		
+		
 		req.getRequestDispatcher("/home/main.jsp").forward(req, resp);
 	}
 }

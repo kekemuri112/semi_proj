@@ -7,9 +7,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import semi.cafe.CafeDao;
+import semi.notice.NoticeDao;
 
 @WebServlet("/reg/registercontroller.do")
 public class RegisterController extends HttpServlet{
@@ -31,8 +31,24 @@ public class RegisterController extends HttpServlet{
 		}else {
 			req.setAttribute("msg", "회원 가입이 실패하였습니다.");
 		}
-		HttpSession session=req.getSession();
-		req.setAttribute("cafelist", CafeDao.getInstance().listAll());
+		
+		req.setAttribute("header1", "/home/wraphome.jsp");
+		req.setAttribute("header2", "/home/wrapmain.jsp");
+		req.setAttribute("headerLog", "/register/rmain.jsp");
+		req.setAttribute("mlist", "/cafe/cafelist.jsp");
+		String cafe_num=req.getParameter("cafe_num");
+		if(cafe_num!=null&&!cafe_num.equals("")) {
+			String snotice_num=req.getParameter("notice_num");
+			int notice_num=0;
+			if(snotice_num!=null) {
+				notice_num=Integer.parseInt(snotice_num);
+			}
+			req.setAttribute("noticelist", NoticeDao.getInstance().listAll(notice_num));
+			req.setAttribute("mlist", "/notice/noticelist.jsp");
+		}else {
+			req.setAttribute("cafelist", CafeDao.getInstance().listAll());
+			req.setAttribute("mlist", "/cafe/cafelist.jsp");
+		}
 		req.setAttribute("mfile", "/home/result.jsp");
 		req.getRequestDispatcher("/home/main.jsp").forward(req, resp);
 	}

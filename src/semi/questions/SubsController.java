@@ -17,7 +17,6 @@ public class SubsController extends HttpServlet {
 		req.setCharacterEncoding("utf-8");
 		resp.setContentType("text/plain;charset=utf-8");
 		String cafe_num=req.getParameter("cafe_num");
-		System.out.println("get방싱:"+cafe_num);
 		req.setAttribute("cafe_num", cafe_num);
 		req.setAttribute("header1", "/home/wraphome.jsp");
 		req.setAttribute("header2", "/home/wrapmain.jsp");
@@ -36,7 +35,6 @@ public class SubsController extends HttpServlet {
 		if(scafe_num!=null) {
 			cafe_num=Integer.parseInt(scafe_num);
 		}
-		System.out.println("post방싱:"+cafe_num);
 		int n=CaferegDao.getInstance().insert(cafe_num, cafereg_question);
 		if(n>0) {
 			req.setAttribute("msg", "질문저장완료");

@@ -15,44 +15,7 @@ public class NoticeDao {
 		return instance;
 	}
 	
-	public ArrayList<NoticeVo> listNotice(int notice_num){
-		Connection con=null;
-		PreparedStatement pstmt=null;
-		ResultSet rs=null;
-		try {
-			con=ConnectionPool.getCon();
-			String sql="select * from notice where notice_num=? order by notice_ref desc, notice_step asc";
-			pstmt=con.prepareStatement(sql);
-			pstmt.setInt(1, notice_num);
-			rs=pstmt.executeQuery();
-			ArrayList<NoticeVo> list=new ArrayList<NoticeVo>();
-			while(rs.next()) {
-				NoticeVo vo=new NoticeVo(
-							rs.getInt("notice_num"),
-							rs.getInt("cafe_num"),
-							rs.getString("notice_name"),
-							rs.getInt("notice_lev"),
-							rs.getInt("notice_ref"),
-							rs.getInt("notice_step"),
-							rs.getInt("notice_grade")
-						);
-				list.add(vo);
-			}
-			return list;
-		}catch(SQLException se) {
-			se.printStackTrace();
-			return null;
-		}finally {
-			try {
-				if(rs!=null)rs.close();
-				if(pstmt!=null)pstmt.close();
-				if(con!=null)con.close();
-			}catch(SQLException s) {
-				s.printStackTrace();
-			}
-		}		
-	}
-	
+
 	public int insert(NoticeVo vo) {
 		Connection con=null;
 		PreparedStatement pstmt1=null;
@@ -168,7 +131,6 @@ public class NoticeDao {
 			rs=pstmt.executeQuery();
 			ArrayList<NoticeVo> list=new ArrayList<NoticeVo>();
 			while(rs.next()) {
-				System.out.println("rs.next() 실행중..");
 				NoticeVo vo=new NoticeVo(
 							rs.getInt("notice_num"),
 							cafe_num,

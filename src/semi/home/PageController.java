@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 import semi.cafe.CafeDao;
 import semi.notice.NoticeDao;
 import semi.questions.CaferegDao;
+import semi.questions.CaferegVo;
 @WebServlet("/semi/pagecontroller.do")
 public class PageController extends HttpServlet {
 	@Override
@@ -32,6 +33,7 @@ public class PageController extends HttpServlet {
 		switch(check) {
 			//로그인
 			case 1:	req.setAttribute("mfile", checks[check-1]);
+			
 				break;
 			case 2:	req.setAttribute("mfile", checks[check-1]);
 				break;
@@ -48,7 +50,7 @@ public class PageController extends HttpServlet {
 				if(scafe_num!=null) {
 					cafe_num=Integer.parseInt(scafe_num);
 				}
-				ArrayList<String> qlist = CaferegDao.getInstance().getQuestions(cafe_num);
+				ArrayList<CaferegVo> qlist = CaferegDao.getInstance().getQuestions(cafe_num);
 				req.setAttribute("qlist", qlist);
 				req.setAttribute("cafe_num", cafe_num);
 				break;
@@ -66,14 +68,9 @@ public class PageController extends HttpServlet {
 		req.setAttribute("header1", "/home/wraphome.jsp");
 		req.setAttribute("header2", "/home/wrapmain.jsp");
 		req.setAttribute("headerLog", "/register/rmain.jsp");
-		String cafe_num=req.getParameter("cafe_num");
-		if(cafe_num!=null&&!cafe_num.equals("")) {
-			String snotice_num=req.getParameter("notice_num");
-			int notice_num=0;
-			if(snotice_num!=null) {
-				notice_num=Integer.parseInt(snotice_num);
-			}
-			req.setAttribute("noticelist", NoticeDao.getInstance().listAll(notice_num));
+		int cafe_num=(int)req.getSession().getAttribute("cafe_num");
+		if(cafe_num!=0&&cafe_num==0) {
+			req.setAttribute("noticelist", NoticeDao.getInstance().listAll(cafe_num));
 			req.setAttribute("mlist", "/notice/noticelist.jsp");
 		}else {
 			req.setAttribute("cafelist", CafeDao.getInstance().listAll());

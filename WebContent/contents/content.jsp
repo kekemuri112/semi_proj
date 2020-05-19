@@ -18,7 +18,7 @@
 	<c:forEach var="vo" items="${list }">
 	<tr>
 		<td>${vo.contents_num}</td>
-		<td><a href="${cp }/contents/detail.do?contents_num=${vo.contents_num}&notice=${vo.notice_num}">${vo.contents_title }</a></td>
+		<td><a href="${cp }/contents/detail.do?contents_num=${vo.contents_num}">${vo.contents_title }</a></td>
 		<td>${vo.users_id }</td>
 		<td>${vo.contents_modifyDate }</td>
 	</tr>
