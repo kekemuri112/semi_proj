@@ -25,17 +25,19 @@ public class PageController extends HttpServlet {
 		int check=Integer.parseInt(req.getParameter("check"));
 		req.setAttribute("cafelist", CafeDao.getInstance().listAll());
 		String[] checks= {"/register/login.jsp","/register/register.jsp","/register/regsearch.jsp",
-				"/home/result.jsp","/questions/answer.jsp","","/cafe/cafeapproval.jsp",
+				"/home/result.jsp","/questions/answer.jsp","/cafe/userscafedel.jsp","/cafe/cafeapproval.jsp",
 				"/questions/questions.jsp","/register/regupdate.jsp"};
+		
 		/*
 		 * 	1.로그인	2.회원가입	3.id/pwd찾기	4.로그아웃	5.카페가입
 		 * 	6.카페탈퇴	7.가입한카페목록  8.카페관리  9.정보수정
 		 */
 		HttpSession session=req.getSession();
+		int cafe_num=(int)req.getSession().getAttribute("cafe_num");
+		
 		switch(check) {
 			//로그인
 			case 1:	req.setAttribute("mfile", checks[check-1]);
-			
 				break;
 			case 2:	req.setAttribute("mfile", checks[check-1]);
 				break;
@@ -47,22 +49,17 @@ public class PageController extends HttpServlet {
 					req.setAttribute("msg", "로그아웃완료");
 				break;
 			case 5:	req.setAttribute("mfile", checks[check-1]);
-				String scafe_num=req.getParameter("cafe_num");
-				int cafe_num=0;
-				if(scafe_num!=null) {
-					cafe_num=Integer.parseInt(scafe_num);
-				}
 				ArrayList<CaferegVo> qlist = CaferegDao.getInstance().getQuestions(cafe_num);
 				req.setAttribute("qlist", qlist);
-				req.setAttribute("cafe_num", cafe_num);
 				break;
 			case 6:	req.setAttribute("mfile", checks[check-1]);
+				String cafe_name=CafeDao.getInstance().getVo(cafe_num).getCafe_name();
+				req.setAttribute("cafe_name", cafe_name);
 				break;
 			case 7:	req.setAttribute("mfile", checks[check-1]);
 				break;
 			case 8:	req.setAttribute("mfile", checks[check-1]);
 				req.setAttribute("cafe_admin", req.getParameter("cafe_admin"));
-				req.setAttribute("cafe_num", req.getParameter("cafe_num"));
 				break;
 			case 9:	req.setAttribute("mfile", checks[check-1]);
 				String users_id=(String)session.getAttribute("users_id");
@@ -73,7 +70,6 @@ public class PageController extends HttpServlet {
 		req.setAttribute("header1", "/home/wraphome.jsp");
 		req.setAttribute("header2", "/home/wrapmain.jsp");
 		req.setAttribute("headerLog", "/register/rmain.jsp");
-		int cafe_num=(int)req.getSession().getAttribute("cafe_num");
 		if(cafe_num!=0 ) {
 			req.setAttribute("mlist", "/notice/noticelist.jsp");
 		}else {

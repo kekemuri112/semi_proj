@@ -218,14 +218,15 @@ public class CafeDao {
 		}
 	}
 	//cafe삭제하는 메소드
-	public int delete(int cafe_num) {
+	public int usersdelete(int cafe_num,int users_num) {
 		Connection con=null;
 		PreparedStatement pstmt=null;
 		try {
 			con=ConnectionPool.getCon();
-			String sql="delete from cafe where cafe_num=?";
+			String sql="delete from userscafe where cafe_num=? and users_num";
 			pstmt=con.prepareStatement(sql);
 			pstmt.setInt(1, cafe_num);
+			pstmt.setInt(2, users_num);
 			return pstmt.executeUpdate();
 		}catch (SQLException se) {
 			se.printStackTrace();

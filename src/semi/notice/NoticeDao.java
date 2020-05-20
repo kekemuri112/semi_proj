@@ -103,15 +103,16 @@ public class NoticeDao {
 	}
 
 	//회원인지 아닌지 알려줌
-	public String usersCafe(int users_num,int cafe_num) {
+	public String usersCafe(int users_num,int cafe_num, String approved) {
 		Connection con=null;
 		PreparedStatement pstmt=null;
 		try {
 			con=ConnectionPool.getCon();
-			String sql="select * from users_cafe where users_num=? and cafe_num=? and users_cafe_approved='승인'";
+			String sql="select * from users_cafe where users_num=? and cafe_num=? and users_cafe_approved=?";
 			pstmt=con.prepareStatement(sql);
 			pstmt.setInt(1, users_num);
 			pstmt.setInt(2, cafe_num);
+			pstmt.setString(3, approved);
 			int n=pstmt.executeUpdate();
 			if(n>0) {
 				return "true";	

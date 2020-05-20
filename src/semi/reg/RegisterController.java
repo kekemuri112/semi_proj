@@ -27,7 +27,7 @@ public class RegisterController extends HttpServlet{
 		UsersDao dao=UsersDao.getInstance();
 		int n=dao.insert(vo);
 		if(n>0) {
-			req.setAttribute("msg", "회원 가입 완료되었습니다.");
+			req.setAttribute("msg", "회원 가입이 완료되었습니다.");
 		}else {
 			req.setAttribute("msg", "회원 가입이 실패하였습니다.");
 		}

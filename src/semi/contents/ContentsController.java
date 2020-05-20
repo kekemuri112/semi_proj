@@ -75,13 +75,16 @@ public class ContentsController extends HttpServlet {
 		String users_id=(String)session.getAttribute("users_id");
 		String bl="false";
 		String bl2="false";
+		String bl3="false";
 		if(users_id!=null) {
 			bl=ndao.cafeAdmin(users_id,cafe_num);
 			int users_num=(int)session.getAttribute("users_num");
-			bl2=ndao.usersCafe(users_num, cafe_num);
+			bl2=ndao.usersCafe(users_num, cafe_num,"승인");
+			bl3=ndao.usersCafe(users_num, cafe_num,"대기");
 		}
 		session.setAttribute("cafe_admin", bl);
 		session.setAttribute("userscafe", bl2);
+		session.setAttribute("userscafeApproved", bl2);
 		
 		if(scafe_num!=null) {
 			req.setAttribute("mlist", "/notice/noticelist.jsp");

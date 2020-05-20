@@ -9,9 +9,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import semi.cafe.CafeDao;
-import semi.notice.NoticeDao;
-
 //카페 가입 버튼 눌렀을때...컨트롤러
 @WebServlet("/questions/answer.do")
 public class AnswerController extends HttpServlet{
@@ -37,12 +34,7 @@ public class AnswerController extends HttpServlet{
 		req.setAttribute("header1", "/home/wraphome.jsp");
 		req.setAttribute("header2", "/home/wrapmain.jsp");
 		req.setAttribute("headerLog", "/register/rmain.jsp");
-		if(cafe_num!=0) {
-			req.setAttribute("mlist", "notice/noteiclist.jsp");
-		}else {
-			req.setAttribute("cafelist", CafeDao.getInstance().listAll());
-			req.setAttribute("mlist", "/cafe/cafelist.jsp");
-		}
+		req.setAttribute("mlist", "/notice/noteiclist.jsp");
 		req.setAttribute("mfile", "/home/result.jsp");
 		req.getRequestDispatcher("/home/main.jsp").forward(req, resp);
 	}
