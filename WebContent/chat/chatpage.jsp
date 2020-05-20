@@ -1,11 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<body onload="getClear();">
+<body onload="getClear()">
 <div id="content">
 
+  <%  int cafe_num=(int)session.getAttribute("cafe_num");%>
   <% if (application.getAttribute("messages") != null) {%>
-  <%= application.getAttribute("messages")%>
+  <%=application.getAttribute("messages")%>
   <% }%>
 </div>
 <div>
@@ -14,10 +15,10 @@
 	</div>
 	<input style="border: none;width:300px;height:30px;" type="text" id="message">
 	<br><br>
-	<input type="hidden" value=${cafe_num } id="cafe_num">
+	<input type="hidden" value=<%=cafe_num %> id="cafe_num">
 	<input type="button"  style=" width:70px;height:35px; border-radius: 25px/25px;  background-color:white; outline-style:hidden;" value="보내기" onclick="postMessage()">
+</body>
 <script>
-	
     function postMessage() {
         var xmlhttp = new XMLHttpRequest();
         xmlhttp.open("post", "${cp}/chat/shoutServlet.do?t="+new Date(), false);
@@ -38,10 +39,13 @@
                 	var msg=xmlhttp.responseText;
                 	var msg1=msg.split("\n");
                     messagesWaiting = false;
-                    var cafe_num = document.getElementById("cafe_num");
+                    var cafe_num = document.getElementById("cafe_num").value;
                     if(cafe_num == msg1[1]){
+                    	console.log("if문진입");
                     	var msgbox = document.getElementById("msgbox");
                     	msgbox.value += msg1[0];
+                    }else{
+                    	console.log("진입안함...");
                     }
                 }
             }
