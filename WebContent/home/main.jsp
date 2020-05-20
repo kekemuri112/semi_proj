@@ -7,7 +7,7 @@
 <meta charset="UTF-8">
 <title>/home/main.jsp</title>
 <style>
-	#wrap{width:1800px;height:980px; background-color: rgba(255,255,255,0.3); margin: auto; position:relative; z-index: 2;}
+	#wrap{width:1800px;height:1100px; background-color: rgba(255,255,255,0.3); margin: auto; position:relative; z-index: 2;}
 	#header1{width:25%;height:20%; background-color: rgba(255,255,255,0.2); text-align:center ;border:90;border-color:grey; margin: auto;float: left;display: inline-block;}
 	#header2{width:50%;height:20%; background-color: rgba(255,255,255,0.2); text-align:center ;margin: auto;float: left;display: inline-block;}
 	#header3{width:25%;height:20%; background-color: rgba(255,255,255,0.2); text-align:center ;background-color:#F45D00;border-radius: 180px / 180px ;position: relative; margin: auto;float: left;display: inline-block;}
@@ -62,6 +62,9 @@
 		<div id="chat">
 			<div>
 				<h1 style="color: white;">채팅방임</h1>
+				<c:if test="${cafe_num>0 }">
+					<jsp:include page="/chat/chatpage.jsp"/>
+				</c:if>
 			</div>
 		</div>
 	</div>

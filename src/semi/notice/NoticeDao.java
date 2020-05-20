@@ -13,8 +13,68 @@ public class NoticeDao {
 	private NoticeDao() {}
 	public static NoticeDao getInstance() {
 		return instance;
+	}	
+	public int delNotice(int notice_lev,int notice_ref,int notice_num,String notice_name) {
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		try {
+			con=ConnectionPool.getCon();
+			String sql=null;
+			if(notice_name.equals("삭제된 게시판")) {
+				NoticeDeleteDao dao=NoticeDeleteDao.getInstance();
+				return dao.delete_notice(notice_num);
+			}else {
+				sql="update notice set notice_name='삭제된 게시판' where notice_num="+notice_num;
+				if(notice_lev==0) { // ū�Խ����϶�
+					sql+=" or notice_ref="+notice_ref;
+				}
+			}
+			pstmt=con.prepareStatement(sql);
+			return pstmt.executeUpdate();	
+		}catch(SQLException se) {
+			se.printStackTrace();
+			return -1;
+		}finally {
+			try {
+				if(pstmt!=null)pstmt.close();
+				if(con!=null)con.close();
+			}catch(SQLException se) {
+				se.printStackTrace();
+			}
+		}
 	}
-	public int getStep(int notice_ref) { //step 구하기
+	
+	//회원인지 아닌지 알려줌
+		public String usersCafe(int users_num,int cafe_num, String approved) {
+			Connection con=null;
+			PreparedStatement pstmt=null;
+			try {
+				con=ConnectionPool.getCon();
+				String sql="select * from users_cafe where users_num=? and cafe_num=? and users_cafe_approved=?";
+				pstmt=con.prepareStatement(sql);
+				pstmt.setInt(1, users_num);
+				pstmt.setInt(2, cafe_num);
+				pstmt.setString(3, approved);
+				int n=pstmt.executeUpdate();
+				if(n>0) {
+					return "true";	
+				}else {
+					return "false";
+				}
+			}catch (SQLException se) {
+				se.printStackTrace();
+				return "false";
+			}finally {
+				try {
+					if(pstmt!=null)pstmt.close();
+					if(con!=null)con.close();
+				}catch (SQLException s) {
+					s.printStackTrace();
+				}
+			}
+		}
+	
+	public int getStep(int notice_ref) { //step ���ϱ�
 		Connection con=null;
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
@@ -44,7 +104,7 @@ public class NoticeDao {
 		}
 	}
 	
-	public int insert(int cafe_num,int notice_ref,String notice_name) { //게시판 만들기
+	public int insert(int cafe_num,int notice_ref,String notice_name) { //�Խ��� �����
 		Connection con=null;
 		PreparedStatement pstmt=null;
 		try {
@@ -52,13 +112,13 @@ public class NoticeDao {
 			String sql="insert into notice(notice_num,cafe_num,notice_name,notice_ref,notice_lev,notice_step) "
 					+ "values(notice_seq.nextval,'"+cafe_num+"','"+notice_name+"',";
 			int notice_step=getStep(notice_ref)+1;
-			if(notice_ref>0) { // 작은게시판
+			if(notice_ref>0) { // �����Խ���
 				sql+="'"+notice_ref+"',1,'"+notice_step+"')";
-			}else if(notice_ref==0){ //큰게시판
+			}else if(notice_ref==0){ //ū�Խ���
 				sql+="notice_seq.currval,0,'"+notice_step+"')";
 			}
 			pstmt=con.prepareStatement(sql);
-			System.out.println("notice_insert 메소드 SQL 2: "+sql);
+			System.out.println("notice_insert �޼ҵ� SQL 2: "+sql);
 			return pstmt.executeUpdate();
 		}catch(SQLException se) {
 			se.printStackTrace();
@@ -72,8 +132,6 @@ public class NoticeDao {
 			}
 		}
 	}
-
-	//카페장인인지 아닌지 알려줌
 	public String cafeAdmin(String users_id,int cafe_num) {
 		Connection con=null;
 		PreparedStatement pstmt=null;
@@ -102,17 +160,15 @@ public class NoticeDao {
 		}
 	}
 
-	//회원인지 아닌지 알려줌
-	public String usersCafe(int users_num,int cafe_num, String approved) {
+	public String usersCafe(int users_num,int cafe_num) {
 		Connection con=null;
 		PreparedStatement pstmt=null;
 		try {
 			con=ConnectionPool.getCon();
-			String sql="select * from users_cafe where users_num=? and cafe_num=? and users_cafe_approved=?";
+			String sql="select * from userscafe where users_num=? and cafe_num=? and userscafe_approved='����'";
 			pstmt=con.prepareStatement(sql);
 			pstmt.setInt(1, users_num);
 			pstmt.setInt(2, cafe_num);
-			pstmt.setString(3, approved);
 			int n=pstmt.executeUpdate();
 			if(n>0) {
 				return "true";	
@@ -132,14 +188,13 @@ public class NoticeDao {
 		}
 	}
 	
-	//모든 게시판 목록 올려줌
 	public ArrayList<NoticeVo> listAll(int cafe_num){
 		Connection con=null;
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
 		try {
 			con=ConnectionPool.getCon();
-			String sql="select * from notice where cafe_num=? order by notice_ref desc,notice_step asc";
+			String sql="select * from notice where cafe_num=? order by notice_ref asc,notice_step asc";
 			pstmt=con.prepareStatement(sql);
 			pstmt.setInt(1, cafe_num);
 			rs=pstmt.executeQuery();
@@ -154,6 +209,7 @@ public class NoticeDao {
 							rs.getInt("notice_step"),
 							rs.getInt("notice_grade")
 						);
+				
 				list.add(vo);
 			}
 			return list;
@@ -170,6 +226,7 @@ public class NoticeDao {
 			}
 		}		
 	}
+	/*
 	public int getCount() {
 		Connection con=null;
 		PreparedStatement pstmt=null;
@@ -197,30 +254,38 @@ public class NoticeDao {
 				s.printStackTrace();
 			}
 		}
-	}
-	public int delete(int notice_num) {
+	}*/
+	/*public int delete(int notice_num) {
 		Connection con=null;
-		PreparedStatement pstmt=null;
+		PreparedStatement pstmt1=null;
+		PreparedStatement pstmt2=null;
+		PreparedStatement pstmt3=null;
+		PreparedStatement pstmt4=null;
 		try {
 			con=ConnectionPool.getCon();
-			String sql="delete from notice where notice_num=?";
-			pstmt=con.prepareStatement(sql);
-			pstmt.setInt(1, notice_num);
-			return pstmt.executeUpdate();
+			String sql1="delete from notice where notice_num=?";
+			pstmt1=con.prepareStatement(sql1);
+			pstmt1.setInt(1, notice_num);
+			pstmt2=con.prepareStatement(sql1);
+			pstmt2.setInt(1, notice_num);
+			pstmt3=con.prepareStatement(sql1);
+			pstmt3.setInt(1, notice_num);
+			pstmt4=pstmt3;
+			
+			return pstmt4.executeUpdate();
 		}catch (SQLException se) {
 			se.printStackTrace();
 			return -1;
 		}finally {
 			try {
-				if(pstmt!=null)pstmt.close();
+				if(pstmt1!=null)pstmt1.close();
 				if(con!=null)con.close();
 			}catch (SQLException s) {
 				s.printStackTrace();
 			}
 		}
-	}
+	}*/
 	
-	//PK값 하나 받아서 모든값을 가져오는 메소드 (rs 를 사용)
 	public NoticeVo getVo(int notice_num) {
 		Connection con=null;
 		PreparedStatement pstmt=null;

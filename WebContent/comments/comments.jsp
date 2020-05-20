@@ -48,7 +48,7 @@ window.addEventListener('load',function(){
 						commList.appendChild(span);
 					}
 					
-					div.innerHTML="<div style='background-color: rgba(255,255,255,0.8);'><p>"+users_id +" :"+comments_content+"</p>"
+					div.innerHTML="<p>"+users_id +" :"+comments_content+"</p>"
 								+"<input type='hidden' value='"+users_id+"'>"
 								+"<input type='hidden' value='"+comments_content+"'>"
 								+"<input type='hidden' value='"+comments_num+"'>"
@@ -56,8 +56,8 @@ window.addEventListener('load',function(){
 								+"<input type='button' style=' width:65px;height:27px; border-radius: 25px/25px;  background-color:white; outline-style:hidden;' value='답글' onclick='comments_reply("+j+")'>"
 						        +"<input type='button' style=' width:65px;height:27px; border-radius: 25px/25px;  background-color:white; outline-style:hidden;' value='수정' onclick='modify("+j+")'>"
 								+"<input type='button' style=' width:65px;height:27px; border-radius: 25px/25px;  background-color:white; outline-style:hidden;' value='삭제' onclick='comments_delete("+j+")'>"
-								+"</div>"
 					div.id="comment"+j;
+					div.style='background-color: rgba(255,255,255,0.8)';
 					div.className="comments";
 					var div2=document.createElement("div");
 					div2.innerHTML=	"<textarea rows='3' cols='30' id='reply_value"+j+"'></textarea><br>"			   

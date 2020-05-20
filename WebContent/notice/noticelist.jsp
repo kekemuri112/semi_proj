@@ -1,10 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-	<h1 style="color: white; margin-left:100px; ; float: none;">게시판목록</h1>
+<h1 style="color: white; margin-left:100px; ; float: none;">게시판목록</h1>
 <div id="notice_list"  style=" margin-left:40px;float: left;display: inline-block;">
-
 </div>
+<meta charset="UTF-8">
 <script>
 <%
 	int cafe_num=(int)session.getAttribute("cafe_num");
@@ -46,6 +46,14 @@
 						aTag2.appendChild(span);
 						div.appendChild(aTag2);
 					}
+					if(cafe_admin){
+						var aTag4=document.createElement("a");
+						aTag4.href="javascript:deleteNotice("+notice_num+","+notice_lev+","+notice_ref+",'"+notice_name+"')"; //prompt 요청 / 게시판이름입력 호출
+						var span=document.createElement("span");
+						span.innerHTML="[-]";
+						aTag4.appendChild(span);
+						div.appendChild(aTag4);
+					}
 					div.innerHTML+="<br>"
 				}
 				if(cafe_admin){
@@ -85,12 +93,39 @@
 		xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
 		xhr.send('notice_ref='+notice_ref+'&notice_name='+notice_name);
 	}
-	function delete_div(){
+	function delete_div(){ //div 목록초기화.
 		var div=document.getElementById("notice_list")
 		var com=div.childNodes
 		for(var i=com.length-1;i>=0;i--){
 			var comm=com.item(i);
 			div.removeChild(comm);
+		}
+	}
+	function deleteNotice(notice_num,notice_lev,notice_ref,notice_name){
+		var msg="삭제하시겠습니까?";
+		if(notice_name=='삭제된 게시판'){
+			msg="게시판의 글,댓글이 전부 지워집니다. 정말 삭제하시겠습니까?"
+		}
+		if(confirm(msg)){
+			var xhr=new XMLHttpRequest();
+			xhr.onreadystatechange=function(){
+				if(xhr.status==200&&xhr.readyState==4){
+					var data=xhr.responseText;
+					var json=JSON.parse(data);
+					if(json.result){
+						alert("삭제성공!!")
+						delete_div();
+						getList1();
+					}else{
+						alert("삭제실패!!")
+					}
+				}
+			}
+			xhr.open('post',cp+'/notice/delete.do',true);
+			xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+			xhr.send('notice_lev='+notice_lev+'&notice_num='+notice_num+'&notice_ref='+notice_ref+"&notice_name="+notice_name);
+		}else{
+			alert("false!!")
 		}
 	}
 </script>

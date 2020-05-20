@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet(urlPatterns = {"/shoutServlet"}, asyncSupported=true)
+@WebServlet(urlPatterns = {"/chat/shoutServlet.do"}, asyncSupported=true)
 public class WebChat extends HttpServlet {
     private List<AsyncContext> contexts = new LinkedList<>();
     @Override
@@ -33,7 +33,7 @@ public class WebChat extends HttpServlet {
         this.contexts.clear();
         String name = req.getParameter("name");
         String message = req.getParameter("message");
-        String htmlMessage = "<p><b>" + name + "</b><br/>" + message + "</p>";
+        String htmlMessage = name + " : "+ message;
         ServletContext sc = req.getServletContext();
         if (sc.getAttribute("messages") == null) {
             sc.setAttribute("messages", htmlMessage);
