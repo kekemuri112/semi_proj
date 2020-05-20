@@ -26,7 +26,7 @@ public class PageController extends HttpServlet {
 		req.setAttribute("cafelist", CafeDao.getInstance().listAll());
 		String[] checks= {"/register/login.jsp","/register/register.jsp","/register/regsearch.jsp",
 				"/home/result.jsp","/questions/answer.jsp","/cafe/userscafedel.jsp","/cafe/cafeapproval.jsp",
-				"/questions/questions.jsp","/register/regupdate.jsp"};
+				"/questions/cafeset.jsp","/register/regupdate.jsp"};
 		
 		/*
 		 * 	1.로그인	2.회원가입	3.id/pwd찾기	4.로그아웃	5.카페가입
