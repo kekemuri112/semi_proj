@@ -13,25 +13,22 @@
 	<div >
 	<br>
 	<p>
-	${vo.post }
+	${vo.contents_post }
 	</p>
 	<br>
 	</div>
 	<br>
 	<div style=" width:550px; margin:auto;">
 	<c:if test="${vo.users_num eq sessionScope.users_num}">
-		<form  action="/contents/update.do?contents_num=${vo.contents_num }&users_num=${vo.users_num}" method="get">
-			<input type="hidden" name="contents_num" value="${vo.contents_num }">
-			<input type="submit" value="수정하기">
-		</form>
-		<input style=" width:75px;height:30px; border-radius: 25px/25px;  background-color:white; outline-style:hidden;"  type="button" value="삭제하기" onclick="">
+		<a href="${cp }/contents/update.do?contents_num=${vo.contents_num}"><input type="button"  style=" width:75px;height:30px; border-radius: 25px/25px;  background-color:white; outline-style:hidden;" value="수정하기"></a>
+		<a href="${cp }/contents/delete.do?contents_num=${vo.contents_num}"><input type="button"  style=" width:75px;height:30px; border-radius: 25px/25px;  background-color:white; outline-style:hidden;" value="삭제하기"></a>
 	</c:if>
 	<input style=" width:75px;height:30px; border-radius: 25px/25px;  background-color:white; outline-style:hidden;"  type="button" value="뒤로가기" onclick="return_contents();"><br>
 	<br>
 	</div>
 </div>
 <div>
-	<jsp:include page="../comments/comments.jsp?contents_num=${vo.contents_num }&users_num=${vo.users_num }"/>
+	<jsp:include page="/comments/comments.jsp?contents_num=${vo.contents_num }&users_num=${vo.users_num }"/>
 	<br><br>
 </div>
 <script>

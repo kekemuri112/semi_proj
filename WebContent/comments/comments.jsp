@@ -4,15 +4,16 @@
 
 <%
 	String scontents_num=request.getParameter("contents_num");
+	String susers_num=request.getParameter("users_num");
 	int contents_num=Integer.parseInt(scontents_num);
-	int users_num=Integer.parseInt(request.getParameter("users_num"));
+	int users_num=Integer.parseInt(susers_num);
 %>
 <div id="commList">
 </div>
 <div id="page">
 </div><br>
 	<div>
-		<textarea  rows="3" cols="30" id="comments"></textarea><br>
+		<textarea rows="3" cols="30" id="comments"></textarea><br>
 		<input style=" width:75px;height:30px; border-radius: 25px/25px;  background-color:white; outline-style:hidden;" type="button" value="등록하기" onclick="comments_write()">
 	</div>
 <script type="text/javascript">

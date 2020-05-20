@@ -414,7 +414,7 @@ public class ContentsDao {
 		PreparedStatement pstmt=null;
 		try {
 			con=ConnectionPool.getCon();
-			String sql="update user_cafe set users_cafe_point=users_cafe_point+100 where users_num=?";
+			String sql="update users_cafe set users_cafe_point=users_cafe_point+100 where users_num=?";
 			pstmt=con.prepareStatement(sql);
 			pstmt.setInt(1, users_num);
 			return pstmt.executeUpdate();
@@ -432,20 +432,39 @@ public class ContentsDao {
 	}
 	
 	
-	/*
 	public int delete(int contents_num) {
 		Connection con=null;
 		PreparedStatement pstmt=null;
+		PreparedStatement pstmt2=null;
 		try {
 			con=ConnectionPool.getCon();
-			String sql="delete from contents where contents_num=?";
+			con.setAutoCommit(false);
+			String sql="delete from comments where contents_num=?";
+			pstmt=con.prepareStatement(sql);
 			pstmt.setInt(1, contents_num);
-			CommentsDao dao=CommentsDao.getInstance();
-			ArrayList<Integer>list=dao.getComments_num(contents_num);
+			pstmt.executeUpdate();
+			String sql1="delete from contents where contents_num=?";
+			pstmt2=con.prepareStatement(sql1);
+			pstmt2.setInt(1, contents_num);
+			int n=pstmt2.executeUpdate();
+			con.commit();
+			return n;
 		}catch(SQLException se) {
 			se.printStackTrace();
+			try {
+				con.rollback();
+			}catch(SQLException se1) {
+				se1.printStackTrace();
+			}
 			return -1;
+		}finally {
+			try {
+				con.setAutoCommit(true);
+				if(pstmt!=null)pstmt.close();
+				if(con!=null)con.close();
+			}catch(SQLException se) {
+				se.printStackTrace();
+			}
 		}
 	}
-	*/
 }

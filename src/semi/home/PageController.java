@@ -70,7 +70,7 @@ public class PageController extends HttpServlet {
 		req.setAttribute("header1", "/home/wraphome.jsp");
 		req.setAttribute("header2", "/home/wrapmain.jsp");
 		req.setAttribute("headerLog", "/register/rmain.jsp");
-		if(cafe_num!=0 ) {
+		if(cafe_num>0 ) {
 			req.setAttribute("mlist", "/notice/noticelist.jsp");
 		}else {
 			req.setAttribute("cafelist", CafeDao.getInstance().listAll());

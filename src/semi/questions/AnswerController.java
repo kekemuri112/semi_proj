@@ -34,7 +34,7 @@ public class AnswerController extends HttpServlet{
 		req.setAttribute("header1", "/home/wraphome.jsp");
 		req.setAttribute("header2", "/home/wrapmain.jsp");
 		req.setAttribute("headerLog", "/register/rmain.jsp");
-		req.setAttribute("mlist", "/notice/noteiclist.jsp");
+		req.setAttribute("mlist", "/notice/noticelist.jsp");
 		req.setAttribute("mfile", "/home/result.jsp");
 		req.getRequestDispatcher("/home/main.jsp").forward(req, resp);
 	}

@@ -9,8 +9,8 @@
 			<h3>${i }번째 질문</h3>
 			<h3>${vo.cafereg_question }</h3>
 			<textarea rows="5" cols="50" name="answer"></textarea><br>
-			<input type="text" value=${vo.cafereg_num } name="cafereg_num">
-			<input type="text" value=${cafe_num } name="cafe_num">
+			<input type="hidden" value=${vo.cafereg_num } name="cafereg_num">
+			<input type="hidden" value=${cafe_num } name="cafe_num">
 		</c:forEach>
 		<input type="submit" value="가입요청">
 		<input type="button" value="뒤로가기" onclick="qCancel()">

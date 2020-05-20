@@ -31,6 +31,10 @@
 				</td>
 			</tr>
 			<tr>
+				<th style="color:#F45D00 ;">이  름</th>
+				<td><input type="text" name="users_name"></td>
+			</tr>
+			<tr>
 				<th style="color:#F45D00 ;">이메일</th>
 				<td><input type="text" name="users_email"></td>
 			</tr>
@@ -44,7 +48,7 @@
 			</tr>
 			<tr>
 				<th style="color:#F45D00 ;" colspan="2">
-					<input style="width:75px;height:30px; border-radius: 25px/25px;  background-color:white; outline-style:hidden;"  type="button" type="submit" value="가입하기">
+					<input style="width:75px;height:30px; border-radius: 25px/25px;  background-color:white; outline-style:hidden;"  type="submit" type="submit" value="가입하기">
 					<input style="width:75px;height:30px; border-radius: 25px/25px;  background-color:white; outline-style:hidden;"  type="button" type="button" value="가입취소" onclick="regCancel()">
 				</th>
 			</tr>

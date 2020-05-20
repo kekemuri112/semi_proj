@@ -13,7 +13,7 @@
 
 <table style="font-size:27px; background-color: rgba(255,255,255,0.8);" border="1">
 	<tr>
-		<th>게시글번호</th><th>제목</th><th>작성자</th><th>작성일</th>
+		<th>게시글번호</th><th style="width: 200px">제목</th><th>작성자</th><th>작성일</th>
 	</tr>
 	<c:forEach var="vo" items="${list }">
 	<tr>
@@ -58,6 +58,6 @@
 		[다음]
 	</c:otherwise>
 </c:choose>
-<c:if test="${notice_num>0 }">
-<a href="${cp }/contents/insert.do?cafe_num=${cafe_num}&notice_num=${notice_num}"><input type="button" value="글작성" ></a>
+<c:if test="${(notice_num>0 && userscafe eq 'true') || (cafe_admin eq 'true'&& notice_num>0)}">
+	<a href="${cp }/contents/insert.do?cafe_num=${cafe_num}&notice_num=${notice_num}"><input type="button" value="글작성" ></a>
 </c:if>

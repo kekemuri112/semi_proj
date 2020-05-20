@@ -38,6 +38,7 @@ public class UpdateController extends HttpServlet{
 			req.setAttribute("cafelist", CafeDao.getInstance().listAll());
 			req.setAttribute("mlist", "/cafe/cafelist.jsp");
 		}
+		req.setAttribute("header1", "/home/wraphome.jsp");
 		req.setAttribute("headerLog", "/register/rmain.jsp");
 		req.setAttribute("header2", "/home/wrapmain.jsp");
 		req.setAttribute("mfile", "/home/result.jsp");		

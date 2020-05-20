@@ -22,11 +22,12 @@ public class ContentsController extends HttpServlet {
 		String keyword=req.getParameter("keyword");
 		HttpSession session= req.getSession();
 		int cafe_num=0;
+		String cafe_name="";
 		if(scafe_num!=null) {
 			cafe_num=Integer.parseInt(scafe_num);
-			session.setAttribute("cafe_num", cafe_num);
+			cafe_name=CafeDao.getInstance().getVo(cafe_num).getCafe_name();
 		}
-		String cafe_name=CafeDao.getInstance().getVo(cafe_num).getCafe_name();
+		session.setAttribute("cafe_num", cafe_num);
 		session.setAttribute("cafe_name", cafe_name);
 		String spageNum=req.getParameter("pageNum");
 		String snotice_num=req.getParameter("notice_num");
@@ -43,6 +44,7 @@ public class ContentsController extends HttpServlet {
 		}
 		int startRow=(pageNum-1)*10+1;
 		int endRow=startRow+9;
+		req.setAttribute("notice_num", notice_num);
 		ArrayList<Integer> list2=dao.getNotice_num(cafe_num);
 		if(list2!=null) {
 			ArrayList<Contents_ListVo> list=dao.listAll(cafe_num, startRow, endRow, notice_num, field, keyword);
@@ -53,10 +55,7 @@ public class ContentsController extends HttpServlet {
 				endPage=pageCount;
 			}
 			
-			req.setAttribute("notice_num", notice_num);
 			req.setAttribute("notice_name", notice_name);
-			req.setAttribute("cafe_num", cafe_num);
-			
 			req.setAttribute("list", list);
 			req.setAttribute("pageCount", pageCount);
 			req.setAttribute("startPage", startPage);
@@ -64,8 +63,7 @@ public class ContentsController extends HttpServlet {
 			req.setAttribute("pageNum",pageNum);
 			req.setAttribute("mfile","/contents/content.jsp");
 		}else {
-			req.setAttribute("msg","게시글이 없습니다.");
-			req.setAttribute("mfile","/home/result.jsp");
+			req.setAttribute("mfile","/contents/content.jsp");
 		}
 		
 		req.setAttribute("header1", "/home/wraphome.jsp");
@@ -84,7 +82,7 @@ public class ContentsController extends HttpServlet {
 		}
 		session.setAttribute("cafe_admin", bl);
 		session.setAttribute("userscafe", bl2);
-		session.setAttribute("userscafeApproved", bl2);
+		session.setAttribute("userscafeApproved", bl3);
 		
 		if(scafe_num!=null) {
 			req.setAttribute("mlist", "/notice/noticelist.jsp");
@@ -92,8 +90,6 @@ public class ContentsController extends HttpServlet {
 			req.setAttribute("cafelist", CafeDao.getInstance().listAll());
 			req.setAttribute("mlist", "/cafe/cafelist.jsp");
 		}
-		
-		
 		req.getRequestDispatcher("/home/main.jsp").forward(req, resp);
 	}
 }
