@@ -1,12 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <title>JSP Page</title>
-</head>
-<body onload="getMessages();">
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<body onload="getClear();">
 <div id="content">
 
   <% if (application.getAttribute("messages") != null) {%>
@@ -19,8 +14,10 @@
 	</div>
 	<input style="border: none;width:300px;height:30px;" type="text" id="message">
 	<br><br>
+	<input type="hidden" value=${cafe_num } id="cafe_num">
 	<input type="button"  style=" width:70px;height:35px; border-radius: 25px/25px;  background-color:white; outline-style:hidden;" value="보내기" onclick="postMessage()">
 <script>
+	
     function postMessage() {
         var xmlhttp = new XMLHttpRequest();
         xmlhttp.open("post", "${cp}/chat/shoutServlet.do?t="+new Date(), false);
@@ -30,6 +27,7 @@
         document.getElementById("message").value = "";
         xmlhttp.send("name="+users_id+"&message="+messageText);
     }
+    
     var messagesWaiting = false;
     function getMessages(){
         if(!messagesWaiting){
@@ -37,9 +35,14 @@
             var xmlhttp = new XMLHttpRequest();
             xmlhttp.onreadystatechange=function(){
                 if (xmlhttp.readyState==4 && xmlhttp.status==200) {
+                	var msg=xmlhttp.responseText;
+                	var msg1=msg.split("\n");
                     messagesWaiting = false;
-                    var msgbox = document.getElementById("msgbox");
-                    msgbox.value += xmlhttp.responseText;
+                    var cafe_num = document.getElementById("cafe_num");
+                    if(cafe_num == msg1[1]){
+                    	var msgbox = document.getElementById("msgbox");
+                    	msgbox.value += msg1[0];
+                    }
                 }
             }
             xmlhttp.open("get", "${cp}/chat/shoutServlet.do?t="+new Date(), true);
@@ -47,6 +50,12 @@
         }
     }
     setInterval(getMessages, 1000);
+    
+    function getClear(){
+    	var msgbox = document.getElementById("msgbox");
+    	msgbox.value="";
+    	getMessages();
+    };
+    
+    
 </script>
-</body>
-</html>

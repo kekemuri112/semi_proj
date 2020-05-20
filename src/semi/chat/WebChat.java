@@ -44,6 +44,7 @@ public class WebChat extends HttpServlet {
         for (AsyncContext asyncContext : asyncContexts) {
             try (PrintWriter writer = asyncContext.getResponse().getWriter()) {
                 writer.println(htmlMessage);
+                writer.println((int)req.getSession().getAttribute("cafe_num"));
                 writer.flush();
                 asyncContext.complete();
             } catch (Exception ex) {
