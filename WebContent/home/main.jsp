@@ -7,14 +7,14 @@
 <meta charset="UTF-8">
 <title>/home/main.jsp</title>
 <style>
-	#wrap{width:1800px;height:980px; background-color: rgba(255,255,255,0.2); margin: auto; position:relative; z-index: 2;}
+	#wrap{width:1800px;height:980px; background-color: rgba(255,255,255,0.3); margin: auto; position:relative; z-index: 2;}
 	#header1{width:25%;height:20%; background-color: rgba(255,255,255,0.2); text-align:center ;border:90;border-color:grey; margin: auto;float: left;display: inline-block;}
 	#header2{width:50%;height:20%; background-color: rgba(255,255,255,0.2); text-align:center ;margin: auto;float: left;display: inline-block;}
 	#header3{width:25%;height:20%; background-color: rgba(255,255,255,0.2); text-align:center ;background-color:#F45D00;border-radius: 180px / 180px ;position: relative; margin: auto;float: left;display: inline-block;}
 	#header3-1{width: 80%;height: 80%;text-align:center ; margin-top: 10px;margin-left:50px;display: inline-block;}
 	#menu{width:20%;height:80%; border-radius: 80px / 70px;background-color:#F45D00;margin: auto;float: left;display: inline-block;}
-	#list{width:100%;height:70%; margin: auto;float: left;display: inline-block;}
-	#chat{width:100%;height:30%;text-align:center ;float: left ;text-align:center ; margin: auto;float: left;display: inline-block;}
+	#list{width:100%;height:60%; margin: auto;float: left;display: inline-block;}
+	#chat{width:100%;height:40%;text-align:center ;float: left ;text-align:center ; margin: auto;float: left;display: inline-block;}
 	#main{width:80%;height:80%; background-color: rgba(255,255,255,0.2); text-align:center ;margin: auto;float: left;z-index: 2; display: inline-block;}
 	#cafe{font-size: 80px;}
 	table{ text-align:center ;margin: auto;display: inline-block; }
