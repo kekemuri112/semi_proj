@@ -9,7 +9,7 @@
 			<tr>
 				<th style="color:#F45D00 ;" >사용자 아이디</th>
 				<td>
-					<input type="text" name="users_id" id="users_id" placeholder="아이디 입력(6~14자리)" onkeyup="idsearch(); idResult();"
+					<input  type="text" name="users_id" id="users_id" placeholder="아이디 입력(6~14자리)" onkeyup="idsearch(); idResult();"
 					onfocusout="delmsg()">
 					<span id="checkId"></span>
 				</td>
@@ -44,8 +44,8 @@
 			</tr>
 			<tr>
 				<th style="color:#F45D00 ;" colspan="2">
-					<input type="submit" value="가입하기">
-					<input type="button" value="가입취소" onclick="regCancel()">
+					<input style="width:75px;height:30px; border-radius: 25px/25px;  background-color:white; outline-style:hidden;"  type="button" type="submit" value="가입하기">
+					<input style="width:75px;height:30px; border-radius: 25px/25px;  background-color:white; outline-style:hidden;"  type="button" type="button" value="가입취소" onclick="regCancel()">
 				</th>
 			</tr>
 		</table>

@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>    
 <style>
-	.regC{ width: 75px;height: 40px;background-color:white; outline-style:hidden; border: 10px;border-radius: 20px / 20px; }
+	.regC{ width: 75px;height: 40px;background-color:white; outline-style:hidden;    border: 10px;border-radius: 20px / 20px; }
 </style>  
     
 <c:choose>

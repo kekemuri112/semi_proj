@@ -23,7 +23,7 @@
 				var data=xhr.responseText;
 				var json=JSON.parse(data);
 				var approval=document.getElementById("approval");
-				var tableApp ="<table><tr><th>카페명</th><th>소개글</th><th>개설의도</th><th>카페장</th><th>비고</th></tr>";
+				var tableApp ="<table style=' background-color: rgba(255,255,255,0.8); border:2px solid black;'><tr><th>카페명</th><th>소개글</th><th>개설의도</th><th>카페장</th><th>비고</th></tr>";
 				for(var i=0;i<json.length-1;i++){
 					var cafe_num=json[i].cafe_num;
 					var cafe_name=json[i].cafe_name;
@@ -33,8 +33,8 @@
 					var pageNum=json[json.length-1].pageNum;
 					tableApp +="<tr><td>"+cafe_name+"</td><td>"+cafe_desc+
 								"</td><td>"+cafe_intent+"</td><td>"+cafe_admin+"</td><td>"+
-								"<input type='button' value='거부' onclick='cafeDel("+cafe_num+","+pageNum1+")'>"+
-								"<input type='button' value='승인' onclick='cafeAcc("+cafe_num+","+pageNum1+")'>"+
+								"<input style='width:75px;height:30px; border-radius: 25px/25px;  background-color:white; outline-style:hidden;' type='button' value='거부' onclick='cafeDel("+cafe_num+","+pageNum1+")'>"+
+								"<input style='width:75px;height:30px; border-radius: 25px/25px;  background-color:white; outline-style:hidden;' type='button' value='승인' onclick='cafeAcc("+cafe_num+","+pageNum1+")'>"+
 								"</td></tr>";
 				}
 				tableApp += "</table>";

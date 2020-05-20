@@ -16,8 +16,8 @@
 			</tr>
 			<tr>
 				<th colspan="2">
-					<input style="" type="submit" value="로그인">
-					<input type="button" value="뒤로가기" onclick="loginCancel()">
+					<input style="width:75px;height:30px; border-radius: 25px/25px;  background-color:white; outline-style:hidden;"  type="button" type="submit" value="로그인">
+					<input style="width:75px;height:30px; border-radius: 25px/25px;  background-color:white; outline-style:hidden;"  type="button" type="button" value="뒤로가기" onclick="loginCancel()">
 				</th>
 			</tr>
 		</table>

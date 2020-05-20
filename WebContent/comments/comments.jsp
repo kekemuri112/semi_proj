@@ -12,8 +12,8 @@
 <div id="page">
 </div><br>
 	<div>
-		<textarea rows="3" cols="30" id="comments"></textarea><br>
-		<input type="button" value="등록하기" onclick="comments_write()">
+		<textarea  rows="3" cols="30" id="comments"></textarea><br>
+		<input style=" width:75px;height:30px; border-radius: 25px/25px;  background-color:white; outline-style:hidden;" type="button" value="등록하기" onclick="comments_write()">
 	</div>
 <script type="text/javascript">
 
@@ -43,18 +43,19 @@ window.addEventListener('load',function(){
 						for(var z=1;z<=comments_lev;z++){
 							span.innerHTML+="&ensp;&ensp;&ensp;"
 						}
-						span.innerHTML+="ㄴ";
+						span.innerHTML+="┖";
 						commList.appendChild(span);
 					}
 					
-					div.innerHTML="<strong>"+users_id +" :"+comments_content+"</strong>"
+					div.innerHTML="<div style='background-color: rgba(255,255,255,0.8);'><p>"+users_id +" :"+comments_content+"</p>"
 								+"<input type='hidden' value='"+users_id+"'>"
 								+"<input type='hidden' value='"+comments_content+"'>"
 								+"<input type='hidden' value='"+comments_num+"'>"
 								+"<input type='hidden' value='"+pageNum+"'>"
-								+"<input type='button' value='답글' onclick='comments_reply("+j+")'>"
-						        +"<input type='button' value='수정' onclick='modify("+j+")'>"
-								+"<input type='button' value='삭제' onclick='comments_delete("+j+")'>"
+								+"<input type='button' style=' width:65px;height:27px; border-radius: 25px/25px;  background-color:white; outline-style:hidden;' value='답글' onclick='comments_reply("+j+")'>"
+						        +"<input type='button' style=' width:65px;height:27px; border-radius: 25px/25px;  background-color:white; outline-style:hidden;' value='수정' onclick='modify("+j+")'>"
+								+"<input type='button' style=' width:65px;height:27px; border-radius: 25px/25px;  background-color:white; outline-style:hidden;' value='삭제' onclick='comments_delete("+j+")'>"
+								+"</div>"
 					div.id="comment"+j;
 					div.className="comments";
 					var div2=document.createElement("div");

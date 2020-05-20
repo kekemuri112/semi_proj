@@ -1,8 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-	<div id="notice_list">	
-	</div>
+	<h1 style="color: white; margin-left:100px; ; float: none;">게시판목록</h1>
+<div id="notice_list"  style=" margin-left:40px;float: left;display: inline-block;">
+
+</div>
 <script>
 <%
 	int cafe_num=(int)session.getAttribute("cafe_num");
