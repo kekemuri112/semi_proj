@@ -18,10 +18,12 @@ ${vo.contents_post }
 </p>
 ===================================================================
 <br>
-<c:if test="${vo.users_num eq sessionScope.users_num}">
-	<a href="${cp }/contents/update.do?contents_num=${vo.contents_num}"><input type="button" value="수정하기"></a>
-	<a href="${cp }/contents/delete.do?contents_num=${vo.contents_num}"><input type="button" value="삭제하기"></a>
-</c:if>
+<!--<c:if test="${vo.users_num eq sessionScope.users_num}">-->
+<!--</c:if>-->
+
+<a href="${cp }/contents/update.do?contents_num=${vo.contents_num}"><input type="button" value="수정하기"></a>
+<a href="${cp }/contents/delete.do?contents_num=${vo.contents_num}"><input type="button" value="삭제하기"></a>
+
 <input type="button" value="목록" onclick="return_contents()"><br>
 <div>
 	<jsp:include page="../comments/comments.jsp?contents_num=${vo.contents_num }&users_num=${vo.users_num }"/>

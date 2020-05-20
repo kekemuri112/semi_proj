@@ -33,9 +33,6 @@ public class CommentsController extends HttpServlet{
 		if(endPage>pageCount) {
 			endPage=pageCount;
 		}
-		System.out.println("comments pageNum : "+pageNum);
-		System.out.println("comments startPage:"+startPage);
-		System.out.println("comments pageCount: "+pageCount);
 		ArrayList<CommentsVo> comList=dao.comList(contents_num,startRow,endRow);
 		JSONArray jarr=new JSONArray();
 		for(CommentsVo vo1:comList) {

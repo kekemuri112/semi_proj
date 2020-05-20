@@ -44,11 +44,10 @@
 						span.innerHTML="[+]";
 						aTag2.appendChild(span);
 						div.appendChild(aTag2);
-						////////////////////////////
-						
+						////////////////////////////	
 					}
 					var aTag4=document.createElement("a");
-					aTag4.href="javascript:deleteNotice("+notice_num+","+notice_lev+","+notice_ref+")"; //prompt 요청 / 게시판이름입력 호출
+					aTag4.href="javascript:deleteNotice("+notice_num+","+notice_lev+","+notice_ref+",'"+notice_name+"')"; //prompt 요청 / 게시판이름입력 호출
 					var span=document.createElement("span");
 					span.innerHTML="[-]";
 					aTag4.appendChild(span);
@@ -100,11 +99,16 @@
 			div.removeChild(comm);
 		}
 	}
-	function deleteNotice(notice_num,notice_lev,notice_ref){
+	function deleteNotice(notice_num,notice_lev,notice_ref,notice_name){
 		console.log("notice_num : "+notice_num);
+		console.log("notice_name : "+notice_name);
 		console.log("notice_lev : "+notice_lev);
 		console.log("notice_ref : "+notice_ref);
-		if(confirm("삭제하시겠습니까?")){
+		var msg="삭제하시겠습니까?";
+		if(notice_name=='삭제된 게시판'){
+			msg="게시판의 글,댓글이 전부 지워집니다. 정말 삭제하시겠습니까?"
+		}
+		if(confirm(msg)){
 			var xhr=new XMLHttpRequest();
 			xhr.onreadystatechange=function(){
 				if(xhr.status==200&&xhr.readyState==4){
@@ -121,7 +125,7 @@
 			}
 			xhr.open('post',cp+'/notice/delete.do',true);
 			xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-			xhr.send('notice_lev='+notice_lev+'&notice_num='+notice_num+'&notice_ref='+notice_ref);
+			xhr.send('notice_lev='+notice_lev+'&notice_num='+notice_num+'&notice_ref='+notice_ref+"&notice_name="+notice_name);
 		}else{
 			alert("false!!")
 		}

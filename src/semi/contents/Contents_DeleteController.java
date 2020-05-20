@@ -14,15 +14,14 @@ public class Contents_DeleteController extends HttpServlet{
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String scontents_num=req.getParameter("contents_num");
 		int contents_num=Integer.parseInt(scontents_num);
-		System.out.println("»èÁ¦ÄÁÆ®·Ñ·¯ contents_num : "+contents_num);
 		ContentsDao dao=ContentsDao.getDao();
 		int n=dao.delete(contents_num);
 		if(n>0) {
-			req.setAttribute("msg", "»èÁ¦¿Ï·á");
+			req.setAttribute("msg", "ï¿½ï¿½ï¿½ï¿½ï¿½Ï·ï¿½");
 		}else {
-			req.setAttribute("msg", "»èÁ¦½ÇÆÐ");
+			req.setAttribute("msg", "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
 		}
-		
+	
 		
 		
 		

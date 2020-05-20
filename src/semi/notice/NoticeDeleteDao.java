@@ -24,7 +24,7 @@ public class NoticeDeleteDao {
 			if(list.size()>0) {
 				ContentsDao dao=ContentsDao.getDao();
 				for(int i=0;i<list.size();i++) {
-					dao.delete(list.get(i));
+					dao.delete(list.get(i)); // contentsDao의 댓글지우는 메소드 사용함.
 				}
 			}
 			ArrayList<Integer> list2=getNotice_num(notice_num);

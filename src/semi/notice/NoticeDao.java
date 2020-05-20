@@ -38,21 +38,26 @@ public class NoticeDao {
 			}
 		}
 	}*/
-	public int delNotice(int notice_lev,int notice_ref,int notice_num) {
+	public int delNotice(int notice_lev,int notice_ref,int notice_num,String notice_name) {
 		Connection con=null;
 		PreparedStatement pstmt=null;
+		System.out.println("delNoticeì˜ notice_name : "+notice_name);
 		try {
 			con=ConnectionPool.getCon();
-			String sql="update notice set notice_name='»èÁ¦µÈ °Ô½ÃÆÇÀÔ´Ï´Ù.' where notice_num=?";
-			if(notice_lev==0) {
-				sql+=" or notice_ref="+notice_ref;
+			String sql=null;
+			if(notice_name.equals("ì‚­ì œëœ ê²Œì‹œíŒ")) {
+				NoticeDeleteDao dao=NoticeDeleteDao.getInstance();
+				return dao.delete_notice(notice_num);
+			}else {
+				sql="update notice set notice_name='ì‚­ì œëœ ê²Œì‹œíŒ' where notice_num="+notice_num;
+				if(notice_lev==0) { // Å«ï¿½Ô½ï¿½ï¿½ï¿½ï¿½Ï¶ï¿½
+					sql+=" or notice_ref="+notice_ref;
+				}
+				System.out.println("delNotice sql : "+sql);
 			}
-			System.out.println("delNotice sql¹® : "+sql);
 			pstmt=con.prepareStatement(sql);
-			pstmt.setInt(1, notice_num);
-			System.out.println("delNotice sql¹®  2: "+sql);
-			return pstmt.executeUpdate();
-			
+			System.out.println("delNotice sql  2: "+sql);
+			return pstmt.executeUpdate();	
 		}catch(SQLException se) {
 			se.printStackTrace();
 			return -1;
@@ -66,7 +71,7 @@ public class NoticeDao {
 		}
 	}
 	
-	public int getStep(int notice_ref) { //step ±¸ÇÏ±â
+	public int getStep(int notice_ref) { //step ï¿½ï¿½ï¿½Ï±ï¿½
 		Connection con=null;
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
@@ -96,7 +101,7 @@ public class NoticeDao {
 		}
 	}
 	
-	public int insert(int cafe_num,int notice_ref,String notice_name) { //°Ô½ÃÆÇ ¸¸µé±â
+	public int insert(int cafe_num,int notice_ref,String notice_name) { //ï¿½Ô½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½
 		Connection con=null;
 		PreparedStatement pstmt=null;
 		try {
@@ -104,13 +109,13 @@ public class NoticeDao {
 			String sql="insert into notice(notice_num,cafe_num,notice_name,notice_ref,notice_lev,notice_step) "
 					+ "values(notice_seq.nextval,'"+cafe_num+"','"+notice_name+"',";
 			int notice_step=getStep(notice_ref)+1;
-			if(notice_ref>0) { // ÀÛÀº°Ô½ÃÆÇ
+			if(notice_ref>0) { // ï¿½ï¿½ï¿½ï¿½ï¿½Ô½ï¿½ï¿½ï¿½
 				sql+="'"+notice_ref+"',1,'"+notice_step+"')";
-			}else if(notice_ref==0){ //Å«°Ô½ÃÆÇ
+			}else if(notice_ref==0){ //Å«ï¿½Ô½ï¿½ï¿½ï¿½
 				sql+="notice_seq.currval,0,'"+notice_step+"')";
 			}
 			pstmt=con.prepareStatement(sql);
-			System.out.println("notice_insert ¸Þ¼Òµå SQL 2: "+sql);
+			System.out.println("notice_insert ï¿½Þ¼Òµï¿½ SQL 2: "+sql);
 			return pstmt.executeUpdate();
 		}catch(SQLException se) {
 			se.printStackTrace();
@@ -157,7 +162,7 @@ public class NoticeDao {
 		PreparedStatement pstmt=null;
 		try {
 			con=ConnectionPool.getCon();
-			String sql="select * from userscafe where users_num=? and cafe_num=? and userscafe_approved='½ÂÀÎ'";
+			String sql="select * from userscafe where users_num=? and cafe_num=? and userscafe_approved='ï¿½ï¿½ï¿½ï¿½'";
 			pstmt=con.prepareStatement(sql);
 			pstmt.setInt(1, users_num);
 			pstmt.setInt(2, cafe_num);
