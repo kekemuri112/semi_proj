@@ -37,7 +37,6 @@ public class CommentsController extends HttpServlet{
 		JSONArray jarr=new JSONArray();
 		for(CommentsVo vo1:comList) {
 			JSONObject json=new JSONObject();
-			System.out.println("comments_num : "+vo1.getComments_num());
 			UserVo vo=dao.getUserId(vo1.getUsers_num());
 			json.put("users_id", vo.getUsers_id());
 			json.put("comments_num", vo1.getComments_num());

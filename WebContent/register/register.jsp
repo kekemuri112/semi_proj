@@ -1,10 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <div>
-	<form method="post" action="${cp }/reg/registercontroller.do" onsubmit="return check()">
+	<form style="border-radius: 100px / 100px ; background-color: rgba(355,355,355,0.8);width:450px;margin: auto;margin-top: 180px;"  method="post" action="${cp }/reg/registercontroller.do" onsubmit="return check()">
 		<table>
 			<tr>
-				<th colspan="2" style="font-size: 40px">회원 가입</th>
+				<th colspan="2" style="color:#F45D00 ; font-size: 40px">회원 가입</th>
 			</tr>
 			<tr>
 				<th>사용자 아이디</th>
@@ -48,8 +48,8 @@
 			</tr>
 			<tr>
 				<th colspan="2">
-					<input type="submit" value="가입하기">
-					<input type="button" value="가입취소" onclick="regCancel()">
+					<input style="width:75px;height:30px; border-radius: 25px/25px;  background-color:white; outline-style:hidden;" type="submit" value="가입하기">
+					<input style="width:75px;height:30px; border-radius: 25px/25px;  background-color:white; outline-style:hidden;" type="button" value="가입취소" onclick="regCancel()">
 				</th>
 			</tr>
 		</table>

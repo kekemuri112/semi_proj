@@ -174,10 +174,8 @@ public class CommentsDao {
 			pstmt.setInt(2, vo.getUsers_num());
 			pstmt.setString(3, vo.getComments_content());
 			pstmt.setInt(4, comments_lev);
-			System.out.println("insert 메소드의 comments_num = "+comments_num);
 			pstmt.setInt(5, comments_ref);
 			pstmt.setInt(6, comments_step);
-			System.out.println("insert 메소드 comments_step : "+comments_step);
 			return pstmt.executeUpdate();
 		}catch(SQLException se) {
 			se.printStackTrace();
@@ -199,7 +197,6 @@ public class CommentsDao {
 			con=ConnectionPool.getCon();
 			String sql="update comments set comments_content=? where comments_num=?";
 			pstmt=con.prepareStatement(sql);
-			System.out.println("��� update �޼ҵ��� comments_content : "+comments_content);
 			pstmt.setString(1, comments_content);
 			pstmt.setInt(2, comments_num);
 			return pstmt.executeUpdate();
