@@ -11,6 +11,7 @@
 				<td>
 					<input type="text" name="users_id" id="users_id" placeholder="아이디 입력(6~14자리)" minlength="6" onkeyup="idsearch()"
 					onfocusout="delmsg()">
+					<br>
 					<span id="checkId"></span>
 				</td>
 			</tr>
@@ -24,6 +25,7 @@
 				<td>
 					<input type="password" name="users_pwd" id="users_pwd" placeholder="비밀번호 입력(6~12자리)" minlength="6" maxlength="12" onkeyup="pwdConfirm()"
 					onfocusout="delmsg()">
+					<br>
 					<span id="pwdCon"></span>
 				</td>
 			</tr>

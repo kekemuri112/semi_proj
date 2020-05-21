@@ -24,14 +24,16 @@
 	</tr>
 	</c:forEach>
 </table><br>
-<select id="op">
-<option value="">작성자</option>
-<option value="">제목</option>
-<option value="">내용</option>
+<form action="${cp }/contents/contents.do" method="post">
+<select id="field">
+<option value="users_id">작성자</option>
+<option value="contents_title">제목</option>
+<option value="contents_post">내용</option>
 </select>
 <input type="text" name="keyword">
 <input type="submit" value="검색"><br>
-
+<input type="hidden" value="${notice_num }" name="notice_num">
+</form>
 <c:choose>
 	<c:when test="${startPage>5}">
 		<a href="${cp }/contents/contents.do?cafe_num=${cafe_num}&pageNum=${startPage-1}&notice_num=${notice_num}">[이전]</a>

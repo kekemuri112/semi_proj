@@ -13,10 +13,10 @@
 	display: inline-block;" readonly="readonly"></textarea>
 	<br><br>
 	</div>
-	<input style="border: none;width:300px;height:30px;" type="text" id="message" onkeypress="if(event.keyCode==13){postMessage();};">
+	<input style="border: none;border-radius: 25px/25px; width:300px;height:27px;" type="text" id="message" onkeypress="if(event.keyCode==13){postMessage();};">
 	<br><br>
 	<input type="hidden" value=<%=cafe_num %> id="cafe_num">
-	<input type="button"  style=" width:70px;height:35px; border-radius: 25px/25px;  background-color:white; outline-style:hidden;" value="보내기" onclick="postMessage()">
+	<input type="button"  style=" width:120px;height:35px; border-radius: 25px/25px;  background-color:white; outline-style:hidden;" value="보내기" onclick="postMessage()">
 </body>
 <script>
     function postMessage() {
