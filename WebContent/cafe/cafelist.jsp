@@ -3,7 +3,6 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <style>
 	ul{ list-style:none;};
-	a{color: white; text-decoration:none;}
 </style>
 <h1 style="color: white;text-align: center;">카페목록</h1>
 <div> 
@@ -14,10 +13,10 @@
 		</c:forEach>
 		<c:choose>
 			<c:when test="${users_id eq 'admin' }">
-				<a href="${cp }/semi/pagecontroller.do?check=7"><li style="color: white;  text-decoration:none; ">카페승인대기리스트</li></a>
+				<a href="${cp }/semi/pagecontroller.do?check=7"><li style="color: white; font-size:30px;  text-decoration:none; text-shadow: 2.5px 2.5px 1.5px black;  ">카페승인대기리스트</li></a>
 			</c:when>
 			<c:when test="${not empty users_id }">
-				<a href="${cp }/cafe/cafeinsert.do"><li style="color: white;  text-decoration:none; ">카페개설요청</li></a>
+				<a href="${cp }/cafe/cafeinsert.do"><li style="color: white; font-size:30px;  text-decoration:none;  text-shadow: 2.5px 2.5px 1.5px black;   ">카페개설요청</li></a>
 			</c:when>
 			<c:otherwise>
 			

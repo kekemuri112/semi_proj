@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 
 <div>
-	<table>
+	<table style="font-size:30px ; border-radius: 100px / 100px ; background-color: rgba(355,355,355,0.8);width:450px ;margin: auto;margin-top: 180px; ">
 		<tr>
 			<th colspan="2" style="font-size: 30px">관리자 페이지</th>
 		</tr>
@@ -16,9 +16,10 @@
 		</tr>		
 		<tr>
 			<th colspan="2" style="font-size: 20px">
-				<input type="button" value="뒤로가기" onclick="idsearchCancel()">
+				<input  style=" width:75px;height:30px; border-radius: 25px/25px;  background-color:white; outline-style:hidden;" type="button" value="뒤로가기" onclick="idsearchCancel()">
 			</th>
-		</tr>	
+		</tr>
+		<tr></tr>	
 	</table>
 </div>
 <script type="text/javascript">

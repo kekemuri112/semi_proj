@@ -64,7 +64,7 @@
 			       <%} %>
 					</select>일
 					<span id="checkBir"></span>
-					<input type="text" name="users_birth" id="users_birth">
+					<input type="hidden" name="users_birth" id="users_birth">
 					</td>
 			</tr>
 			<tr>
@@ -89,9 +89,9 @@
 	var bl2=eval('false');
 	var bl3=eval('false');
 	var birthday="";
-	/*var bl4=eval('false');
+	var bl4=eval('false');
 	var bl5=eval('false');
-	var bl6=eval('false');*/
+	var bl6=eval('false');
 
 	function check(){
 		if(bl&&bl2&&bl3&&bl4&&bl5&&bl6){

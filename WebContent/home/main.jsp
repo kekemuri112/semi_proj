@@ -13,11 +13,12 @@
 	#header3{width:25%;height:20%; background-color: rgba(255,255,255,0.2); text-align:center ;background-color:#F45D00;border-radius: 180px / 180px ;position: relative; margin: auto;float: left;display: inline-block;}
 	#header3-1{width: 80%;height: 80%;text-align:center ; margin-top: 10px;margin-left:50px;display: inline-block;}
 	#menu{width:20%;height:80%; border-radius: 80px / 70px;background-color:#F45D00;margin: auto;float: left;display: inline-block;}
-	#list{width:100%;height:60%; margin: auto;float: left;display: inline-block;}
+	#list{width:100%;height:60%; margin: auto;float: left;display: inline-block; color: white;text-decoration: none;}
 	#chat{width:100%;height:40%;text-align:center ;float: left ;text-align:center ; margin: auto;float: left;display: inline-block;}
 	#main{width:80%;height:80%; background-color: rgba(255,255,255,0.2); text-align:center ;margin: auto;float: left;z-index: 2; display: inline-block;}
 	#cafe{font-size: 80px;}
 	table{ margin: auto; }
+	a{text-decoration: none;color: black; font-size: 18px;}
 </style>
 </head>
 <body>
@@ -55,7 +56,7 @@
 	
 	<div id="menu">
 		<div id="list">
-			<div>
+			<div >
 				<jsp:include page="${mlist }"/>
 			</div>
 		</div>

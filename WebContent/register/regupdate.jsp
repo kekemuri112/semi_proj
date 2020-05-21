@@ -2,10 +2,10 @@
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
 <div>
-	<form method="post" action="${cp }/reg/updatecontroller.do" onsubmit="return check()">
+	<form style="border-radius: 100px / 100px ; background-color: rgba(355,355,355,0.8);width:550px;margin: auto;margin-top: 180px;" method="post" action="${cp }/reg/updatecontroller.do" onsubmit="return check()">
 		<table>
 			<tr>
-				<th colspan="2" style="font-size: 40px">${vo.users_id } 회원 정보 수정<br></th>
+				<th colspan="2" style="font-size: 30px">${vo.users_id } 회원 정보 수정 </th>
 			</tr>
 			<tr>
 				<th>이름</th>
@@ -16,6 +16,7 @@
 				<th>기존 비밀번호</th>
 				<td>
 					<input type="password" name="old_pwd2" id="old_pwd2" onkeyup="oldCheck()" minlength="6" onfocusout="delmsg()">
+					<span><br></span>
 					<span id="oldCon"></span>
 				</td>
 			</tr>
@@ -23,6 +24,7 @@
 				<th>새 비밀번호</th>
 				<td>
 					<input type="password" name="users_pwd" id="users_pwd" onkeyup="pwdConfirm()" placeholder="비밀번호 입력(6~12자리)" minlength="6" maxlength="12" onfocusout="delmsg()">
+					<span><br></span>
 					<span id="pwdCon"></span>
 				</td>
 			</tr>
@@ -30,6 +32,7 @@
 				<th>새 비밀번호 확인</th>
 				<td>
 					<input type="password" id="pwd2" onkeyup="pwdCheck()" maxlength="12" onfocusout="delmsg()">
+					<span><br></span>
 					<span id="checkPwd"></span>
 				</td>
 			</tr>
