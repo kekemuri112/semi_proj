@@ -10,7 +10,13 @@
 				<th>사용자 아이디</th>
 				<td>
 					<input type="text" name="users_id" id="users_id" placeholder="아이디 입력(6~14자리)" minlength="6" onkeyup="idsearch()" onfocusout="delmsg()">
-					</td><td><span id="checkId"></span>
+					</td>
+
+			</tr>
+			<tr>
+				<th></th>
+				<td>
+					<span id="checkId"></span>
 				</td>
 			</tr>
 			<tr>
@@ -24,7 +30,7 @@
 				<th>비밀번호</th>
 				<td>
 					<input type="password" name="users_pwd" id="users_pwd" placeholder="비밀번호 입력(6~12자리)" minlength="6" maxlength="12" onkeyup="pwdConfirm()" onfocusout="delmsg()">
-					<span id="pwdCon"></span>
+					<br><span id="pwdCon"></span>
 				</td>
 			</tr>
 			<tr>
@@ -58,7 +64,7 @@
 			       <%} %>
 					</select>일
 					<span id="checkBir"></span>
-					<input type="hidden" name="users_birth" id="users_birth">
+					<input type="text" name="users_birth" id="users_birth">
 					</td>
 			</tr>
 			<tr>
@@ -67,11 +73,12 @@
 			</tr>
 			<tr>
 				<th colspan="2">
-					<input style="width:75px;height:30px; border-radius: 25px/25px;  background-color:white; outline-style:hidden;" type="submit" value="가입하기" onclick="nameCheck(); emailCheck(); birthCheck();">
+					<input style="width:75px;height:30px; border-radius: 25px/25px;  background-color:white; outline-style:hidden;" type="submit" value="가입하기" onclick="nameCheck(); emailCheck(); birthCheck(); viewBl();">
 					<input style="width:75px;height:30px; border-radius: 25px/25px;  background-color:white; outline-style:hidden;" type="button" value="가입취소" onclick="regCancel()">
 				</th>
 			</tr>
 		</table>
+		<br>
 	</form>
 </div>
 <script type="text/javascript">
@@ -82,6 +89,9 @@
 	var bl2=eval('false');
 	var bl3=eval('false');
 	var birthday="";
+	/*var bl4=eval('false');
+	var bl5=eval('false');
+	var bl6=eval('false');*/
 
 	function check(){
 		if(bl&&bl2&&bl3&&bl4&&bl5&&bl6){
@@ -227,6 +237,14 @@
 		}else{
 			bl5=true;
 		}
+	}
+	function viewBl(){
+		console.log(bl1);
+		console.log(bl2);
+		console.log(bl3);
+		console.log(bl4);
+		console.log(bl5);
+		console.log(bl6);
 	}
 	
 	

@@ -16,6 +16,7 @@ public class RegisterController extends HttpServlet{
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		req.setCharacterEncoding("utf-8");
+		System.out.println("레지스터 컨트롤러 실행.");
 		resp.setContentType("text/plain;charset=utf-8");
 		String users_id = req.getParameter("users_id");				
 		String users_pwd = req.getParameter("users_pwd");				
@@ -38,7 +39,8 @@ public class RegisterController extends HttpServlet{
 		req.setAttribute("mlist", "/cafe/cafelist.jsp");
 		int cafe_num= (Integer)req.getSession().getAttribute("cafe_num");
 		if(cafe_num>0) {
-			req.setAttribute("mlist", "notice/noticelist.jsp");
+			//맨날지워짐-개색기
+			req.setAttribute("mlist", "/notice/noticelist.jsp");
 		}else {
 			req.setAttribute("cafelist", CafeDao.getInstance().listAll());
 			req.setAttribute("mlist", "/cafe/cafelist.jsp");

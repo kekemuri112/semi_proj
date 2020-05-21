@@ -61,5 +61,5 @@
 	</c:otherwise>
 </c:choose>
 <c:if test="${(notice_num>0 && userscafe eq 'true') || (cafe_admin eq 'true'&& notice_num>0)}">
-	<a href="${cp }/contents/insert.do?cafe_num=${cafe_num}&notice_num=${notice_num}"><input type="button" value="글작성" ></a>
+	<a href="${cp }/contents/insert.do?cafe_num=${cafe_num}&notice_num=${notice_num}"><input style="width:75px;height:30px; border-radius: 25px/25px;  background-color:white; outline-style:hidden;" type="button" value="글작성" ></a>
 </c:if>

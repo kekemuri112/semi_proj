@@ -6,6 +6,7 @@
 			<tr>
 				<th colspan="2" style="color:#F45D00 ; font-size: 100px">로 그 인</th>
 			</tr>
+			<tr></tr>
 			<tr>
 				<th style="color:#F45D00 ;">아이디</th>
 				<td><input type="text" name="users_id"></td>
@@ -20,8 +21,9 @@
 					<input style="width:75px;height:30px; border-radius: 25px/25px;  background-color:white; outline-style:hidden;"  type="button" type="button" value="뒤로가기" onclick="loginCancel()">
 				</th>
 			</tr>
+			<tr></tr>
 		</table>
-
+		<br>
 	</form>
 </div>
 <script type="text/javascript">

@@ -50,7 +50,7 @@
 					<input type="hidden" name="users_num" id="users_num" value="${vo.users_num }">
 					<br>
 					<input type="submit" value="수정하기">
-					<input type="button" value="수정취소" onclick="regCancel()"><br>
+					<input type="hidden" value="수정취소" onclick="regCancel()"><br>
 					
 				</th>
 			</tr>

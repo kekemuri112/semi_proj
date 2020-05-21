@@ -9,7 +9,7 @@
   	request.setCharacterEncoding("utf-8");
   	response.setContentType("text/html;charset=utf-8");
 %>
-	<textarea id="msgbox" rows="10" cols="40" style="border:none; background-color: rgba(255,255,255,0); margin-left:29px;float: left;
+	<textarea id="msgbox" rows="10" cols="40" style="color:white; font:bold; border:none; background-color: rgba(255,255,255,0); margin-left:29px;float: left;
 	display: inline-block;" readonly="readonly"></textarea>
 	<br><br>
 	</div>

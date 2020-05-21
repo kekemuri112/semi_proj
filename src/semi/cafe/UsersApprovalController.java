@@ -29,13 +29,10 @@ public class UsersApprovalController extends HttpServlet{
 		int pageCount=(int)Math.ceil(dao.getCount(cafe_num)/10.0); // 총페이지갯수
 		int startPage=((pageNum-1)/5)*5+1;
 		int endPage=startPage+4;
-		System.out.println("pageCount : "+pageCount);
 		
 		if(endPage>pageCount) {
 			endPage=pageCount;
 		}
-		System.out.println("endPage : "+endPage);
-		System.out.println("컨트롤러에서 cafe_num : "+cafe_num);
 		ArrayList<UsersApprovalVo>list=dao.getInfo(cafe_num,startRow,endRow);
 		JSONArray jarr=new JSONArray();
 		for(UsersApprovalVo vo:list) {

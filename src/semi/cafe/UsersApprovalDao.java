@@ -27,20 +27,13 @@ public class  UsersApprovalDao {
 					  +" (select " 
 					  + " u.users_num users_num,users_id,users_pwd,users_name,users_email,users_birth,users_phone,users_cafe_num,cafe_num,users_cafe_point,users_cafe_approved"  
 					  +" from users u inner join users_cafe uc" 
-					  +" on u.users_num=uc.users_num order by users_cafe_approved asc,users_cafe_num desc) a)"  
-					  +" where cafe_num=? and rnum>=? and rnum<=?";
-			/*String sql="select "
-					+ "u.users_num users_num,users_id,users_pwd,users_name,users_email,users_birth,users_phone,users_cafe_num,cafe_num,users_cafe_point,users_cafe_approved"
-					+" from users u inner join users_cafe uc"
-					+" on u.users_num=uc.users_num"
-					+" where cafe_num=?";*/
+					  +" on u.users_num=uc.users_num  where cafe_num=? order by users_cafe_approved asc,users_cafe_num desc) a)"  
+					  +" where rnum>=? and rnum<=?";
 			pstmt=con.prepareStatement(sql);
 			pstmt.setInt(1, cafe_num);
 			pstmt.setInt(2, startRow);
 			pstmt.setInt(3, endRow);
-			System.out.println("getInfo 메소드안에서 sql : " + sql);
 			rs=pstmt.executeQuery();
-			System.out.println("실행끝!!!!");
 			ArrayList<UsersApprovalVo>list =new ArrayList<UsersApprovalVo>();
 			while(rs.next()) {
 				UsersApprovalVo vo=new UsersApprovalVo(rs.getInt("users_num"), 

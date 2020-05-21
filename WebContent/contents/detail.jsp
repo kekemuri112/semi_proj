@@ -7,7 +7,7 @@
 </style>
 <br><br><br><br>
 <div style="width:550px; margin:auto;  outline-style:solid ; outline-color:black;  background-color: rgba(255,255,255,0.8);">
-	<h1>상세글보기</h1>
+	<h1 style="color: #F45D00;">상세글보기</h1>
 	<h2>${vo.contents_title }</h2>&nbsp; &nbsp; <span>${vo.users_id }</span>&nbsp; &nbsp;
 	<span>${vo.contents_regDate }</span><br>
 	<div >

@@ -12,8 +12,9 @@
 </div>
 <div id="page">
 </div><br>
-	<div>
-		<textarea rows="3" cols="30" id="comments"></textarea><br>
+	<div >
+		<h3 style="color: #F45D00;">댓글</h3>
+		<textarea style="border-radius: 18px / 18px ; background-color: rgba(355,355,355,0.8);" rows="3" cols="30" id="comments"></textarea><br>
 		<input style=" width:75px;height:30px; border-radius: 25px/25px;  background-color:white; outline-style:hidden;" type="button" value="등록하기" onclick="comments_write()">
 	</div>
 <script type="text/javascript">
