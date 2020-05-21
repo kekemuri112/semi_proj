@@ -20,6 +20,8 @@ public class WebChat extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
+    	req.setCharacterEncoding("utf-8");
+    	resp.setContentType("text/plain;charset=utf-8");
         final AsyncContext asyncContext = req.startAsync(req, resp);
         asyncContext.setTimeout(10 * 60 * 1000);
         contexts.add(asyncContext);
@@ -29,6 +31,8 @@ public class WebChat extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
+    	req.setCharacterEncoding("utf-8");
+    	resp.setContentType("text/plain;charset=utf-8");
         List<AsyncContext> asyncContexts = new ArrayList<>(this.contexts);
         this.contexts.clear();
         String name = req.getParameter("name");
@@ -43,7 +47,7 @@ public class WebChat extends HttpServlet {
         }
         for (AsyncContext asyncContext : asyncContexts) {
             try (PrintWriter writer = asyncContext.getResponse().getWriter()) {
-                writer.println(htmlMessage);
+        		writer.println(htmlMessage);
                 writer.println((int)req.getSession().getAttribute("cafe_num"));
                 writer.flush();
                 asyncContext.complete();

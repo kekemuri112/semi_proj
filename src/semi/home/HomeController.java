@@ -20,6 +20,9 @@ public class HomeController extends HttpServlet{
 		String cp=req.getContextPath();
 		HttpSession session= req.getSession();
 		session.setAttribute("cafe_num", 0);
+		session.setAttribute("cafe_admin", false);
+		session.setAttribute("userscafe", false);
+		session.setAttribute("userscafeApproved", false);
 		session.removeAttribute("cafe_name");
 		req.getServletContext().setAttribute("cp", cp);
 		req.setAttribute("cafelist", CafeDao.getInstance().listAll());

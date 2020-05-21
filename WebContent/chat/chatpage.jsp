@@ -2,18 +2,14 @@
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <body onload="getClear()">
-<div id="content">
 
-  <%  int cafe_num=(int)session.getAttribute("cafe_num");%>
-  <% if (application.getAttribute("messages") != null) {%>
-  <%=application.getAttribute("messages")%>
-  <% }%>
-</div>
 <div>
-	<textarea id="msgbox" rows="10" cols="40" style="border:none; background-color: rgba(255,255,255,0); margin-left:29px;float: left;display: inline-block;" readonly="readonly"></textarea>
+  	<% int cafe_num=(int)session.getAttribute("cafe_num");%>
+	<textarea id="msgbox" rows="10" cols="40" style="border:none; background-color: rgba(255,255,255,0); margin-left:29px;float: left;
+	display: inline-block;" readonly="readonly"></textarea>
 	<br><br>
 	</div>
-	<input style="border: none;width:300px;height:30px;" type="text" id="message">
+	<input style="border: none;width:300px;height:30px;" type="text" id="message" onkeypress="if(event.keyCode==13){postMessage();};">
 	<br><br>
 	<input type="hidden" value=<%=cafe_num %> id="cafe_num">
 	<input type="button"  style=" width:70px;height:35px; border-radius: 25px/25px;  background-color:white; outline-style:hidden;" value="보내기" onclick="postMessage()">
@@ -37,15 +33,13 @@
             xmlhttp.onreadystatechange=function(){
                 if (xmlhttp.readyState==4 && xmlhttp.status==200) {
                 	var msg=xmlhttp.responseText;
-                	var msg1=msg.split("\n");
+                	var msg1=msg.split("\r\n");
                     messagesWaiting = false;
                     var cafe_num = document.getElementById("cafe_num").value;
                     if(cafe_num == msg1[1]){
-                    	console.log("if문진입");
                     	var msgbox = document.getElementById("msgbox");
-                    	msgbox.value += msg1[0];
-                    }else{
-                    	console.log("진입안함...");
+                    	msgbox.scrollTop=msgbox.scrollHeight;
+                    	msgbox.value += msg1[0]+"\n";
                     }
                 }
             }
