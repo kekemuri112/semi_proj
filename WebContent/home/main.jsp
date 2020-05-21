@@ -17,7 +17,7 @@
 	#chat{width:100%;height:40%;text-align:center ;float: left ;text-align:center ; margin: auto;float: left;display: inline-block;}
 	#main{width:80%;height:80%; background-color: rgba(255,255,255,0.2); text-align:center ;margin: auto;float: left;z-index: 2; display: inline-block;}
 	#cafe{font-size: 80px;}
-	table{ text-align:center ;margin: auto;display: inline-block; }
+	table{ margin: auto; width: 80%; }
 </style>
 </head>
 <body>
@@ -61,8 +61,8 @@
 		</div>
 		<div id="chat">
 			<div>
-				<c:if test="${cafe_num>0 || empty users_id }">
-					<h1 style="color: white;">${cafe_name }채팅창..</h1>
+				<c:if test="${cafe_num>0 && not empty users_id }">
+					<h1 style="color: white; font-size:170%">${cafe_name }채팅창..</h1>
 					<jsp:include page="/chat/chatpage.jsp"/>
 				</c:if>
 			</div>

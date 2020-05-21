@@ -84,7 +84,7 @@ public class ContentsController extends HttpServlet {
 		session.setAttribute("userscafe", bl2);
 		session.setAttribute("userscafeApproved", bl3);
 		
-		if(scafe_num!=null) {
+		if(cafe_num>0) {
 			req.setAttribute("mlist", "/notice/noticelist.jsp");
 		}else {
 			req.setAttribute("cafelist", CafeDao.getInstance().listAll());

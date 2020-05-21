@@ -36,9 +36,9 @@ public class RegisterController extends HttpServlet{
 		req.setAttribute("header2", "/home/wrapmain.jsp");
 		req.setAttribute("headerLog", "/register/rmain.jsp");
 		req.setAttribute("mlist", "/cafe/cafelist.jsp");
-		String cafe_num=req.getParameter("cafe_num");
-		if(cafe_num!=null&&!cafe_num.equals("")) {
-			req.setAttribute("mlist", "/notice/noticelist.jsp");
+		int cafe_num= (Integer)req.getSession().getAttribute("cafe_num");
+		if(cafe_num>0) {
+			req.setAttribute("mlist", "notice/noticelist.jsp");
 		}else {
 			req.setAttribute("cafelist", CafeDao.getInstance().listAll());
 			req.setAttribute("mlist", "/cafe/cafelist.jsp");

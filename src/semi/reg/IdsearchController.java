@@ -21,7 +21,7 @@ public class IdsearchController extends HttpServlet{
 		req.setAttribute("header2", "/home/wrapmain.jsp");
 		req.setAttribute("headerLog", "/register/rmain.jsp");
 		int cafe_num=(int)req.getSession().getAttribute("cafe_num");
-		if(cafe_num!=0 ) {
+		if(cafe_num>0 ) {
 			req.setAttribute("mlist", "/notice/noticelist.jsp");
 		}else {
 			req.setAttribute("cafelist", CafeDao.getInstance().listAll());
@@ -56,7 +56,7 @@ public class IdsearchController extends HttpServlet{
 		req.setAttribute("header2", "/home/wrapmain.jsp");
 		req.setAttribute("headerLog", "/register/rmain.jsp");
 		int cafe_num=(int)req.getSession().getAttribute("cafe_num");
-		if(cafe_num!=0 ) {
+		if(cafe_num>0 ) {
 			req.setAttribute("mlist", "/notice/noticelist.jsp");
 		}else {
 			req.setAttribute("cafelist", CafeDao.getInstance().listAll());

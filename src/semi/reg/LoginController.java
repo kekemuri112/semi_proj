@@ -34,8 +34,8 @@ public class LoginController extends HttpServlet{
 		req.setAttribute("header2", "/home/wrapmain.jsp");
 		req.setAttribute("headerLog", "/register/rmain.jsp");
 		req.setAttribute("mfile", "/home/result.jsp");
-		String cafe_num=req.getParameter("cafe_num");
-		if(cafe_num!=null&&!cafe_num.equals("")) {
+		int cafe_num=(Integer)session.getAttribute("cafe_num");
+		if(cafe_num>0) {
 			req.setAttribute("mlist", "notice/noticelist.jsp");
 		}else {
 			req.setAttribute("cafelist", CafeDao.getInstance().listAll());
