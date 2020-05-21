@@ -17,7 +17,7 @@
 	#chat{width:100%;height:40%;text-align:center ;float: left ;text-align:center ; margin: auto;float: left;display: inline-block;}
 	#main{width:80%;height:80%; background-color: rgba(255,255,255,0.2); text-align:center ;margin: auto;float: left;z-index: 2; display: inline-block;}
 	#cafe{font-size: 80px;}
-	table{ margin: auto; width: 80%; }
+	table{ margin: auto; }
 </style>
 </head>
 <body>
