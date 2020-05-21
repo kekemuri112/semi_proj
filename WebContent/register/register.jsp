@@ -9,23 +9,21 @@
 			<tr>
 				<th>사용자 아이디</th>
 				<td>
-					<input type="text" name="users_id" id="users_id" placeholder="아이디 입력(6~14자리)" minlength="6" onkeyup="idsearch()"
-					onfocusout="delmsg()">
-					<br>
-					<span id="checkId"></span>
+					<input type="text" name="users_id" id="users_id" placeholder="아이디 입력(6~14자리)" minlength="6" onkeyup="idsearch()" onfocusout="delmsg()">
+					</td><td><span id="checkId"></span>
 				</td>
 			</tr>
 			<tr>
 				<th>이름</th>
 				<td>
-					<input type="text" name="users_name" id="users_name"></td>
-			</tr>				
+					<input type="text" name="users_name" id="users_name">
+					<span id="nameCon"></span>
+				</td>
+			</tr>			
 			<tr>
 				<th>비밀번호</th>
 				<td>
-					<input type="password" name="users_pwd" id="users_pwd" placeholder="비밀번호 입력(6~12자리)" minlength="6" maxlength="12" onkeyup="pwdConfirm()"
-					onfocusout="delmsg()">
-					<br>
+					<input type="password" name="users_pwd" id="users_pwd" placeholder="비밀번호 입력(6~12자리)" minlength="6" maxlength="12" onkeyup="pwdConfirm()" onfocusout="delmsg()">
 					<span id="pwdCon"></span>
 				</td>
 			</tr>
@@ -33,16 +31,35 @@
 				<th>비밀번호 확인</th>
 				<td>
 					<input type="password" id="pwd2" onkeyup="pwdCheck()" maxlength="12" onfocusout="delmsg()">
-					<span id="checkPwd"></span>
+					<br><span id="checkPwd"></span>
 				</td>
 			</tr>
 			<tr>
 				<th>이메일</th>
-				<td><input type="text" name="users_email"></td>
+				<td><input type="text" name="users_email" id="users_email">
+				<br><span id="emailCon"></span>
+				</td>
 			</tr>
 			<tr>
 				<th>생년월일</th>
-				<td><input type="text" name="users_birth" placeholder="19000101로 작성" maxlength="8"></td>
+				<td><select id="year" onchange="birth();">
+			       <%for(int i=2015; i>=1990; i--){ %>
+			       <option value="<%=i %>"><%=i %></option>
+			       <%} %>
+					</select>년
+			    	<select name="month" id="month" onchange="birth();">
+			       <%for(int i=01; i<=12; i++){ %>
+			       <option value="<%=i %>"><%=i %></option>
+			       <%} %>
+					</select>월
+					<select name="day" id="day" onchange="birth();">
+			       <%for(int i=1; i<=31; i++){ %>
+			       <option value="<%=i %>"><%=i %></option>
+			       <%} %>
+					</select>일
+					<span id="checkBir"></span>
+					<input type="hidden" name="users_birth" id="users_birth">
+					</td>
 			</tr>
 			<tr>
 				<th>핸드폰번호</th>
@@ -50,7 +67,7 @@
 			</tr>
 			<tr>
 				<th colspan="2">
-					<input style="width:75px;height:30px; border-radius: 25px/25px;  background-color:white; outline-style:hidden;" type="submit" value="가입하기">
+					<input style="width:75px;height:30px; border-radius: 25px/25px;  background-color:white; outline-style:hidden;" type="submit" value="가입하기" onclick="nameCheck(); emailCheck(); birthCheck();">
 					<input style="width:75px;height:30px; border-radius: 25px/25px;  background-color:white; outline-style:hidden;" type="button" value="가입취소" onclick="regCancel()">
 				</th>
 			</tr>
@@ -64,14 +81,40 @@
 	var bl=eval('false');
 	var bl2=eval('false');
 	var bl3=eval('false');
-	
+	var birthday="";
+
 	function check(){
-		if(bl&&bl2&&bl3){
+		if(bl&&bl2&&bl3&&bl4&&bl5&&bl6){
 			return true;
+			//return true;
 		}else{
 			return false;	
 		}
 	}
+	
+	function birth(){
+		var year=document.getElementById("year").value;
+		var month=document.getElementById("month").value;
+		var day=document.getElementById("day").value;
+		if(month<10){
+			month='0'+month;
+		}
+		if(day<10){
+			day='0'+day;
+		}
+		var birthday=year+month+day;
+		document.getElementById("users_birth").value=birthday;
+	}
+	
+	function birthCheck(){
+		var users_birth=document.getElementById("users_birth").value;
+		if(typeof users_birth=="undefined"||users_birth==null||users_birth==""){
+			bl6=false;	
+		}else{
+			bl6=true;
+		}
+	}
+	
 	function idsearch() {
 		var xhr=null;
 		var users_id=document.getElementById("users_id").value;
@@ -103,6 +146,7 @@
 					bl=false;
 				}
 			}
+			
 		};
 		xhr.open("post", "${cp }/reg/idcheck.do?&users_id="+users_id, true);
 		xhr.send();
@@ -159,7 +203,32 @@
 			span.style.color="red";
 			bl3=false;
 		}
-	}	
+	}
+	
+	function nameCheck(){
+		var users_name=document.getElementById("users_name").value;
+		var span=document.getElementById("nameCon");
+		if(typeof users_name=="undefined"||users_name==null||users_name==""){
+			span.innerHTML="필수 정보입니다.";
+			span.style.color="red";
+			bl4=false;
+		}else{
+			bl4=true;
+		}
+	}
+	
+	function emailCheck(){
+		var users_email=document.getElementById("users_email").value;
+		var span=document.getElementById("emailCon");
+		if(typeof users_email=="undefined"||users_email==null||users_email==""){
+			span.innerHTML="이메일 주소를 입력해주세요.";
+			span.style.color="red";
+			bl5=false;
+		}else{
+			bl5=true;
+		}
+	}
+	
 	
 	function regCancel(){
 		window.history.back();

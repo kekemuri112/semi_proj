@@ -56,13 +56,14 @@ window.addEventListener('load',function(){
 								+"<input type='button' style=' width:65px;height:27px; border-radius: 25px/25px;  background-color:white; outline-style:hidden;' value='답글' onclick='comments_reply("+j+")'>"
 						        +"<input type='button' style=' width:65px;height:27px; border-radius: 25px/25px;  background-color:white; outline-style:hidden;' value='수정' onclick='modify("+j+")'>"
 								+"<input type='button' style=' width:65px;height:27px; border-radius: 25px/25px;  background-color:white; outline-style:hidden;' value='삭제' onclick='comments_delete("+j+")'>"
+								+"<br>"
 					div.id="comment"+j;
 					div.style='background-color: rgba(255,255,255,0.8)';
 					div.className="comments";
 					var div2=document.createElement("div");
 					div2.innerHTML=	"<textarea rows='3' cols='30' id='reply_value"+j+"'></textarea><br>"			   
-								  +"<input type='button' value='확인' onclick='reply_insert("+comments_num+","+j+")'>"
-								  +"<input type='button' value='취소' >";
+								  +"<input style=' width:65px;height:27px; border-radius: 25px/25px;  background-color:white; outline-style:hidden;' type='button' value='확인' onclick='reply_insert("+comments_num+","+j+")'>"
+								  +"<input style=' width:65px;height:27px; border-radius: 25px/25px;  background-color:white; outline-style:hidden;' type='button' value='취소' >";
 					div2.style="display:none";
 					div2.id="comments_re"+j;
 					commList.appendChild(div);
@@ -194,8 +195,8 @@ window.addEventListener('load',function(){
 					 +"<input type='hidden' value='"+comments_content+"'>"
 					 +"<input type='hidden' value='"+comments_num+"'>"
 					 +"<input type='hidden' value='"+pageNum+"'>"
-					 +"<input type='button' value='확인' onclick='update_comment("+j+")'>"
-					 +"<input type='button' value='취소' onclick='return_comment("+j+")'><br>";
+					 +"<input style='width:75px;height:30px; border-radius: 25px/25px;  background-color:white; outline-style:hidden;' type='button' value='확인' onclick='update_comment("+j+")'>"
+					 +"<input style='width:75px;height:30px; border-radius: 25px/25px;  background-color:white; outline-style:hidden;' type='button' value='취소' onclick='return_comment("+j+")'><br>";
 	}
 	function return_comment(j){
 		var div=document.getElementById("comment"+j);

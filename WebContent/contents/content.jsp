@@ -31,7 +31,7 @@
 <option value="contents_post">내용</option>
 </select>
 <input type="text" name="keyword">
-<input type="submit" value="검색"><br>
+<input style=" width:65px;height:27px; border-radius: 25px/25px;  background-color:white; outline-style:hidden;" type="submit" value="검색"><br>
 <input type="hidden" value="${notice_num }" name="notice_num">
 </form>
 <c:choose>
