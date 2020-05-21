@@ -61,7 +61,7 @@
 		</div>
 		<div id="chat">
 			<div>
-				<c:if test="${cafe_num>0 }">
+				<c:if test="${cafe_num>0 || empty users_id }">
 					<h1 style="color: white;">${cafe_name }채팅창..</h1>
 					<jsp:include page="/chat/chatpage.jsp"/>
 				</c:if>

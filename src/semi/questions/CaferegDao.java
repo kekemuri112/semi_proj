@@ -84,16 +84,18 @@ public class CaferegDao {
 			pstmt1.setInt(2, users_num);
 			pstmt1.executeUpdate();
 			int n=0;
-			for(int i=0;i<contents.length;i++) {
-				String aContent=contents[i];
-				String acafereg_num=scafereg_num[i];
-				String sql2="insert into answer values(?,users_cafe_seq.currval,?)";
-				pstmt2=con.prepareStatement(sql2);
-				pstmt2.setString(1, acafereg_num);
-				pstmt2.setString(2, aContent);
-				System.out.println(i+"번째aContent:"+aContent);
-				System.out.println(i+"번쨰acafereg_num:"+acafereg_num);
-				n += pstmt2.executeUpdate();
+			if(contents!=null) {
+				for(int i=0;i<contents.length;i++) {
+					String aContent=contents[i];
+					String acafereg_num=scafereg_num[i];
+					String sql2="insert into answer values(?,users_cafe_seq.currval,?)";
+					pstmt2=con.prepareStatement(sql2);
+					pstmt2.setString(1, acafereg_num);
+					pstmt2.setString(2, aContent);
+					System.out.println(i+"번째aContent:"+aContent);
+					System.out.println(i+"번쨰acafereg_num:"+acafereg_num);
+					n += pstmt2.executeUpdate();
+				}
 			}
 			return n;
 		}catch(SQLException se) {

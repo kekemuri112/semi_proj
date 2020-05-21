@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import semi.cafe.CafeDao;
-import semi.notice.NoticeDao;
 import semi.questions.CaferegDao;
 import semi.questions.CaferegVo;
 import semi.reg.UsersDao;
@@ -26,11 +25,11 @@ public class PageController extends HttpServlet {
 		req.setAttribute("cafelist", CafeDao.getInstance().listAll());
 		String[] checks= {"/register/login.jsp","/register/register.jsp","/register/regsearch.jsp",
 				"/home/result.jsp","/questions/answer.jsp","/cafe/userscafedel.jsp","/cafe/cafeapproval.jsp",
-				"/questions/cafeset.jsp","/register/regupdate.jsp"};
+				"/questions/cafeset.jsp","/register/regupdate.jsp","/cafe/usersapproval.jsp"};
 		
 		/*
 		 * 	1.로그인	2.회원가입	3.id/pwd찾기	4.로그아웃	5.카페가입
-		 * 	6.카페탈퇴	7.가입한카페목록  8.카페관리  9.정보수정
+		 * 	6.카페탈퇴	7.가입한카페목록  8.카페관리  9.정보수정 10.유저목록
 		 */
 		HttpSession session=req.getSession();
 		int cafe_num=(int)req.getSession().getAttribute("cafe_num");
@@ -50,7 +49,11 @@ public class PageController extends HttpServlet {
 				break;
 			case 5:	req.setAttribute("mfile", checks[check-1]);
 				ArrayList<CaferegVo> qlist = CaferegDao.getInstance().getQuestions(cafe_num);
-				req.setAttribute("qlist", qlist);
+				if(qlist.size()==0) {
+					req.setAttribute("qlist", null);
+				}else {
+					req.setAttribute("qlist", qlist);
+				}
 				break;
 			case 6:	req.setAttribute("mfile", checks[check-1]);
 				String cafe_name=CafeDao.getInstance().getVo(cafe_num).getCafe_name();
@@ -65,6 +68,8 @@ public class PageController extends HttpServlet {
 				String users_id=(String)session.getAttribute("users_id");
 				UsersVo vo= UsersDao.getInstance().information(users_id);
 				req.setAttribute("vo", vo);
+				break;
+			case 10:	req.setAttribute("mfile", checks[check-1]);
 				break;
 		}
 		req.setAttribute("header1", "/home/wraphome.jsp");

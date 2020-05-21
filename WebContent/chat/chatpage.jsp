@@ -4,7 +4,11 @@
 <body onload="getClear()">
 
 <div>
-  	<% int cafe_num=(int)session.getAttribute("cafe_num");%>
+<%
+	int cafe_num=(int)session.getAttribute("cafe_num");
+  	request.setCharacterEncoding("utf-8");
+  	response.setContentType("text/html;charset=utf-8");
+%>
 	<textarea id="msgbox" rows="10" cols="40" style="border:none; background-color: rgba(255,255,255,0); margin-left:29px;float: left;
 	display: inline-block;" readonly="readonly"></textarea>
 	<br><br>
@@ -19,8 +23,8 @@
         var xmlhttp = new XMLHttpRequest();
         xmlhttp.open("post", "${cp}/chat/shoutServlet.do?t="+new Date(), false);
         xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-        var users_id = escape('${users_id }');
-        var messageText = escape(document.getElementById("message").value);
+        var users_id = '${users_id }';
+        var messageText = document.getElementById("message").value;
         document.getElementById("message").value = "";
         xmlhttp.send("name="+users_id+"&message="+messageText);
     }
@@ -54,6 +58,5 @@
     	msgbox.value="";
     	getMessages();
     };
-    
     
 </script>

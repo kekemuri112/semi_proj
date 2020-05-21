@@ -18,13 +18,9 @@ public class AnswerController extends HttpServlet{
 		resp.setContentType("text/plain;charset=utf-8");
 		String[] contents=req.getParameterValues("answer");
 		String[] scafereg_num=req.getParameterValues("cafereg_num");
-		String scafe_num=(String)req.getParameter("cafe_num");
 		HttpSession session=req.getSession();
+		int cafe_num=(Integer)session.getAttribute("cafe_num");
 		int users_num=(int)session.getAttribute("users_num");
-		int cafe_num=0;
-		if(scafereg_num!=null) {
-			cafe_num=Integer.parseInt(scafe_num);
-		}
 		int n=CaferegDao.getInstance().usersCafeInsert(contents, scafereg_num, cafe_num, users_num);
 		if(n>0) {
 			req.setAttribute("msg", "가입요청성공");
