@@ -49,7 +49,7 @@ public class CafeInsertController extends HttpServlet {
 		String fileName=null;
 		if(sfileName!=null) {
 			if(sfileName.substring(sfileName.length()-4, sfileName.length()).equals(".png")) {
-				fileName= upload+"/"+sfileName;
+				fileName= sfileName;
 			}
 		}
 		CafeVo vo=new CafeVo(0,cafe_name,cafe_desc,cafe_intent,cafe_admin,null,fileName);

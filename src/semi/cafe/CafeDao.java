@@ -35,7 +35,7 @@ public class CafeDao {
 						rs.getString("cafe_intent"),
 						rs.getString("cafe_admin"),
 						rs.getString("cafe_approved"),
-						null
+						rs.getString("cafe_image")
 					);
 			}
 			return vo;
