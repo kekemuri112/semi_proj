@@ -223,16 +223,6 @@
 	}
 	
 	
-	function viewBl(){
-		console.log(bl1);
-		console.log(bl2);
-		console.log(bl3);
-		console.log(bl4);
-		console.log(bl5);
-		console.log(bl6);
-	}
-	
-	
 	function regCancel(){
 		window.history.back();
 		
