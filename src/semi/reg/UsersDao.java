@@ -37,7 +37,28 @@ public class UsersDao {
 			}
 		}
 	}
-	
+	public int emailCheck(String users_email) {
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		try {
+			con=ConnectionPool.getCon();
+			String sql="select * from users where users_email=?";
+			pstmt=con.prepareStatement(sql);
+			pstmt.setString(1, users_email);
+			return pstmt.executeUpdate();
+		}catch(SQLException se) {
+			se.printStackTrace();
+			return 0;
+		}finally {
+			try {
+				if(pstmt!=null) pstmt.close();
+				if(con!=null) con.close();
+			}catch(SQLException s) {
+				s.printStackTrace();
+			}
+		}
+		
+	}
 	
 	// 유저 회원가입
 	public int insert(UsersVo vo) {
