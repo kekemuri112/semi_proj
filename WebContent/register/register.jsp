@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <div>
-	<form style="border-radius: 100px / 100px ; background-color: rgba(355,355,355,0.8);width:450px;margin: auto;margin-top: 180px;"  method="post" action="${cp }/reg/registercontroller.do" onsubmit="return check()">
+	<form style="border-radius: 100px / 100px ; background-color: rgba(355,355,355,0.8);width:450px;margin: auto;margin-top: 180px;"
+	  method="post" action="${cp }/reg/registercontroller.do" onsubmit="return check()">
 		<table>
 			<tr>
 				<th colspan="2" style="color:#F45D00 ; font-size: 40px">회원 가입</th>
@@ -42,7 +43,7 @@
 			</tr>
 			<tr>
 				<th>이메일</th>
-				<td><input type="text" name="users_email" id="users_email" onclick="delmsg()" required>
+				<td><input type="text" name="users_email" id="users_email" onkeyup="emailCheck()" onfocusout="delmsg()" required>
 				<br><span id="emailCon"></span>
 				</td>
 			</tr>
@@ -69,13 +70,13 @@
 			</tr>
 			<tr>
 				<th>핸드폰번호</th>
-				<td><input type="text" name="users_phone" id="users_phone" onfocusout="delmsg()" required>
+				<td><input type="text" name="users_phone" id="users_phone" minlength="6" onfocusout="delmsg()" required>
 				<span id="phoneCon"></span>
 				</td>
 			</tr>
 			<tr>
 				<th colspan="2">
-					<input style="width:75px;height:30px; border-radius: 25px/25px;  background-color:white; outline-style:hidden;" type="submit" value="가입하기" onclick="nameCheck(); emailCheck(); birthCheck(); viewBl();">
+					<input style="width:75px;height:30px; border-radius: 25px/25px;  background-color:white; outline-style:hidden;" type="submit" value="가입하기" >
 					<input style="width:75px;height:30px; border-radius: 25px/25px;  background-color:white; outline-style:hidden;" type="button" value="가입취소" onclick="regCancel()">
 				</th>
 			</tr>
@@ -92,15 +93,15 @@
 	var bl3=eval('false');
 	var bl5=eval('false');
 	var bl6=eval('false');
-	var bl7=eval('false');
 	var birthday="";
 
 	
 	function check(){
+		birthCheck();
 		if(bl&&bl2&&bl3&&bl5&&bl6){
 			return true;
-			//return true;
 		}else{
+			alert("안됨");
 			return false;	
 		}
 	}
@@ -131,6 +132,7 @@
 					span.style.color="red";
 					bl=false;
 				}
+				console.log(bl+":bl");
 			}
 			
 		};
@@ -151,6 +153,7 @@
 			span.style.color="red";
 			bl2=false;
 		}
+		console.log(bl2+":bl2");
 	}
 	
 	function pwdConfirm(){
@@ -170,6 +173,7 @@
 			span.style.color="red";
 			bl3=false;
 		}
+		console.log(bl3+":bl3");
 	}
 	
 	function emailCheck(){
@@ -186,13 +190,11 @@
 					span.innerHTML="중복된 이메일 주소입니다."
 					span.style.color="red";
 					bl5=false;
-				}else if(!users_email.match(regExp)){ 
-					span.innerHTML="이메일 주소가 올바르지 않습니다.";
-					span.style.color="red";
-					bl5=false;
 				}else{
+					console.log(check+"엘스문");
 					bl5=true;
 				}
+				console.log(bl5+":bl5");
 			}
 		};
 		xhr.open("post", "${cp }/reg/emailcheck.do?&users_email="+users_email, true);
@@ -220,12 +222,12 @@
 		}else{
 			bl6=true;
 		}
+		console.log(bl6+"이프문");
 	}
 	
 	
 	function regCancel(){
 		window.history.back();
-		
 	}
 	
 	function delmsg(){
