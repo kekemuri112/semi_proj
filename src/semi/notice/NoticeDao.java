@@ -104,7 +104,7 @@ public class NoticeDao {
 		}
 	}
 	
-	public int insert(int cafe_num,int notice_ref,String notice_name) { //�Խ��� �����
+	public int insert(int cafe_num,int notice_ref,String notice_name) { 
 		Connection con=null;
 		PreparedStatement pstmt=null;
 		try {
@@ -112,13 +112,12 @@ public class NoticeDao {
 			String sql="insert into notice(notice_num,cafe_num,notice_name,notice_ref,notice_lev,notice_step) "
 					+ "values(notice_seq.nextval,'"+cafe_num+"','"+notice_name+"',";
 			int notice_step=getStep(notice_ref)+1;
-			if(notice_ref>0) { // �����Խ���
+			if(notice_ref>0) { 
 				sql+="'"+notice_ref+"',1,'"+notice_step+"')";
-			}else if(notice_ref==0){ //ū�Խ���
+			}else if(notice_ref==0){ 
 				sql+="notice_seq.currval,0,'"+notice_step+"')";
 			}
 			pstmt=con.prepareStatement(sql);
-			System.out.println("notice_insert �޼ҵ� SQL 2: "+sql);
 			return pstmt.executeUpdate();
 		}catch(SQLException se) {
 			se.printStackTrace();
@@ -226,65 +225,6 @@ public class NoticeDao {
 			}
 		}		
 	}
-	/*
-	public int getCount() {
-		Connection con=null;
-		PreparedStatement pstmt=null;
-		ResultSet rs=null;
-		try {
-			con=ConnectionPool.getCon();
-			String sql="select NVL(count(num),0) cnt from notice";
-			pstmt=con.prepareStatement(sql);
-			rs=pstmt.executeQuery();
-			if(rs.next()) {
-				return rs.getInt("cnt");
-			}else {
-				return 0;
-			}
-			
-		}catch (SQLException se) {
-			se.printStackTrace();
-			return -1;
-		}finally {
-			try {
-				if(rs!=null)rs.close();
-				if(pstmt!=null)rs.close();
-				if(con!=null)rs.close();
-			}catch(SQLException s) {
-				s.printStackTrace();
-			}
-		}
-	}*/
-	/*public int delete(int notice_num) {
-		Connection con=null;
-		PreparedStatement pstmt1=null;
-		PreparedStatement pstmt2=null;
-		PreparedStatement pstmt3=null;
-		PreparedStatement pstmt4=null;
-		try {
-			con=ConnectionPool.getCon();
-			String sql1="delete from notice where notice_num=?";
-			pstmt1=con.prepareStatement(sql1);
-			pstmt1.setInt(1, notice_num);
-			pstmt2=con.prepareStatement(sql1);
-			pstmt2.setInt(1, notice_num);
-			pstmt3=con.prepareStatement(sql1);
-			pstmt3.setInt(1, notice_num);
-			pstmt4=pstmt3;
-			
-			return pstmt4.executeUpdate();
-		}catch (SQLException se) {
-			se.printStackTrace();
-			return -1;
-		}finally {
-			try {
-				if(pstmt1!=null)pstmt1.close();
-				if(con!=null)con.close();
-			}catch (SQLException s) {
-				s.printStackTrace();
-			}
-		}
-	}*/
 	
 	public NoticeVo getVo(int notice_num) {
 		Connection con=null;

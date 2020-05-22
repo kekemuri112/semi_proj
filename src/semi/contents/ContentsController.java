@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import semi.cafe.CafeDao;
+import semi.cafe.CafeVo;
 import semi.notice.NoticeDao;
 
 @WebServlet("/contents/contents.do")
@@ -25,18 +26,16 @@ public class ContentsController extends HttpServlet {
 		String cafe_name="";
 		if(scafe_num!=null) {
 			cafe_num=Integer.parseInt(scafe_num);
-			cafe_name=CafeDao.getInstance().getVo(cafe_num).getCafe_name();
+			CafeVo cdao=CafeDao.getInstance().getVo(cafe_num);
+			cafe_name=cdao.getCafe_name();
 			session.setAttribute("cafe_num", cafe_num);
 			session.setAttribute("cafe_name", cafe_name);
+			session.setAttribute("cafe_image", cdao.getCafe_image());
 		}else {
 			cafe_num=(Integer)session.getAttribute("cafe_num");
 		}
 		String spageNum=req.getParameter("pageNum");
 		String snotice_num=req.getParameter("notice_num");
-		System.out.println("notice_num:"+snotice_num);
-		System.out.println("cafe_num:"+cafe_num);
-		System.out.println("field:"+field);
-		System.out.println("keyword:"+keyword);
 		int notice_num=0;
 		String notice_name=null;
 		ContentsDao dao=ContentsDao.getDao();

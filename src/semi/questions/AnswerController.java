@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import semi.notice.NoticeDao;
+
 //카페 가입 버튼 눌렀을때...컨트롤러
 @WebServlet("/questions/answer.do")
 public class AnswerController extends HttpServlet{
@@ -27,6 +29,8 @@ public class AnswerController extends HttpServlet{
 		}else {
 			req.setAttribute("msg", "가입요청실패");
 		}
+		String bl3=NoticeDao.getInstance().usersCafe(users_num, cafe_num,"대기");
+		session.setAttribute("userscafeApproved", bl3);
 		req.setAttribute("header1", "/home/wraphome.jsp");
 		req.setAttribute("header2", "/home/wrapmain.jsp");
 		req.setAttribute("headerLog", "/register/rmain.jsp");

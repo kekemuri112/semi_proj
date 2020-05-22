@@ -27,6 +27,7 @@
 				var json=JSON.parse(data); //json 배열로 받아옴.
 				var approval=document.getElementById("approval"); //div 가져옴
 				var table=document.createElement("table"); //테이블 태그 생성
+				table.style="border-radius: 20px / 20px ; background-color: rgba(355,355,355,0.8);width:550px;margin: auto;margin-top: 180px;"
 				table.border="1"; //테이블 테두리지정.
 				var ths=["회원아이디","회원이름","회원생일","전화번호","활동포인트","현재상태","비고"];//맨위행
 				var tr=document.createElement("tr"); //행만들기
@@ -68,6 +69,9 @@
 								var button1=document.createElement("input");
 								button1.type="button"; // input 타입 button 버튼생성
 								button1.value="추방"; // 버튼 value값
+								button1.style="width:75px;height:30px; border-radius: 25px/25px;  background-color:white; outline-style:hidden;";
+								button2.style="width:75px;height:30px; border-radius: 25px/25px;  background-color:white; outline-style:hidden;";
+								
 								button1.addEventListener('click', function() { 
 									redCard(cafe_numList[z],pageNum);
 								}) //
@@ -80,6 +84,8 @@
 								button2.type="button";
 								button1.value="승인"; // 버튼 value값
 								button2.value="거절";
+								button1.style="width:75px;height:30px; border-radius: 25px/25px;  background-color:white; outline-style:hidden;";
+								button2.style="width:75px;height:30px; border-radius: 25px/25px;  background-color:white; outline-style:hidden;";
 								//버튼클릭시 어느함수실행할지 지정.
 								button1.addEventListener('click', function() { 
 									accept(cafe_numList[z],pageNum)

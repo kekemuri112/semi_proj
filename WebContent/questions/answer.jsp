@@ -2,7 +2,8 @@
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <div>
-	<form method="post" action="${cp }/questions/answer.do">
+	<form style="border-radius: 100px / 100px ; background-color: rgba(355,355,355,0.8);width:450px;margin: auto;margin-top: 180px;"
+	 method="post" action="${cp }/questions/answer.do">
 		<c:choose>
 			<c:when test="${qlist eq null }">
 				<h1>질문은 없습니다.</h1>

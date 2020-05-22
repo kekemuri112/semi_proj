@@ -82,8 +82,7 @@ public class CaferegDao {
 			pstmt1=con.prepareStatement(sql1);
 			pstmt1.setInt(1, cafe_num);
 			pstmt1.setInt(2, users_num);
-			pstmt1.executeUpdate();
-			int n=0;
+			int n=pstmt1.executeUpdate();
 			if(contents!=null) {
 				for(int i=0;i<contents.length;i++) {
 					String aContent=contents[i];

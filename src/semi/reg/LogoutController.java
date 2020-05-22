@@ -28,7 +28,7 @@ public class LogoutController extends HttpServlet{
 		req.setAttribute("mfile", "/home/result.jsp");
 		int cafe_num= (Integer)session.getAttribute("cafe_num");
 		if(cafe_num>0) {
-			req.setAttribute("mlist", "notice/noticelist.jsp");
+			req.setAttribute("mlist", "/notice/noticelist.jsp");
 		}else {
 			req.setAttribute("cafelist", CafeDao.getInstance().listAll());
 			req.setAttribute("mlist", "/cafe/cafelist.jsp");
