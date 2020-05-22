@@ -13,13 +13,20 @@
 	display: inline-block;" readonly="readonly"></textarea>
 	<br><br>
 	</div>
-	<input style="border: none;border-radius: 25px/25px; width:300px;height:27px;" type="text" id="message" onkeypress="if(event.keyCode==13){postMessage();};">
+	<input style="border: none;border-radius: 25px/25px; width:300px;height:27px;"
+	 type="text" id="message" onkeypress="if(event.keyCode==13){postMessage();};">
 	<br><br>
 	<input type="hidden" value=<%=cafe_num %> id="cafe_num">
-	<input type="button"  style=" width:120px;height:35px; border-radius: 25px/25px;  background-color:white; outline-style:hidden;" value="보내기" onclick="postMessage()">
+	<input type="button"  style=" width:120px;height:35px; border-radius: 25px/25px;  background-color:white;
+	 outline-style:hidden;" value="보내기" onclick="postMessage()" id="btn" >
+	<br><span id="resultMsg"></span>
 </body>
 <script>
+	
     function postMessage() {
+        time=setInterval(timer, 1000);
+        var btn = document.getElementById("btn").disabled=true;
+    	var message=document.getElementById("message").readOnly=true;
         var xmlhttp = new XMLHttpRequest();
         xmlhttp.open("post", "${cp}/chat/shoutServlet.do?t="+new Date(), false);
         xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
@@ -28,6 +35,23 @@
         document.getElementById("message").value = "";
         xmlhttp.send("name="+users_id+"&message="+messageText);
     }
+    
+    var time=null;
+    var i=3;
+    function timer(){
+    	var resultMsg = document.getElementById("resultMsg");
+    	resultMsg.innerHTML = i+"초 남았습니다..";
+    	resultMsg.style.color="red";
+    	if(i==0){
+    		document.getElementById("btn").disabled=false;
+        	document.getElementById("message").readOnly=false;
+    		resultMsg.innerHTML ="";
+    		i=5;
+    		clearInterval(time);
+    	}
+    	i=i-1;
+    }
+    
     
     var messagesWaiting = false;
     function getMessages(){
