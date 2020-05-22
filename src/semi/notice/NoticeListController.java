@@ -27,7 +27,6 @@ public class NoticeListController extends HttpServlet{
 			json.put("notice_num", vo.getNotice_num());
 			json.put("cafe_num", vo.getCafe_num());
 			json.put("notice_lev", vo.getNotice_lev());
-			json.put("notice_grade", vo.getNotice_grade());
 			json.put("notice_ref", vo.getNotice_ref());
 			json.put("notice_step", vo.getNotice_step());
 			json.put("notice_name", vo.getNotice_name());

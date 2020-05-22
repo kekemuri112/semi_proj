@@ -205,8 +205,7 @@ public class NoticeDao {
 							rs.getString("notice_name"),
 							rs.getInt("notice_lev"),
 							rs.getInt("notice_ref"),
-							rs.getInt("notice_step"),
-							rs.getInt("notice_grade")
+							rs.getInt("notice_step")
 						);
 				
 				list.add(vo);
@@ -244,8 +243,7 @@ public class NoticeDao {
 						rs.getString("notice_name"),
 						rs.getInt("notice_lev"),
 						rs.getInt("notice_ref"),
-						rs.getInt("notice_step"),
-						rs.getInt("notice_grade")
+						rs.getInt("notice_step")
 					);
 			}
 			return vo;
