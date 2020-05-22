@@ -14,6 +14,8 @@ import org.json.JSONObject;
 public class UsersRedCardController extends HttpServlet{ //강퇴기능 컨트롤러
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		req.setCharacterEncoding("utf-8");
+		resp.setContentType("text/plain;charset=utf-8");
 		String susers_cafe_num=req.getParameter("users_cafe_num");
 		int users_cafe_num=Integer.parseInt(susers_cafe_num);
 		UsersApprovalDao dao=UsersApprovalDao.getInstance();

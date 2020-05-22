@@ -18,6 +18,8 @@ import semi.notice.NoticeDao;
 public class ContentsController extends HttpServlet {
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		req.setCharacterEncoding("utf-8");
+		resp.setContentType("text/plain;charset=utf-8");
 		String scafe_num=req.getParameter("cafe_num");
 		String field=req.getParameter("field");
 		String keyword=req.getParameter("keyword");

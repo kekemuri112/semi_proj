@@ -51,15 +51,14 @@ public class ContentsDao {
 		ResultSet rs=null;
 		try {
 			con=ConnectionPool.getCon();
-			String sql="select * from contents where notice_num in (select notice_num from notice where cafe_num=?)";
+			String sql="select distinct notice_num from contents where notice_num in (select notice_num from notice where cafe_num=?)";
 			pstmt=con.prepareStatement(sql);
 			pstmt.setInt(1, cafe_num);
 			rs=pstmt.executeQuery();
 			ArrayList<Integer> list=null;
-			
+			list = new ArrayList<Integer>();
 			while(rs.next()) {
 				int notice_num=rs.getInt("notice_num");
-				list = new ArrayList<Integer>();
 				list.add(notice_num);
 			}
 			return list;
@@ -340,7 +339,7 @@ public class ContentsDao {
 		PreparedStatement pstmt=null;
 		try {
 			con=ConnectionPool.getCon();
-			String sql="insert into contents values(content_seq.nextval,?,?,?,?,sysdate,sysdate)";
+			String sql="insert into contents values(contents_seq.nextval,?,?,?,?,sysdate,sysdate)";
 			pstmt=con.prepareStatement(sql);
 			pstmt.setInt(1, vo.getNotice_num());
 			pstmt.setInt(2, vo.getUsers_num());

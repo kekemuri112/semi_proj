@@ -45,6 +45,7 @@
     	if(i==0){
     		document.getElementById("btn").disabled=false;
         	document.getElementById("message").readOnly=false;
+        	document.getElementById("message").focus();
     		resultMsg.innerHTML ="";
     		i=5;
     		clearInterval(time);

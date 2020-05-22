@@ -17,6 +17,8 @@ import org.json.JSONObject;
 public class CommentsController extends HttpServlet{
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		req.setCharacterEncoding("utf-8");
+		resp.setContentType("text/plain;charset=utf-8");
 		int contents_num=Integer.parseInt(req.getParameter("contents_num"));
 		int pageNum=1;
 		String spageNum=req.getParameter("pageNum");

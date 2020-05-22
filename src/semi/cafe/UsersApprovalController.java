@@ -16,6 +16,8 @@ import org.json.JSONObject;
 public class UsersApprovalController extends HttpServlet{
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		req.setCharacterEncoding("utf-8");
+		resp.setContentType("text/plain;charset=utf-8");
 		UsersApprovalDao dao=UsersApprovalDao.getInstance();
 		int cafe_num=(int)req.getSession().getAttribute("cafe_num");
 		int pageNum=1;

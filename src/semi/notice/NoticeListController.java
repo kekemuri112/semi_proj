@@ -17,8 +17,9 @@ import org.json.JSONObject;
 public class NoticeListController extends HttpServlet{
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		int cafe_num=(int)req.getSession().getAttribute("cafe_num");
+		req.setCharacterEncoding("utf-8");
 		resp.setContentType("text/plain;charset=utf-8");
+		int cafe_num=(int)req.getSession().getAttribute("cafe_num");
 		NoticeDao dao=NoticeDao.getInstance();
 		ArrayList<NoticeVo> list=dao.listAll(cafe_num);
 		JSONArray jarr=new JSONArray();

@@ -70,7 +70,6 @@
 								button1.type="button"; // input 타입 button 버튼생성
 								button1.value="추방"; // 버튼 value값
 								button1.style="width:75px;height:30px; border-radius: 25px/25px;  background-color:white; outline-style:hidden;";
-								button2.style="width:75px;height:30px; border-radius: 25px/25px;  background-color:white; outline-style:hidden;";
 								
 								button1.addEventListener('click', function() { 
 									redCard(cafe_numList[z],pageNum);

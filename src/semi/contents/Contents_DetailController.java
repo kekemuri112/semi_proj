@@ -19,7 +19,6 @@ public class Contents_DetailController extends HttpServlet{
 		int contents_num=Integer.parseInt(scontents_num);
 		ContentsDao dao=ContentsDao.getDao();
 		Contents_detailVo vo=dao.detail(contents_num);
-		//System.out.println("디테일두 접근함..cafe_num:"+(int)req.getSession().getAttribute("cafe_num"));
 		req.setAttribute("vo", vo);
 		req.setAttribute("header1", "/home/wraphome.jsp");
 		req.setAttribute("header2", "/home/wrapmain.jsp");

@@ -15,6 +15,8 @@ import org.json.JSONObject;
 public class UsersPopupTestController extends HttpServlet{
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		req.setCharacterEncoding("utf-8");
+		resp.setContentType("text/plain;charset=utf-8");
 		String susers_cafe_num=req.getParameter("users_cafe_num");
 		int users_cafe_num=0;
 		if(susers_cafe_num!=null) {

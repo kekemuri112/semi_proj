@@ -13,6 +13,8 @@ import semi.cafe.CafeDao;
 public class Contents_UpdateController extends HttpServlet{
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		req.setCharacterEncoding("utf-8");
+		resp.setContentType("text/plain;charset=utf-8");
 		int contents_num=Integer.parseInt(req.getParameter("contents_num"));
 		ContentsDao dao=ContentsDao.getDao();
 		Contents_detailVo vo=dao.detail(contents_num);
@@ -27,11 +29,11 @@ public class Contents_UpdateController extends HttpServlet{
 		req.setAttribute("mlist", "/notice/noticelist.jsp");
 		req.setAttribute("mfile","/contents/contents_update.jsp" );
 		req.getRequestDispatcher("/home/main.jsp").forward(req, resp);
-		
 	}
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		req.setCharacterEncoding("utf-8");
+		resp.setContentType("text/plain;charset=utf-8");
 		String scontents_num=req.getParameter("contents_num");
 		int contents_num=Integer.parseInt(scontents_num);
 		String contents_title=req.getParameter("contents_title");

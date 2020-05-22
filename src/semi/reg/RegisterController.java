@@ -16,7 +16,6 @@ public class RegisterController extends HttpServlet{
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		req.setCharacterEncoding("utf-8");
-		System.out.println("레지스터 컨트롤러 실행.");
 		resp.setContentType("text/plain;charset=utf-8");
 		String users_id = req.getParameter("users_id");				
 		String users_pwd = req.getParameter("users_pwd");				

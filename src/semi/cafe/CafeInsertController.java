@@ -32,8 +32,9 @@ public class CafeInsertController extends HttpServlet {
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		req.setCharacterEncoding("utf-8");
+		resp.setContentType("text/plain;charset=utf-8");
 		String cafe_admin=(String)req.getSession().getAttribute("users_id");
-		System.out.println(cafe_admin+"카페장...");
 		String upload=req.getServletContext().getRealPath("/upload");
 				MultipartRequest mr=new MultipartRequest(
 					req,

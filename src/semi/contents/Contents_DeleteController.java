@@ -14,6 +14,8 @@ import semi.contents.ContentsDao;
 public class Contents_DeleteController extends HttpServlet{
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		req.setCharacterEncoding("utf-8");
+		resp.setContentType("text/plain;charset=utf-8");
 		String scontents_num=req.getParameter("contents_num");
 		int contents_num=Integer.parseInt(scontents_num);
 		ContentsDao dao=ContentsDao.getDao();
