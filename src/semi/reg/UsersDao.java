@@ -119,16 +119,20 @@ public class UsersDao {
 		try {
 			con=ConnectionPool.getCon();
 			if(users_id!=null) {
-				sql+=" and users_id="+users_id;
-			}
-			pstmt=con.prepareStatement(sql);
-			pstmt.setString(1, users_name);
-			pstmt.setString(2, users_email);
-			rs=pstmt.executeQuery();
-			rs.next();
-			if(users_id!=null) {
+				sql+=" and users_id=?";
+				pstmt=con.prepareStatement(sql);
+				pstmt.setString(1, users_name);
+				pstmt.setString(2, users_email);
+				pstmt.setString(3, users_id);
+				rs=pstmt.executeQuery();
+				rs.next();
 				return rs.getString("users_pwd");
 			}else {
+				pstmt=con.prepareStatement(sql);
+				pstmt.setString(1, users_name);
+				pstmt.setString(2, users_email);
+				rs=pstmt.executeQuery();
+				rs.next();
 				return rs.getString("users_id");
 			}
 		}catch(SQLException se) {

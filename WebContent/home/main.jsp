@@ -22,8 +22,6 @@
 </style>
 </head>
 <body>
-<!--background-color: rgba(255,255,255,0.2); -->
-
 <img src="${cp}/image/phone.gif" style="width: 1300px;position:absolute; right:180px; top:200px; ; z-index: 1; ">
 <div id="wrap">
 	<div id="header1">
@@ -53,7 +51,6 @@
 			</div>
 		</div>
 	</div>
-	
 	<div id="menu">
 		<div id="list">
 			<div >

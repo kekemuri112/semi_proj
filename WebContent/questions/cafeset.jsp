@@ -11,7 +11,7 @@
 				<a href="${cp }/questions/subscontroller.do?cafe_admin=${cafe_admin }&cafe_num=${cafe_num }">가입질문생성</a>
 			</th>
 			<th>
-				<a href="${cp }/semi/pagecontroller.do?check=10">회원대기목록</a>
+				<a href="${cp }/semi/pagecontroller.do?check=10">회원관리</a>
 			</th>
 		</tr>		
 		<tr>

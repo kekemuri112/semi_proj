@@ -1,5 +1,6 @@
 package semi.cafe;
 
+import java.io.File;
 import java.io.IOException;
 
 import javax.servlet.ServletException;
@@ -10,8 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
-
-import semi.notice.NoticeDao;
 
 
 @WebServlet("/cafe/cafeinsert.do")
@@ -36,13 +35,15 @@ public class CafeInsertController extends HttpServlet {
 		resp.setContentType("text/plain;charset=utf-8");
 		String cafe_admin=(String)req.getSession().getAttribute("users_id");
 		String upload=req.getServletContext().getRealPath("/upload");
-				MultipartRequest mr=new MultipartRequest(
-					req,
-					upload,
-					1024*1024*5,
-					"utf-8",
-					new DefaultFileRenamePolicy()
-				);
+		File file=new File(upload);
+		file.mkdir();
+		MultipartRequest mr=new MultipartRequest(
+			req,
+			upload,
+			1024*1024*5,
+			"utf-8",
+			new DefaultFileRenamePolicy()
+		);
 		String cafe_name=mr.getParameter("cafe_name");
 		String cafe_desc=mr.getParameter("cafe_desc");
 		String cafe_intent=mr.getParameter("cafe_intent");

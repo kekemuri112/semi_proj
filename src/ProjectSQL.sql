@@ -52,13 +52,13 @@ CREATE TABLE CONTENTS
 	contents_post varchar2(1024),
 	contents_regdate date,
 	contents_modifydate date
-)
+);
 CREATE SEQUENCE CONTENTS_SEQ;
 
 CREATE TABLE COMMENTS
 (
 	comments_num number(4) primary key,
-	contents_num number(4) references content(content_num),
+	contents_num number(4) references contents(contents_num),
 	users_num number(4) references users(users_num),
 	comments_content varchar2(250),
 	comments_lev number(5),
