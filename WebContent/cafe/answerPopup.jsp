@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<div id="answer">
+ <div style="background-color: #F45D00;">
+	<div style="margin: auto; background-color: #F45D00;">
+		<h2 style="color: white;" id="answer"></h2>
+	</div>
 </div>
 <script>
 <%
@@ -22,7 +25,9 @@
 				for(var i=0;i<json.length;i++){
 					var cafereg_question=json[i].cafereg_question;
 					var answer_contents=json[i].answer_contents;
-					div.innerHTML+="질문 "+(i+1)+" : "+cafereg_question+"<br>"+answer_contents+"<br>";
+					div.innerHTML+="질문 "+(i+1)+" : "+cafereg_question+"<br>"+ "답변:"+answer_contents+"<br>";
+
+					
 				}
 			}
 		}

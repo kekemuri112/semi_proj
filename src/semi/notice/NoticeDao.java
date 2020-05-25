@@ -159,24 +159,23 @@ public class NoticeDao {
 		}
 	}
 
-	public String usersCafe(int users_num,int cafe_num) {
+	public boolean usersCafe(int users_num,int cafe_num) {
 		Connection con=null;
 		PreparedStatement pstmt=null;
 		try {
 			con=ConnectionPool.getCon();
-			String sql="select * from userscafe where users_num=? and cafe_num=? and userscafe_approved='����'";
+			String sql="select * from users_cafe where users_num=? and cafe_num=?";
 			pstmt=con.prepareStatement(sql);
 			pstmt.setInt(1, users_num);
 			pstmt.setInt(2, cafe_num);
 			int n=pstmt.executeUpdate();
 			if(n>0) {
-				return "true";	
-			}else {
-				return "false";
+				return false;	
 			}
+			return true;
 		}catch (SQLException se) {
 			se.printStackTrace();
-			return "false";
+			return false;
 		}finally {
 			try {
 				if(pstmt!=null)pstmt.close();

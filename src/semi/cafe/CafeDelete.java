@@ -20,6 +20,7 @@ public class CafeDelete extends HttpServlet{
 		int cafe_num=(int)session.getAttribute("cafe_num");
 		CafeDao dao=CafeDao.getInstance();
 		int n=dao.usersdelete(cafe_num, users_num);
+		session.removeAttribute("userscafeApproved");
 		if(n>0) {
 			req.setAttribute("msg", "카페 탈퇴완료..");
 		}else {

@@ -220,20 +220,27 @@ public class CafeDao {
 	//cafe삭제하는 메소드
 	public int usersdelete(int cafe_num,int users_num) {
 		Connection con=null;
-		PreparedStatement pstmt=null;
+		PreparedStatement pstmt1=null;
+		PreparedStatement pstmt2=null;
 		try {
 			con=ConnectionPool.getCon();
-			String sql="delete from userscafe where cafe_num=? and users_num=?";
-			pstmt=con.prepareStatement(sql);
-			pstmt.setInt(1, cafe_num);
-			pstmt.setInt(2, users_num);
-			return pstmt.executeUpdate();
+			String sql1="delete from users_cafe where cafe_num=? and users_num=?";
+			String sql2="delete from answer where users_cafe_num in (select users_cafe_num from users_cafe where cafe_num=? and users_num=?)";
+			pstmt1=con.prepareStatement(sql1);
+			pstmt1.setInt(1, cafe_num);
+			pstmt1.setInt(2, users_num);
+			pstmt2=con.prepareStatement(sql2);
+			pstmt2.setInt(1, cafe_num);
+			pstmt2.setInt(2, users_num);
+			pstmt2.executeUpdate();
+			return pstmt1.executeUpdate();
 		}catch (SQLException se) {
 			se.printStackTrace();
 			return -1;
 		}finally {
 			try {
-				if(pstmt!=null)pstmt.close();
+				if(pstmt1!=null)pstmt1.close();
+				if(pstmt2!=null)pstmt2.close();
 				if(con!=null)con.close();
 			}catch (SQLException s) {
 				s.printStackTrace();

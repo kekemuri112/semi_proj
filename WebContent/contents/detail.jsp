@@ -12,7 +12,7 @@
 	<span>${vo.contents_regDate }</span><br>
 	<div >
 	<br>
-	<p>
+	<p style="text-align: left;margin-left: 5px;">
 	${vo.contents_post }
 	</p>
 	<br>
