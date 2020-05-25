@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import semi.cafe.CafeDao;
-import semi.notice.NoticeDao;
 
 @WebServlet("/reg/logoutcontroller.do")
 public class LogoutController extends HttpServlet{
@@ -21,6 +20,11 @@ public class LogoutController extends HttpServlet{
 		HttpSession session=req.getSession();
 		session.removeAttribute("users_id");
 		session.removeAttribute("users_num");
+		boolean bl=false;
+		session.setAttribute("cafe_admin",bl);
+		session.setAttribute("userscafe",bl);
+		session.setAttribute("userscafeApproved",bl);
+		System.out.println(session.getAttribute("cafe_admin"));
 		req.setAttribute("msg", "로그아웃완료!");
 		req.setAttribute("header1", "/home/wraphome.jsp");
 		req.setAttribute("header2", "/home/wrapmain.jsp");

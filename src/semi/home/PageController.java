@@ -45,6 +45,9 @@ public class PageController extends HttpServlet {
 			case 4:	req.setAttribute("mfile", checks[check-1]);
 					session.removeAttribute("users_id");
 					session.removeAttribute("users_num");
+					session.setAttribute("cafe_admin",false);
+					session.setAttribute("userscafe",false);
+					session.setAttribute("userscafeApproved",false);
 					req.setAttribute("msg", "로그아웃완료");
 				break;
 			case 5:	req.setAttribute("mfile", checks[check-1]);
