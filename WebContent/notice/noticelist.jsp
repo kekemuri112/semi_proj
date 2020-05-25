@@ -31,13 +31,17 @@
 					var notice_num=json[i].notice_num;
 					if(notice_lev>0){
 						div.innerHTML+="&ensp;&ensp;&ensp;ㄴ"
+						var aTag=document.createElement("a")
+						aTag.href=cp+"/contents/contents.do?cafe_num="+cafe_num+"&notice_num="+notice_num;
+						var span=document.createElement("span");
+						span.innerHTML=notice_name;
+						aTag.appendChild(span);
+						div.appendChild(aTag);
+					}else{
+						var span=document.createElement("span");
+						span.innerHTML=notice_name;
+						div.appendChild(span);
 					}
-					var aTag=document.createElement("a")
-					aTag.href=cp+"/contents/contents.do?cafe_num="+cafe_num+"&notice_num="+notice_num;
-					var span=document.createElement("span");
-					span.innerHTML=notice_name;
-					aTag.appendChild(span);
-					div.appendChild(aTag);
 					if(notice_lev==0&&cafe_admin){ // 큰게시판일때 + 모양으로 a태그생성.
 						var aTag2=document.createElement("a");
 						aTag2.href="javascript:insertNotice("+notice_ref+")"; //prompt 요청 / 게시판이름입력 호출

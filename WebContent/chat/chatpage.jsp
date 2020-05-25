@@ -14,7 +14,7 @@
 	<br><br>
 	</div>
 	<input style="border: none;border-radius: 25px/25px; width:300px;height:27px;"
-	 type="text" id="message" onkeypress="if(event.keyCode==13){postMessage();};">
+	 type="text" id="message" autocomplete=off onkeypress="if(event.keyCode==13){postMessage();};">
 	<br><br>
 	<input type="hidden" value=<%=cafe_num %> id="cafe_num">
 	<input type="button"  style=" width:120px;height:35px; border-radius: 25px/25px;  background-color:white;

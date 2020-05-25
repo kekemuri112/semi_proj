@@ -52,8 +52,8 @@
 				<th colspan="2">
 					<input type="hidden" name="users_num" id="users_num" value="${vo.users_num }">
 					<br>
-					<input type="submit" value="수정하기">
-					<input type="hidden" value="수정취소" onclick="regCancel()"><br>
+					<input  style=" width:75px;height:30px; border-radius: 25px/25px;  background-color:white; outline-style:hidden;" type="submit" value="수정하기">
+					<input  style=" width:75px;height:30px; border-radius: 25px/25px;  background-color:white; outline-style:hidden;" type="hidden" value="수정취소" onclick="regCancel()"><br>
 					
 				</th>
 			</tr>

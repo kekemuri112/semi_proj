@@ -223,7 +223,7 @@ public class CafeDao {
 		PreparedStatement pstmt=null;
 		try {
 			con=ConnectionPool.getCon();
-			String sql="delete from userscafe where cafe_num=? and users_num";
+			String sql="delete from userscafe where cafe_num=? and users_num=?";
 			pstmt=con.prepareStatement(sql);
 			pstmt.setInt(1, cafe_num);
 			pstmt.setInt(2, users_num);
