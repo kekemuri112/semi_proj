@@ -30,7 +30,7 @@
 			<tr>
 				<th>비밀번호</th>
 				<td>
-					<input type="password" name="users_pwd" id="users_pwd" placeholder="비밀번호 입력(6~12자리)" minlength="6" maxlength="12" onkeyup="pwdConfirm()" onfocusout="delmsg()" required>
+					<input type="password" name="users_pwd" id="users_pwd" placeholder="비밀번호 입력(6~12자리)" minlength="6" maxlength="12" onkeyup="if(event.keyCode!=16){ pwdConfirm();};" onfocusout="delmsg()" required>
 					<br><span id="pwdCon"></span>
 				</td>
 			</tr>
@@ -119,16 +119,14 @@
 					span.innerHTML = "사용 가능한 아이디입니다.";
 					span.style.color="blue";
 					bl=true;
-				}else if(special_pattern.test(users_id)|| blank_pattern.test(users_id)){
+				}
+				if(special_pattern.test(users_id)|| blank_pattern.test(users_id)){
 					span.innerHTML="아이디엔 특수문자나 공백을 사용할 수 없습니다.";
 					span.style.color="red";
 					bl=false;
-				}else if(check=='false'){
+				}
+				if(check=='false'){
 					span.innerHTML = "중복된 아이디입니다.";
-					span.style.color="red";
-					bl=false;
-				}else{
-					span.innerHTML="길이가 올바르지 않습니다.";
 					span.style.color="red";
 					bl=false;
 				}
@@ -173,7 +171,7 @@
 			span.style.color="red";
 			bl3=false;
 		}
-		console.log(bl3+":bl3");
+		console.log("bl3:"+bl3);
 	}
 	
 	function emailCheck(){
@@ -194,7 +192,6 @@
 					console.log(check+"엘스문");
 					bl5=true;
 				}
-				console.log(bl5+":bl5");
 			}
 		};
 		xhr.open("post", "${cp }/reg/emailcheck.do?&users_email="+users_email, true);
@@ -222,7 +219,6 @@
 		}else{
 			bl6=true;
 		}
-		console.log(bl6+"이프문");
 	}
 	
 	

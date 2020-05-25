@@ -324,7 +324,10 @@ public class ContentsDao {
 				String contents_title=rs.getString("contents_title");
 				int users_num=rs.getInt("users_num");
 				String users_id=getUsers_id(users_num);
-				String post=rs.getString("contents_post");
+				String post="내용이 없습니다.";
+				if(rs.getString("contents_post")!=null) {
+					post=rs.getString("contents_post").replaceAll("\n", "<br>");
+				}
 				Date contents_regDate=rs.getDate("contents_regdate");
 				Date contents_modifyDate=rs.getDate("contents_modifyDate");
 				vo=new Contents_detailVo(contents_title, users_id, post, contents_regDate, contents_modifyDate,contents_num,users_num);

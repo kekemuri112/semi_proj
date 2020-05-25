@@ -19,7 +19,6 @@ public class Contents_DetailController extends HttpServlet{
 		int contents_num=Integer.parseInt(scontents_num);
 		ContentsDao dao=ContentsDao.getDao();
 		Contents_detailVo vo=dao.detail(contents_num);
-		vo.setContents_post(vo.getContents_post().replaceAll("\n", "<br>"));
 		req.setAttribute("vo", vo);
 		req.setAttribute("header1", "/home/wraphome.jsp");
 		req.setAttribute("header2", "/home/wrapmain.jsp");
