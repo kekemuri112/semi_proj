@@ -54,7 +54,6 @@ public class ContentsController extends HttpServlet {
 		req.setAttribute("notice_num", notice_num);
 		ArrayList<Integer> list2=dao.getNotice_num(cafe_num);
 		if(list2!=null) {
-			System.out.println("notice_num:"+notice_num);
 			ArrayList<Contents_ListVo> list=dao.listAll(cafe_num, startRow, endRow, notice_num, field, keyword);
 			int pageCount=(int)Math.ceil(dao.getCount(cafe_num,notice_num, field, keyword)/10.0);
 			int startPage=((pageNum-1)/5)*5+1;
