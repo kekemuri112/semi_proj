@@ -62,7 +62,7 @@ window.addEventListener('load',function(){
 					div.style='background-color: rgba(255,255,255,0.8)';
 					div.className="comments";
 					var div2=document.createElement("div");
-					div2.innerHTML=	"<textarea rows='3' cols='30' id='reply_value"+j+"'></textarea><br>"			   
+					div2.innerHTML=	"<input type='text' id='reply_value"+j+"' onkeypress='if(event.keyCode==13){reply_insert("+comments_num+","+j+")}'></textarea><br>"			   
 								  +"<input style=' width:65px;height:27px; border-radius: 25px/25px;  background-color:white; outline-style:hidden;' type='button' value='확인' onclick='reply_insert("+comments_num+","+j+")'>"
 								  +"<input style=' width:65px;height:27px; border-radius: 25px/25px;  background-color:white; outline-style:hidden;' type='button' value='취소' >";
 					div2.style="display:none";

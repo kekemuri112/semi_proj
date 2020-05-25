@@ -21,8 +21,8 @@
 				</c:forEach>
 			</c:otherwise>
 		</c:choose>
-		<input type="submit" value="가입요청">
-		<input type="button" value="뒤로가기" onclick="qCancel()">
+		<input type="submit" value="가입요청" style=" width:75px;height:30px; border-radius: 25px/25px;  background-color:white; outline-style:hidden;">
+		<input type="button" value="뒤로가기" onclick="qCancel()" style=" width:75px;height:30px; border-radius: 25px/25px;  background-color:white; outline-style:hidden;">
 	</form>
 </div>
 <script type="text/javascript">
