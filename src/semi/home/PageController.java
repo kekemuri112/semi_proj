@@ -49,6 +49,8 @@ public class PageController extends HttpServlet {
 				break;
 			case 5:	req.setAttribute("mfile", checks[check-1]);
 				ArrayList<CaferegVo> qlist = CaferegDao.getInstance().getQuestions(cafe_num);
+				String desc=CafeDao.getInstance().getVo(cafe_num).getCafe_desc();
+				req.setAttribute("desc", desc);
 				if(qlist.size()==0) {
 					req.setAttribute("qlist", null);
 				}else {

@@ -49,13 +49,13 @@ public class ContentsDao {
 		Connection con=null; 
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
+		ArrayList<Integer> list=null;
 		try {
 			con=ConnectionPool.getCon();
-			String sql="select distinct notice_num from contents where notice_num in (select notice_num from notice where cafe_num=?)";
+			String sql="select notice_num from notice where cafe_num=?";
 			pstmt=con.prepareStatement(sql);
 			pstmt.setInt(1, cafe_num);
 			rs=pstmt.executeQuery();
-			ArrayList<Integer> list=null;
 			list = new ArrayList<Integer>();
 			while(rs.next()) {
 				int notice_num=rs.getInt("notice_num");
@@ -137,8 +137,12 @@ public class ContentsDao {
 		ResultSet rs=null;
 		try {
 			con=ConnectionPool.getCon();
+			ArrayList<Integer> list2=getNotice_num(cafe_num);
 			String sql="select * from (select "+
-			        "aa.*, rownum rnum from (select * from contents where ";
+					"aa.*, rownum rnum from (select * from contents where ";
+			if(list2.size()==0) {
+				sql += " notice_num=99999 ";
+			}
 			//검색결과가 있을때...
 			if(field!=null && !field.equals("")) {
 				if(field.equals("users_id")) {
@@ -162,8 +166,9 @@ public class ContentsDao {
 				}
 			}
 			if(notice_num==0) { 
-				ArrayList<Integer> list2=getNotice_num(cafe_num);
-				sql += "(";
+				if(list2.size()!=0) {
+					sql += "(";
+				}
 				for(int i=0;i<list2.size();i++) {		
 					int num=list2.get(i);
 					if(i!=list2.size()-1) {
@@ -240,13 +245,16 @@ public class ContentsDao {
 		Connection con=null;
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
+		ArrayList<Integer> list2=getNotice_num(cafe_num);
 		try {
 			con=ConnectionPool.getCon();
 			String sql="select nvl(count(*),0) cnt from contents where ";
+			if(list2.size()==0) {
+				return 0;
+			}
 			if(field!=null&&!field.equals("")) {
 				if(field.equals("users_id")) {
 					ArrayList<Integer> list=getUsers_num(keyword);
-					System.out.println("list.size():"+list.size());
 					if(list.size()==1) {
 						sql+="(users_num="+list.get(0)+") and ";
 					}else if(list.size()>1){
@@ -269,8 +277,9 @@ public class ContentsDao {
 			if(notice_num>0) {
 				sql+=" notice_num="+notice_num;
 			}else{
-				ArrayList<Integer> list2=getNotice_num(cafe_num);
-				sql += "(";
+				if(list2.size()!=0) {
+					sql += "(";
+				}
 				for(int i=0;i<list2.size();i++) {
 					int num=list2.get(i);
 					if(i!=list2.size()-1) {
