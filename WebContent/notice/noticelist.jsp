@@ -76,8 +76,8 @@
 	function insertNotice(notice_ref1){
 		var notice_name=prompt("게시판이름을 입력하세요.");
 		var notice_ref=0;
-		if(notice_name==""){
-			alert("");
+		if(notice_name==""||notice_name==null){
+			alert("확인 바랍니다..");
 			return;
 		}
 		if(notice_ref1!=null){
