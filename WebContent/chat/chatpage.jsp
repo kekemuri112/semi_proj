@@ -47,7 +47,7 @@
         	document.getElementById("message").readOnly=false;
         	document.getElementById("message").focus();
     		resultMsg.innerHTML ="";
-    		i=5;
+    		i=3;
     		clearInterval(time);
     	}
     	i=i-1;
