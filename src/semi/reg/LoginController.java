@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import semi.cafe.CafeDao;
+import semi.notice.NoticeDao;
 @WebServlet("/reg/logincontroller.do")
 public class LoginController extends HttpServlet{
 	@Override
@@ -24,14 +25,22 @@ public class LoginController extends HttpServlet{
 		if(n>0) {
 			UsersVo vo=dao.information(users_id);
 			session.setAttribute("users_id", users_id);
-			session.setAttribute("users_num", vo.getUsers_no());
-			req.setAttribute("msg", "로그인 완료되었습니다.");
+			session.setAttribute("users_num", vo.getUsers_num());
+			req.setAttribute("msg", "LOGIN완료!");
 		}else {
-			req.setAttribute("msg", "로그인 실패하였습니다.");
+			req.setAttribute("msg", "LOGIN실패T.T");
 		}
-		req.setAttribute("cafelist", CafeDao.getInstance().listAll());
-		session.setAttribute("headerLog", "/register/rmain.jsp");
-		session.setAttribute("mfile", "/home/result.jsp");
+		req.setAttribute("header1", "/home/wraphome.jsp");
+		req.setAttribute("header2", "/home/wrapmain.jsp");
+		req.setAttribute("headerLog", "/register/rmain.jsp");
+		req.setAttribute("mfile", "/home/result.jsp");
+		int cafe_num=(Integer)session.getAttribute("cafe_num");
+		if(cafe_num>0) {
+			req.setAttribute("mlist", "/notice/noticelist.jsp");
+		}else {
+			req.setAttribute("cafelist", CafeDao.getInstance().listAll());
+			req.setAttribute("mlist", "/cafe/cafelist.jsp");
+		}
 		req.getRequestDispatcher("/home/main.jsp").forward(req, resp);
 	}
 }

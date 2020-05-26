@@ -15,10 +15,48 @@ public class CafeDao {
 	public static CafeDao getInstance() {
 		return instance;
 	}
+	
+	public CafeVo getVo(int cafe_num) {
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		try {
+			con=ConnectionPool.getCon();
+			String sql="select * from cafe where cafe_num=?";
+			pstmt=con.prepareStatement(sql);
+			pstmt.setInt(1, cafe_num);
+			rs=pstmt.executeQuery();
+			CafeVo vo=null;
+			if(rs.next()) {
+				vo=new CafeVo(
+						rs.getInt("cafe_num"),
+						rs.getString("cafe_name"),
+						rs.getString("cafe_desc"),
+						rs.getString("cafe_intent"),
+						rs.getString("cafe_admin"),
+						rs.getString("cafe_approved"),
+						rs.getString("cafe_image")
+					);
+			}
+			return vo;
+		}catch(SQLException se) {
+			se.printStackTrace();
+			return null;
+		}finally {
+			try {
+				if(rs!=null)rs.close();
+				if(pstmt!=null)pstmt.close();
+				if(con!=null)con.close();
+			}catch(SQLException s) {
+				s.printStackTrace();
+			}
+		}
+	}
+	
+	
 	public int cafeStatus(int cafe_num,boolean bl) {
 		Connection con=null;
 		PreparedStatement pstmt=null;
-		System.out.println("cafe_num"+cafe_num);
 		try {
 			con=ConnectionPool.getCon();
 			String sql=null;
@@ -32,8 +70,7 @@ public class CafeDao {
 			pstmt.setInt(1, cafe_num);
 			return pstmt.executeUpdate();
 		}catch(SQLException se) {
-			System.out.println("cafedao.cafeStatus()여기서 터짐");
-			//se.printStackTrace();
+			se.printStackTrace();
 			return -1;
 		}finally {
 			try {
@@ -181,21 +218,29 @@ public class CafeDao {
 		}
 	}
 	//cafe삭제하는 메소드
-	public int delete(int cafe_num) {
+	public int usersdelete(int cafe_num,int users_num) {
 		Connection con=null;
-		PreparedStatement pstmt=null;
+		PreparedStatement pstmt1=null;
+		PreparedStatement pstmt2=null;
 		try {
 			con=ConnectionPool.getCon();
-			String sql="delete from cafe where cafe_num=?";
-			pstmt=con.prepareStatement(sql);
-			pstmt.setInt(1, cafe_num);
-			return pstmt.executeUpdate();
+			String sql1="delete from users_cafe where cafe_num=? and users_num=?";
+			String sql2="delete from answer where users_cafe_num in (select users_cafe_num from users_cafe where cafe_num=? and users_num=?)";
+			pstmt1=con.prepareStatement(sql1);
+			pstmt1.setInt(1, cafe_num);
+			pstmt1.setInt(2, users_num);
+			pstmt2=con.prepareStatement(sql2);
+			pstmt2.setInt(1, cafe_num);
+			pstmt2.setInt(2, users_num);
+			pstmt2.executeUpdate();
+			return pstmt1.executeUpdate();
 		}catch (SQLException se) {
 			se.printStackTrace();
 			return -1;
 		}finally {
 			try {
-				if(pstmt!=null)pstmt.close();
+				if(pstmt1!=null)pstmt1.close();
+				if(pstmt2!=null)pstmt2.close();
 				if(con!=null)con.close();
 			}catch (SQLException s) {
 				s.printStackTrace();

@@ -7,9 +7,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import semi.cafe.CafeDao;
+import semi.notice.NoticeDao;
 
 @WebServlet("/reg/registercontroller.do")
 public class RegisterController extends HttpServlet{
@@ -27,13 +27,24 @@ public class RegisterController extends HttpServlet{
 		UsersDao dao=UsersDao.getInstance();
 		int n=dao.insert(vo);
 		if(n>0) {
-			req.setAttribute("msg", "회원 가입 완료되었습니다.");
+			req.setAttribute("msg", "회원 가입이 완료되었습니다.");
 		}else {
 			req.setAttribute("msg", "회원 가입이 실패하였습니다.");
 		}
-		HttpSession session=req.getSession();
-		req.setAttribute("cafelist", CafeDao.getInstance().listAll());
-		session.setAttribute("mfile", "/home/result.jsp");
+		
+		req.setAttribute("header1", "/home/wraphome.jsp");
+		req.setAttribute("header2", "/home/wrapmain.jsp");
+		req.setAttribute("headerLog", "/register/rmain.jsp");
+		req.setAttribute("mlist", "/cafe/cafelist.jsp");
+		int cafe_num= (Integer)req.getSession().getAttribute("cafe_num");
+		if(cafe_num>0) {
+			//맨날지워짐-개색기
+			req.setAttribute("mlist", "/notice/noticelist.jsp");
+		}else {
+			req.setAttribute("cafelist", CafeDao.getInstance().listAll());
+			req.setAttribute("mlist", "/cafe/cafelist.jsp");
+		}
+		req.setAttribute("mfile", "/home/result.jsp");
 		req.getRequestDispatcher("/home/main.jsp").forward(req, resp);
 	}
 }

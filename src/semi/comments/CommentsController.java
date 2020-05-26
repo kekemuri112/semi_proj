@@ -13,11 +13,12 @@ import javax.servlet.http.HttpServletResponse;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import semi.contents.Contents_detailVo;
 @WebServlet("/comments/comments.do")
 public class CommentsController extends HttpServlet{
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		req.setCharacterEncoding("utf-8");
+		resp.setContentType("text/plain;charset=utf-8");
 		int contents_num=Integer.parseInt(req.getParameter("contents_num"));
 		int pageNum=1;
 		String spageNum=req.getParameter("pageNum");
@@ -33,16 +34,11 @@ public class CommentsController extends HttpServlet{
 		if(endPage>pageCount) {
 			endPage=pageCount;
 		}
-		System.out.println("comments pageNum : "+pageNum);
-		System.out.println("comments startPage:"+startPage);
-
-		System.out.println("comments pageCount: "+pageCount);
 		ArrayList<CommentsVo> comList=dao.comList(contents_num,startRow,endRow);
 		if(comList==null) return;
 		JSONArray jarr=new JSONArray();
 		for(CommentsVo vo1:comList) {
 			JSONObject json=new JSONObject();
-			System.out.println("comments_num : "+vo1.getComments_num());
 			UserVo vo=dao.getUserId(vo1.getUsers_num());
 			json.put("users_id", vo.getUsers_id());
 			json.put("comments_num", vo1.getComments_num());

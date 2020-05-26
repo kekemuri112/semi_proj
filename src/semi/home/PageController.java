@@ -1,6 +1,7 @@
 package semi.home;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,6 +11,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import semi.cafe.CafeDao;
+import semi.questions.CaferegDao;
+import semi.questions.CaferegVo;
+import semi.reg.UsersDao;
+import semi.reg.UsersVo;
 @WebServlet("/semi/pagecontroller.do")
 public class PageController extends HttpServlet {
 	@Override
@@ -18,31 +23,68 @@ public class PageController extends HttpServlet {
 		resp.setContentType("text/plain;charset=utf-8");
 		int check=Integer.parseInt(req.getParameter("check"));
 		req.setAttribute("cafelist", CafeDao.getInstance().listAll());
-		HttpSession session= req.getSession();
-		
-		System.out.println("222222222");
-		System.out.println("222222222222222222");
-		
-		
 		String[] checks= {"/register/login.jsp","/register/register.jsp","/register/regsearch.jsp",
-				"/reg/logoutcontroller.do","","","/cafe/cafeapproval.jsp",""};
+				"/home/result.jsp","/questions/answer.jsp","/cafe/userscafedel.jsp","/cafe/cafeapproval.jsp",
+				"/questions/cafeset.jsp","/register/regupdate.jsp","/cafe/usersapproval.jsp"};
+		
+		/*
+		 * 	1.로그인	2.회원가입	3.id/pwd찾기	4.로그아웃	5.카페가입
+		 * 	6.카페탈퇴	7.가입한카페목록  8.카페관리  9.정보수정 10.유저목록
+		 */
+		HttpSession session=req.getSession();
+		int cafe_num=(int)req.getSession().getAttribute("cafe_num");
 		
 		switch(check) {
 			//로그인
-			case 1:	session.setAttribute("mfile", checks[check-1]);
+			case 1:	req.setAttribute("mfile", checks[check-1]);
 				break;
-			case 2:	session.setAttribute("mfile", checks[check-1]);
+			case 2:	req.setAttribute("mfile", checks[check-1]);
 				break;
-			case 3:	session.setAttribute("mfile", checks[check-1]);
+			case 3:	req.setAttribute("mfile", checks[check-1]);
 				break;
-			case 4:	session.setAttribute("mfile", checks[check-1]);
+			case 4:	req.setAttribute("mfile", checks[check-1]);
+					session.removeAttribute("users_id");
+					session.removeAttribute("users_num");
+					session.setAttribute("cafe_admin",false);
+					session.setAttribute("userscafe",false);
+					session.setAttribute("userscafeApproved",false);
+					req.setAttribute("msg", "로그아웃완료");
 				break;
-			case 5:	session.setAttribute("mfile", checks[check-1]);
+			case 5:	req.setAttribute("mfile", checks[check-1]);
+				ArrayList<CaferegVo> qlist = CaferegDao.getInstance().getQuestions(cafe_num);
+				String desc=CafeDao.getInstance().getVo(cafe_num).getCafe_desc();
+				req.setAttribute("desc", desc);
+				if(qlist.size()==0) {
+					req.setAttribute("qlist", null);
+				}else {
+					req.setAttribute("qlist", qlist);
+				}
 				break;
-			case 6:	session.setAttribute("mfile", checks[check-1]);
+			case 6:	req.setAttribute("mfile", checks[check-1]);
+				String cafe_name=CafeDao.getInstance().getVo(cafe_num).getCafe_name();
+				req.setAttribute("cafe_name", cafe_name);
 				break;
-			case 7:	session.setAttribute("mfile", checks[check-1]);
+			case 7:	req.setAttribute("mfile", checks[check-1]);
 				break;
+			case 8:	req.setAttribute("mfile", checks[check-1]);
+				req.setAttribute("cafe_admin", req.getParameter("cafe_admin"));
+				break;
+			case 9:	req.setAttribute("mfile", checks[check-1]);
+				String users_id=(String)session.getAttribute("users_id");
+				UsersVo vo= UsersDao.getInstance().information(users_id);
+				req.setAttribute("vo", vo);
+				break;
+			case 10:	req.setAttribute("mfile", checks[check-1]);
+				break;
+		}
+		req.setAttribute("header1", "/home/wraphome.jsp");
+		req.setAttribute("header2", "/home/wrapmain.jsp");
+		req.setAttribute("headerLog", "/register/rmain.jsp");
+		if(cafe_num>0 ) {
+			req.setAttribute("mlist", "/notice/noticelist.jsp");
+		}else {
+			req.setAttribute("cafelist", CafeDao.getInstance().listAll());
+			req.setAttribute("mlist", "/cafe/cafelist.jsp");
 		}
 		req.getRequestDispatcher("/home/main.jsp").forward(req, resp);
 	}

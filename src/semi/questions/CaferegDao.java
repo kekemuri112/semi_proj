@@ -20,6 +20,7 @@ public class CaferegDao {
 		PreparedStatement pstmt=null;
 		try {
 			con=ConnectionPool.getCon();
+			System.out.println("cafe_num:"+cafe_num+",cafereg_question:"+cafereg_question);
 			String sql="insert into cafereg values(cafereg_seq.nextval,?,?)";
 			pstmt=con.prepareStatement(sql);
 			pstmt.setInt(1, cafe_num);
@@ -38,19 +39,22 @@ public class CaferegDao {
 		}
 	}
 	
-	public ArrayList<String> getQuestions(int cafe_num){
+	public ArrayList<CaferegVo> getQuestions(int cafe_num){
 		Connection con=null;
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
 		try {
 			con=ConnectionPool.getCon();
-			String sql="select answer_contents from answer where cafe_num=?";
+			String sql="select cafereg_question, cafereg_num from cafereg where cafe_num=?";
 			pstmt=con.prepareStatement(sql);
 			pstmt.setInt(1, cafe_num);
 			rs=pstmt.executeQuery();
-			ArrayList<String> list=new ArrayList<String>();
+			ArrayList<CaferegVo> list=new ArrayList<CaferegVo>();
 			while(rs.next()) {
-				list.add(rs.getString("answer_contents"));
+				CaferegVo vo=new CaferegVo();
+				vo.setCafereg_num(rs.getInt("cafereg_num"));
+				vo.setCafereg_question(rs.getString("cafereg_question"));
+				list.add(vo);
 			}
 			return list;
 		}catch(SQLException se) {
@@ -67,23 +71,30 @@ public class CaferegDao {
 		}
 	}
 	//질의응답, 목록 인서트
-	public int usersCafeInsert(String[] contents, int cafereg_num,int cafe_num,int users_num) {
+	public int usersCafeInsert(String[] contents, String[] scafereg_num,int cafe_num,int users_num) {
 		Connection con=null;
 		PreparedStatement pstmt1=null;
 		PreparedStatement pstmt2=null;
 		try {
 			con=ConnectionPool.getCon();
 			//카페가입목록 인설트
-			String sql1="insert into users_cafe values(users_cafe_seq.nextval,?,?,'대기중',0)";
+			String sql1="insert into users_cafe values(users_cafe_seq.nextval,?,?,0,'대기')";
 			pstmt1=con.prepareStatement(sql1);
-			pstmt1.executeUpdate();
-			int n=0;
-			for(String aContent:contents) {
-				String sql2="insert into answer values(?,users_cafe_seq.currval,?)";
-				pstmt2=con.prepareStatement(sql2);
-				pstmt2.setInt(1, cafereg_num);
-				pstmt2.setString(2, aContent);
-				n += pstmt2.executeUpdate();
+			pstmt1.setInt(1, cafe_num);
+			pstmt1.setInt(2, users_num);
+			int n=pstmt1.executeUpdate();
+			if(contents!=null) {
+				for(int i=0;i<contents.length;i++) {
+					String aContent=contents[i];
+					String acafereg_num=scafereg_num[i];
+					String sql2="insert into answer values(?,users_cafe_seq.currval,?)";
+					pstmt2=con.prepareStatement(sql2);
+					pstmt2.setString(1, acafereg_num);
+					pstmt2.setString(2, aContent);
+					System.out.println(i+"번째aContent:"+aContent);
+					System.out.println(i+"번쨰acafereg_num:"+acafereg_num);
+					n += pstmt2.executeUpdate();
+				}
 			}
 			return n;
 		}catch(SQLException se) {

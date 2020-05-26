@@ -7,19 +7,16 @@ public class NoticeVo {
 	private int notice_lev;
 	private int notice_ref;
 	private int notice_step;
-	private int notice_grade;
 	
 	public NoticeVo() {}
 
-	public NoticeVo(int notice_num, int cafe_num, String notice_name, int notice_lev, int notice_ref, int notice_step,
-			int notice_grade) {
+	public NoticeVo(int notice_num, int cafe_num, String notice_name, int notice_lev, int notice_ref, int notice_step) {
 		this.notice_num = notice_num;
 		this.cafe_num = cafe_num;
 		this.notice_name = notice_name;
 		this.notice_lev = notice_lev;
 		this.notice_ref = notice_ref;
 		this.notice_step = notice_step;
-		this.notice_grade = notice_grade;
 	}
 
 	public int getNotice_num() {
@@ -69,14 +66,5 @@ public class NoticeVo {
 	public void setNotice_step(int notice_step) {
 		this.notice_step = notice_step;
 	}
-
-	public int getNotice_grade() {
-		return notice_grade;
-	}
-
-	public void setNotice_grade(int notice_grade) {
-		this.notice_grade = notice_grade;
-	}
-	
 	
 }

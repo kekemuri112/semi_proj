@@ -15,6 +15,51 @@ public class UsersDao {
 	public static UsersDao getInstance() {
 		return instance;
 	}
+	// 아이디 검색하는 메소드
+	public int idcheck(String users_id) {
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		try{
+			con=ConnectionPool.getCon();
+			String sql="select * from users where users_id=?";
+			pstmt=con.prepareStatement(sql);
+			pstmt.setString(1, users_id);
+			return pstmt.executeUpdate();
+		}catch(SQLException se){
+			se.printStackTrace();
+			return 0;
+		}finally{
+			try{
+				if(pstmt!=null) pstmt.close();
+				if(con!=null) con.close();
+			}catch(SQLException s){
+				s.printStackTrace();
+			}
+		}
+	}
+	public int emailCheck(String users_email) {
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		try {
+			con=ConnectionPool.getCon();
+			String sql="select * from users where users_email=?";
+			pstmt=con.prepareStatement(sql);
+			pstmt.setString(1, users_email);
+			return pstmt.executeUpdate();
+		}catch(SQLException se) {
+			se.printStackTrace();
+			return 0;
+		}finally {
+			try {
+				if(pstmt!=null) pstmt.close();
+				if(con!=null) con.close();
+			}catch(SQLException s) {
+				s.printStackTrace();
+			}
+		}
+		
+	}
+	
 	// 유저 회원가입
 	public int insert(UsersVo vo) {
 		Connection con=null;
@@ -74,20 +119,23 @@ public class UsersDao {
 		try {
 			con=ConnectionPool.getCon();
 			if(users_id!=null) {
-				sql+=" and users_id="+users_id;
-			}
-			pstmt=con.prepareStatement(sql);
-			pstmt.setString(1, users_name);
-			pstmt.setString(2, users_email);
-			rs=pstmt.executeQuery();
-			rs.next();
-			if(users_id!=null) {
+				sql+=" and users_id=?";
+				pstmt=con.prepareStatement(sql);
+				pstmt.setString(1, users_name);
+				pstmt.setString(2, users_email);
+				pstmt.setString(3, users_id);
+				rs=pstmt.executeQuery();
+				rs.next();
 				return rs.getString("users_pwd");
 			}else {
+				pstmt=con.prepareStatement(sql);
+				pstmt.setString(1, users_name);
+				pstmt.setString(2, users_email);
+				rs=pstmt.executeQuery();
+				rs.next();
 				return rs.getString("users_id");
 			}
 		}catch(SQLException se) {
-			System.out.println("search메소드 실행시...sqlexception...입니다..");
 			se.printStackTrace();
 			return null;
 		}finally {
@@ -135,5 +183,32 @@ public class UsersDao {
 			}
 		}
 	}
+	//회원정보 수정
+		public int update(UsersVo vo) {
+			Connection con=null;
+			PreparedStatement pstmt=null;
+			String sql="update users set users_pwd=?, users_email=?, users_phone=? where users_num=?";
+			int n=0;
+			try {
+				con=ConnectionPool.getCon();
+				pstmt=con.prepareStatement(sql);
+				pstmt.setString(1, vo.getUsers_pwd());
+				pstmt.setString(2, vo.getUsers_email());
+				pstmt.setString(3, vo.getUsers_phone());
+				pstmt.setInt(4, vo.getUsers_num());
+				n=pstmt.executeUpdate();
+				return n;
+			}catch(SQLException se) {
+				se.getStackTrace();
+				return -1;
+			}finally {
+				try {
+					if(pstmt!=null) pstmt.close();
+					if(con!=null) con.close();
+				}catch(SQLException s) {
+					s.printStackTrace();
+				}
+			}
+		}
 
 }

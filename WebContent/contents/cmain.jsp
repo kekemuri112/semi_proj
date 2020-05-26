@@ -3,4 +3,8 @@
 <%
 	request.setCharacterEncoding("utf-8");
 %>
-<h1>테스트용입니다.. 링크 잘 되는지....</h1>
+<h1 style="color:#F45D00 ;
+	position:relative;
+	vertical-align:middle;
+	margin-left: -250px;top: 300px;
+	font-size: 100px;font: fantasy; ">중고나라입니다.</h1>

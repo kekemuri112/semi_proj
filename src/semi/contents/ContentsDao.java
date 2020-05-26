@@ -6,7 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
+
 import semi.db.ConnectionPool;
 
 public class ContentsDao {
@@ -16,34 +16,6 @@ public class ContentsDao {
 	public static ContentsDao getDao() {
 		return dao;
 	}
-	public int getComments(int contents_num) {
-		Connection con=null; 
-		PreparedStatement pstmt=null;
-		ResultSet rs=null;
-		try {
-			con=ConnectionPool.getCon();
-			String sql="select count(*) from comments where contents_num=?";
-			pstmt=con.prepareStatement(sql);
-			pstmt.setInt(1, contents_num);
-			rs=pstmt.executeQuery();
-			rs.next();
-			return rs.getInt(1);
-		}catch(SQLException se) {
-			se.printStackTrace();
-			return -1;
-		}finally {
-			try {
-				if(rs!=null)rs.close();
-				if(pstmt!=null)pstmt.close();
-				if(con!=null)con.close();
-			}catch(SQLException se) {
-				se.printStackTrace();
-			}
-		}
-	}
-	
-	
-	//게시판 이름 가져오기
 	public String getNotice_name(int notice_num) {
 		Connection con=null; 
 		PreparedStatement pstmt=null;
@@ -73,17 +45,18 @@ public class ContentsDao {
 		}
 	}
 	
-	public ArrayList<Integer> getNotice_num(int cafe_num) {
+	public ArrayList<Integer> getNotice_num(int cafe_num) { //�Խ��ǹ�ȣ���ϱ�
 		Connection con=null; 
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
+		ArrayList<Integer> list=null;
 		try {
 			con=ConnectionPool.getCon();
 			String sql="select notice_num from notice where cafe_num=?";
 			pstmt=con.prepareStatement(sql);
 			pstmt.setInt(1, cafe_num);
 			rs=pstmt.executeQuery();
-			ArrayList<Integer> list=new ArrayList<Integer>();
+			list = new ArrayList<Integer>();
 			while(rs.next()) {
 				int notice_num=rs.getInt("notice_num");
 				list.add(notice_num);
@@ -102,7 +75,7 @@ public class ContentsDao {
 			}
 		}
 	}
-	public String getUsers_id(int users_num) { //������ȣ�޾Ƽ� �������̵� ���
+	public String getUsers_id(int users_num) { 
 		Connection con=null;
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
@@ -130,27 +103,82 @@ public class ContentsDao {
 			}
 		}
 	}
-	public ArrayList<Contents_ListVo> listAll (int cafe_num,int startRow,int endRow,int notice_num){
-		Connection con=null;  
+	public ArrayList<Integer> getUsers_num(String keyword) { 
+		Connection con=null;
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
 		try {
 			con=ConnectionPool.getCon();
+			String sql="select users_num from users where users_id like '%"+keyword+"%'";
+			pstmt=con.prepareStatement(sql);
+			rs=pstmt.executeQuery();
+			ArrayList<Integer>list=new ArrayList<Integer>();
+			while(rs.next()) {
+				list.add(rs.getInt("users_num"));
+			}
+			return list;
 			
+		}catch(SQLException se) {
+			se.printStackTrace();
+			return null;
+		}finally {
+			try {
+				if(rs!=null)rs.close();
+				if(pstmt!=null)pstmt.close();
+				if(con!=null)con.close();
+			}catch(SQLException se) {
+				se.printStackTrace();
+			}
+		}
+	}
+	public ArrayList<Contents_ListVo> listAll (int cafe_num,int startRow,int endRow,int notice_num,String field,String keyword){
+		Connection con=null;  //전체리스트뽑기
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		try {
+			con=ConnectionPool.getCon();
+			ArrayList<Integer> list2=getNotice_num(cafe_num);
 			String sql="select * from (select "+
-			"aa.*, rownum rnum from (select * from contents where ";
+					"aa.*, rownum rnum from (select * from contents where ";
+			if(list2.size()==0) {
+				sql += " notice_num=99999 ";
+			}
+			//검색결과가 있을때...
+			if(field!=null && !field.equals("")) {
+				if(field.equals("users_id")) {
+					ArrayList<Integer> list=getUsers_num(keyword);
+					if(list.size()==1) {
+						sql+="(users_num="+list.get(0)+") and ";
+					}else if(list.size()>1){
+						for(int i=0;i<list.size();i++) {
+							if(i!=list.size()-1) {
+								sql+="(users_num="+list.get(i)+" or ";
+							}else {
+								sql+="users_num="+list.get(i)+") and ";
+							}
+						}
+					}
+					if(list.size()==0) { // 해당 아이디를 가진 회원이 없을때.
+						sql+="users_num=0 and ";
+					}
+				}else {
+					sql+=field+" like '%"+keyword+"%' and ";		
+				}
+			}
 			if(notice_num==0) { 
-				ArrayList<Integer> list2=getNotice_num(cafe_num);
+				if(list2.size()!=0) {
+					sql += "(";
+				}
 				for(int i=0;i<list2.size();i++) {		
 					int num=list2.get(i);
 					if(i!=list2.size()-1) {
 						sql+=" notice_num="+num+" or ";
 					}else{
-						sql+=" notice_num="+num;
+						sql+=" notice_num="+num+")";
 					}
 				}
 			}else {
-				sql+=" notice_num="+notice_num;
+				sql+="(notice_num="+notice_num+")";
 			}	
 			sql+=" order by contents_num desc)aa  ) where rnum>=? and rnum<=? ";
 			pstmt=con.prepareStatement(sql);
@@ -160,12 +188,13 @@ public class ContentsDao {
 			ArrayList<Contents_ListVo> list=new ArrayList<Contents_ListVo>();
 			while(rs.next()) {
 				int contents_num=rs.getInt("contents_num");
-				String title=rs.getString("contents_title");
+				String contents_title=rs.getString("contents_title");
+				int count=getComment(contents_num);
 				int users_num=rs.getInt("users_num");
 				String users_id=getUsers_id(users_num);
 				Date contents_regDate=rs.getDate("contents_regdate");
 				Date contents_modifyDate=rs.getDate("contents_modifydate");
-				Contents_ListVo vo=new Contents_ListVo(contents_num,title,users_id,contents_regDate,contents_modifyDate,users_num);
+				Contents_ListVo vo=new Contents_ListVo(contents_num, notice_num, count, contents_title, users_id, users_num, contents_regDate, contents_modifyDate);
 				list.add(vo);
 			}
 			return list;
@@ -182,24 +211,81 @@ public class ContentsDao {
 			}
 		}	
 	}
-	public int getCount(int cafe_num,int notice_num) { //�ش�ī���� �Խñ� ��ü �హ�� ����
-		
+	
+	public int getComment(int contents_num) {
 		Connection con=null;
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
 		try {
 			con=ConnectionPool.getCon();
+			String sql="select nvl(count(*),0) cnum from comments where contents_num=?";
+			pstmt=con.prepareStatement(sql);
+			pstmt.setInt(1, contents_num);
+			rs=pstmt.executeQuery();
+			int n=-1;
+			if(rs.next()) { 
+				n=rs.getInt("cnum");
+			}
+			return n;
+		}catch(SQLException se) {
+			se.printStackTrace();
+			return -1;
+		}finally {
+			try {
+				if(rs!=null)rs.close();
+				if(pstmt!=null)pstmt.close();
+				if(con!=null)con.close();
+			}catch(SQLException se) {
+				se.printStackTrace();
+			}
+		}
+	}
+	
+	public int getCount(int cafe_num,int notice_num,String field,String keyword) { //해당카페의 게시글 전체 행갯수 구함
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		ArrayList<Integer> list2=getNotice_num(cafe_num);
+		try {
+			con=ConnectionPool.getCon();
 			String sql="select nvl(count(*),0) cnt from contents where ";
+			if(list2.size()==0) {
+				return 0;
+			}
+			if(field!=null&&!field.equals("")) {
+				if(field.equals("users_id")) {
+					ArrayList<Integer> list=getUsers_num(keyword);
+					if(list.size()==1) {
+						sql+="(users_num="+list.get(0)+") and ";
+					}else if(list.size()>1){
+						sql += "(";
+						for(int i=0;i<list.size();i++) {
+							if(i!=list.size()-1) {
+								sql+="users_num="+list.get(i)+" or ";
+							}else {
+								sql+="users_num="+list.get(i)+") and ";
+							}
+						}
+					}
+					if(list.size()==0) { // 해당 아이디를 가진 회원이 없을때.
+						sql+="users_num=0 and ";
+					}
+				}else {
+					sql+=field+" like '%"+keyword+"%' and ";		
+				}
+			}
 			if(notice_num>0) {
-				sql+="notice_num="+notice_num;
+				sql+=" notice_num="+notice_num;
 			}else{
-				ArrayList<Integer> list2=getNotice_num(cafe_num);
+				if(list2.size()!=0) {
+					sql += "(";
+				}
 				for(int i=0;i<list2.size();i++) {
 					int num=list2.get(i);
 					if(i!=list2.size()-1) {
 						sql+="notice_num="+num+" or ";
 					}else{
-						sql+="notice_num="+num;
+						sql+="notice_num="+num+")";
 					}
 				}
 			}
@@ -238,7 +324,10 @@ public class ContentsDao {
 				String contents_title=rs.getString("contents_title");
 				int users_num=rs.getInt("users_num");
 				String users_id=getUsers_id(users_num);
-				String post=rs.getString("contents_post");
+				String post="내용이 없습니다.";
+				if(rs.getString("contents_post")!=null) {
+					post=rs.getString("contents_post").replaceAll("\n", "<br>");
+				}
 				Date contents_regDate=rs.getDate("contents_regdate");
 				Date contents_modifyDate=rs.getDate("contents_modifyDate");
 				vo=new Contents_detailVo(contents_title, users_id, post, contents_regDate, contents_modifyDate,contents_num,users_num);
@@ -262,7 +351,7 @@ public class ContentsDao {
 		PreparedStatement pstmt=null;
 		try {
 			con=ConnectionPool.getCon();
-			String sql="insert into contents values(content_seq.nextval,?,?,?,?,sysdate,sysdate)";
+			String sql="insert into contents values(contents_seq.nextval,?,?,?,?,sysdate,sysdate)";
 			pstmt=con.prepareStatement(sql);
 			pstmt.setInt(1, vo.getNotice_num());
 			pstmt.setInt(2, vo.getUsers_num());
@@ -308,7 +397,7 @@ public class ContentsDao {
 			}
 		}
 	}
-	public int update_point(String contents_title,String contents_post,int contents_num) {
+	public int update_point(String contents_title,String contents_post,int contents_num) { //�������
 		Connection con=null;
 		PreparedStatement pstmt=null;
 		try {
@@ -331,12 +420,12 @@ public class ContentsDao {
 			}
 		}
 	}
-	public int updatePoint(int users_num) {
+	public int updatePoint(int users_num) { //���ۼ��� 100����Ʈ up
 		Connection con=null;
 		PreparedStatement pstmt=null;
 		try {
 			con=ConnectionPool.getCon();
-			String sql="update user_cafe set users_cafe_point=users_cafe_point+100 where users_num=?";
+			String sql="update users_cafe set users_cafe_point=users_cafe_point+100 where users_num=?";
 			pstmt=con.prepareStatement(sql);
 			pstmt.setInt(1, users_num);
 			return pstmt.executeUpdate();
@@ -345,6 +434,43 @@ public class ContentsDao {
 			return -1;
 		}finally {
 			try {
+				if(pstmt!=null)pstmt.close();
+				if(con!=null)con.close();
+			}catch(SQLException se) {
+				se.printStackTrace();
+			}
+		}
+	}
+	
+	
+	public int delete(int contents_num) {
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		PreparedStatement pstmt2=null;
+		try {
+			con=ConnectionPool.getCon();
+			con.setAutoCommit(false);
+			String sql="delete from comments where contents_num=?";
+			pstmt=con.prepareStatement(sql);
+			pstmt.setInt(1, contents_num);
+			pstmt.executeUpdate();
+			String sql1="delete from contents where contents_num=?";
+			pstmt2=con.prepareStatement(sql1);
+			pstmt2.setInt(1, contents_num);
+			int n=pstmt2.executeUpdate();
+			con.commit();
+			return n;
+		}catch(SQLException se) {
+			se.printStackTrace();
+			try {
+				con.rollback();
+			}catch(SQLException se1) {
+				se1.printStackTrace();
+			}
+			return -1;
+		}finally {
+			try {
+				con.setAutoCommit(true);
 				if(pstmt!=null)pstmt.close();
 				if(con!=null)con.close();
 			}catch(SQLException se) {
