@@ -45,7 +45,7 @@ public class ContentsDao {
 		}
 	}
 	
-	public ArrayList<Integer> getNotice_num(int cafe_num) { //�Խ��ǹ�ȣ���ϱ�
+	public ArrayList<Integer> getNotice_num(int cafe_num) { 
 		Connection con=null; 
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
@@ -309,7 +309,7 @@ public class ContentsDao {
 			}
 		}
 	}
-	public Contents_detailVo detail(int contents_num) { // �Խñ۹�ȣ �Ķ���ͷι޾Ƽ�  �󼼳������
+	public Contents_detailVo detail(int contents_num) { 
 		Connection con=null;
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;

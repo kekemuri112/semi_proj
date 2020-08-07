@@ -16,7 +16,7 @@ public class NoticeDeleteDao {
 	public static NoticeDeleteDao getInstance() {
 		return instance;
 	}
-	public int delete_notice(int notice_num) {//����±��
+	public int delete_notice(int notice_num) {
 		Connection con=null;
 		PreparedStatement pstmt=null;
 		try {
@@ -24,7 +24,7 @@ public class NoticeDeleteDao {
 			if(list.size()>0) {
 				ContentsDao dao=ContentsDao.getDao();
 				for(int i=0;i<list.size();i++) {
-					dao.delete(list.get(i)); // contentsDao�� �������� �޼ҵ� �����.
+					dao.delete(list.get(i)); // �.
 				}
 			}
 			ArrayList<Integer> list2=getNotice_num(notice_num);

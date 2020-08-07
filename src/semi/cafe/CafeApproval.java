@@ -15,7 +15,7 @@ import org.json.JSONObject;
 @WebServlet("/cafe/cafeapproval.do")
 public class CafeApproval extends HttpServlet{
 	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		req.setCharacterEncoding("utf-8");
 		resp.setContentType("text/plain;charset=utf-8");
 		String spageNum = req.getParameter("pageNum");

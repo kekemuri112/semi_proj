@@ -25,7 +25,7 @@ public class NoticeDao {
 				return dao.delete_notice(notice_num);
 			}else {
 				sql="update notice set notice_name='삭제된 게시판' where notice_num="+notice_num;
-				if(notice_lev==0) { // ū�Խ����϶�
+				if(notice_lev==0) { 
 					sql+=" or notice_ref="+notice_ref;
 				}
 			}

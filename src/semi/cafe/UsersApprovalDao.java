@@ -27,7 +27,7 @@ public class  UsersApprovalDao {
 					  +" (select " 
 					  + " u.users_num users_num,users_id,users_pwd,users_name,users_email,users_birth,users_phone,users_cafe_num,cafe_num,users_cafe_point,users_cafe_approved"  
 					  +" from users u inner join users_cafe uc" 
-					  +" on u.users_num=uc.users_num  where cafe_num=? order by users_cafe_approved asc users_cafe_point desc,users_cafe_num desc) a)"  
+					  +" on u.users_num=uc.users_num  where cafe_num=? order by users_cafe_approved asc,users_cafe_point desc,users_cafe_num desc) a)"  
 					  +" where rnum>=? and rnum<=?";
 			pstmt=con.prepareStatement(sql);
 			pstmt.setInt(1, cafe_num);
@@ -178,14 +178,17 @@ public class  UsersApprovalDao {
 		ResultSet rs=null;
 		try {
 			con=ConnectionPool.getCon();
-			String sql="select cafereg_question,answer_contents,users_cafe_num,a.cafereg_num cafereg_num from (select * from answer) a,(select * from cafereg) c "
+			String sql="select cafereg_question,answer_contents,users_cafe_num,a.cafereg_num cafereg_num "
+					+"from (select * from answer) a,(select * from cafereg) c "
 					  +"where a.cafereg_num=c.cafereg_num and users_cafe_num=? order by cafereg_num asc";
 			pstmt=con.prepareStatement(sql);
 			pstmt.setInt(1, users_cafe_num);
 			rs=pstmt.executeQuery();
 			ArrayList<UsersAnswerVo> list=new ArrayList<UsersAnswerVo>();
 			while(rs.next()) {
-				UsersAnswerVo vo=new UsersAnswerVo(rs.getInt("users_cafe_num"), rs.getInt("cafereg_num"), rs.getString("cafereg_question"), rs.getString("answer_contents"));
+				UsersAnswerVo vo=new UsersAnswerVo(rs.getInt("users_cafe_num"), 
+						rs.getInt("cafereg_num"), rs.getString("cafereg_question"),
+						rs.getString("answer_contents"));
 				list.add(vo);	
 			}
 			return list;

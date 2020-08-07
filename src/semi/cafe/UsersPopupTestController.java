@@ -24,10 +24,8 @@ public class UsersPopupTestController extends HttpServlet{
 		}
 		UsersApprovalDao dao=UsersApprovalDao.getInstance();
 		dao.getAnswer(users_cafe_num);
-		System.out.println("팝업테스트 컨트롤러 : "+users_cafe_num);
 		resp.setContentType("utf-8/plain;charset=utf-8");
 		JSONObject json =new JSONObject();
-		json.put("msg", "테스트!!!!"+users_cafe_num);
 		PrintWriter pw=resp.getWriter();
 		pw.print(json);
 	}

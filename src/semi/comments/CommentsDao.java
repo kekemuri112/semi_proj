@@ -77,7 +77,7 @@ public class CommentsDao {
 		}
 	}
 	public ArrayList<CommentsVo> comList(int contents_num ,int startRow,int endRow) {
-		Connection con=null; //�������¡ó���� ���� ���������� �������� �ش��ϴ� �� ���
+		Connection con=null; 
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
 		try {
